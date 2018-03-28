@@ -11,7 +11,7 @@ npm init
 node install concurrently --save-dev
 node install yarn --global
 node install create-react-app --global
-npm install body-parser express --save
+npm install body-parser express pg --save
 
 après ça vous devrez lancer la commande:
 
