@@ -8,9 +8,9 @@ procéder comme suit après l'installation de node.js:
 Il faut créer un dossier nommé Server-Web-Api puis:
 
 npm init
-node install concurrently --save-dev
-node install yarn --global
-node install create-react-app --global
+npm install concurrently --save-dev
+npm install yarn --global
+npm install create-react-app --global
 npm install body-parser express pg --save
 
 après ça vous devrez lancer la commande:
