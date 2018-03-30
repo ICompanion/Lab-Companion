@@ -56,6 +56,7 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 								  <InputLabel htmlFor="name-simple">ID</InputLabel>
 								  <Input id="login" />
 								</FormControl>
+								<br/>
 								<FormControl className={classes.formControl}>
 								  <InputLabel htmlFor="name-simple">Password</InputLabel>
 								  <Input id="password" />
