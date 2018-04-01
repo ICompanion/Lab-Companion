@@ -1,11 +1,9 @@
 const express = require('express');
+const RouterManager = require('./routes');
+
 const app = express();
 
-const valeur = "teub";
-
-app.get('/api/', function(req, res){
-   res.send({express: 'kioukiou'});
-});
+RouterManager.attach(app);
 
 app.listen(8080, function(){
   console.log('Connected on api...');

@@ -1,14 +1,11 @@
-.Main {
-	
-}
-
-.LeftPanel {
-	
+body {
+	height: 100%;
 }
 
 .App {
   text-align: center;
   font-family: 'Roboto', sans-serif;
+  height: 100%;
 }
 
 .App-logo {

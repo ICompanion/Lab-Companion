@@ -1,9 +1,10 @@
 const pg = require('pg');
-const connection = 'postgresql://lab:Adminpwd@localhost:5000/Burger';
-const db = function(){ };
+const connection = 'postgresql://lab:Adminpwd@localhost:5000/LAB';
+const bddController = function(){ };
 var client;
 
-db.start = function(){
+
+bddController.start = function(){
   client  = new pg.Client(connection);
   client.connect(function(err){
     if(err)
@@ -16,7 +17,7 @@ db.start = function(){
 };
 
 
-db.executeQuery = function(query, callback){
+bddController.executeQuery = function(query, callback){
   client.query(query, function(err, res){
 
     if(err){
@@ -31,11 +32,11 @@ db.executeQuery = function(query, callback){
   });
 };
 
-db.stop = function(){
+bddController.stop = function(){
   client.end(function(){
     console.log('Déconnecté de Burger');
   });
 };
 
 
-module.exports = db;
+module.exports = bddController;

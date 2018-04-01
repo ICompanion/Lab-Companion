@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import logo from '../logo.svg';
@@ -8,7 +8,6 @@ import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 	
-	let boolzer = true;
 	const styles = theme => ({	
 	  grid: {
 		alignContent: 'center',
@@ -35,12 +34,33 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 	});
 		
 	class LoginComponent extends React.Component {
-		stateid = {
-			name: 'ID',
+		
+		state = 
+		{
+			login: '', 
+			pwd: '',
 		};
 		
-		statepwd = {
-			name: 'Password',
+		handleSubmit = async () => {
+				let url = '/patient/connect/'+this.state.login+'/'+this.state.pwd+'';
+				const response = await fetch(url);
+				const body = await response.json();
+
+				if (response.status !== 200) {
+					document.getElementById('serveranswer').innerHTML = "Invalide";
+				} else if (response.status === 200) {
+					document.getElementById('serveranswer').innerHTML = ''+ body +'';
+				}
+				
+				return body;
+		};
+		
+		handleLogin = login => event => {
+			this.setState({ [login]: event.target.value });
+		};
+		
+		handlePwd = pwd => event => {
+			this.setState({ [pwd]: event.target.value });
 		};
 		
 		render() {
@@ -53,26 +73,35 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 					  <h1 className="App-title">Lab Companion</h1>
 					</header>
 					<br/><br/><br/>
-					<Grid container spacing={12} align="center">
+					<Grid container spacing={16} align="center">
 						<Grid item xs={4}/>
 						<Grid item xs={4}>
 							<Paper className={classes.paper}>
-								<Grid container spacing={12} justify="center" alignItems="center">
+								<Grid container spacing={16} justify="center" alignItems="center">
 								  <div className={classes.container}>
 									<FormControl className={classes.formControl}>
 									  <InputLabel htmlFor="name-simple">ID</InputLabel>
-									  <Input id="login" />
+									  <Input 
+										id="login"
+										onChange={this.handleLogin('login').bind(this)}
+										value={this.state.login}
+									  />
 									</FormControl>
 									<FormControl className={classes.formControl}>
-									  <InputLabel className={classes.formLabel} htmlFor="name-simple">Password</InputLabel>
-									  <Input className={classes.formLabel} id="password" />
+									  <InputLabel htmlFor="name-simple">Password</InputLabel>
+									  <Input className={classes.formLabel} 
+										id="pwd" 
+										onChange={this.handlePwd('pwd').bind(this)}	
+										value={this.state.pwd} 
+									  />
 									</FormControl>
 								  </div>
 								</Grid>
-								<Grid container spacing={12} justify="center" alignItems="center">
-									<Button color="primary" className={classes.button}>Login</Button>
+								<Grid container spacing={16} justify="center" alignItems="center">
+									<Button color="primary" type="submit" onClick={this.handleSubmit.bind(this)} className={classes.button}>Login</Button>
 								</Grid>
 							</Paper>
+							<div id="serveranswer"></div>
 						</Grid>
 					 </Grid>
 				</div>
