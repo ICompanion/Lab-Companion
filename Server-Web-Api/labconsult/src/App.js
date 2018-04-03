@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Link, Switch } from 'react-router-dom'
+import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom'
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import ReactRouter from 'react-router';
@@ -35,6 +35,9 @@ class App extends Component {
 		<BrowserRouter>
 		  <div className='App'>
 			<Switch>
+				<Route path='/' exact={true}>
+					<Redirect to='/home'/>
+				</Route>
 				<Route path='/login' exact={true} component={LoginComponent} /> 
 				<Route path='/home' exact={true} component={LeftPanel} />
 				<Route path='*' component={Component404}/>
