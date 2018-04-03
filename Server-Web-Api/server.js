@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const var = "teub";
+const valeur = "teub";
 
 app.get('/api/', function(req, res){
    res.send({express: 'kioukiou'});
