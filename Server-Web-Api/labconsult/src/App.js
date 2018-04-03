@@ -1,10 +1,15 @@
+import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom'
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import ReactRouter from 'react-router';
+import {LoginComponent} from './components/LoginComponent.js';
+import {LeftPanel} from './components/LeftPanel.js';
+import {Component404} from './components/404Component.js';
 import './App.css';
 
 class App extends Component {
 
-  state = {
+	state = {
       response: ''
     };
 
@@ -24,16 +29,21 @@ class App extends Component {
     };
 
   render() {
+	const { classes } = this.props;  
+	  
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          {this.state.response}
-        </p>
-      </div>
+		<BrowserRouter>
+		  <div className='App'>
+			<Switch>
+				<Route path='/' exact={true}>
+					<Redirect to='/home'/>
+				</Route>
+				<Route path='/login' exact={true} component={LoginComponent} /> 
+				<Route path='/home' exact={true} component={LeftPanel} />
+				<Route path='*' component={Component404}/>
+			</Switch>
+		  </div>
+		</BrowserRouter>
     );
   }
 }
