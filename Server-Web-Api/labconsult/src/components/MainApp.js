@@ -2,11 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
+import {Component404} from './404Component.js';
 import classNames from 'classnames';
 import SettingsIcon from 'material-ui-icons/Settings';
 import ExitIcon from 'material-ui-icons/ExitToApp';
 import StudiesIcon from 'material-ui-icons/QuestionAnswer';
-import ResultIcon from 'material-ui-icons/FavoriteBorder';
+import ResultIcon from 'material-ui-icons/LocalHospital';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -88,7 +90,20 @@ const styles = theme => ({
 class MainApp extends React.Component {
   state = {
     open: false,
+	render: '',
   };
+  
+  renderingSwitch(compName, e) {
+	this.setState({render:compName});
+  }
+  
+  _renderSubComp(){
+	switch(this.state.render) {
+		case 'results': return <Component404/>
+	}
+  }
+  
+  // Drawer (don't touch)
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -135,18 +150,18 @@ class MainApp extends React.Component {
           </div>
           <Divider />
           <List>
-			<ListItem button>
+			<ListItem button onClick={this.renderingSwitch.bind(this, 'results')}>
 			  <ListItemIcon>
 				<ResultIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Vos résultats" />
+			  <ListItemText primary="Your results" />
 			</ListItem>
 			<Divider />
 			<ListItem button>
 			  <ListItemIcon>
 				<StudiesIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Vos études" />
+			  <ListItemText primary="Your studies" />
 			</ListItem>
 			<Divider />
 			<ListItem button>
@@ -160,7 +175,7 @@ class MainApp extends React.Component {
 			  <ListItemIcon>
 				<ExitIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Se déconnecter" />
+			  <ListItemText primary="Disconnect" />
 			</ListItem>
 			<Divider />
 		  </List>
@@ -168,8 +183,9 @@ class MainApp extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography variant="display2" noWrap>{'Bienvenue'}</Typography>
+          <Typography variant="display2" noWrap>{'Welcome'}</Typography>
 		  <div className={classes.insideContent}>
+			  {this._renderSubComp()}
 		  </div>
         </main>
       </div>
