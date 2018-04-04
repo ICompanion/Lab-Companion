@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { green } from 'material-ui/colors';
+import { yellow } from 'material-ui/colors';
 import ReactRouter from 'react-router';
 import {LoginComponent} from './components/LoginComponent.js';
 import {MainApp} from './components/MainApp.js';
@@ -12,6 +13,7 @@ import './App.css';
 const theme = createMuiTheme({
   palette: {
     primary: { light: green[100], main: green[200], dark: green[300]},
+	secondary: { light: yellow[100], main: yellow[500], dark: yellow[700]},
 	alternateTextColor: 'white',
   },
   overrides: {
@@ -19,6 +21,9 @@ const theme = createMuiTheme({
       raisedPrimary: {
         color: 'white',
       },
+	  raisedSecondary: {
+		color: 'white',
+	  },
     },
   }
 });
