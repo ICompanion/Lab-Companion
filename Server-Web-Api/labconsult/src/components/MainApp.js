@@ -169,7 +169,7 @@ class MainApp extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography variant="display2" noWrap>{'Bienvenue'}</Typography>
-		  <div className{classes.insideContent}>
+		  <div className={classes.insideContent}>
 		  </div>
         </main>
       </div>
