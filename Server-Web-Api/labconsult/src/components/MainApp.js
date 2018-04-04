@@ -30,7 +30,7 @@ const styles = theme => ({
     display: 'flex',
   },
   appBar: {
-	backgroundColor: '#c6ebd6',
+	color: 'white',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -85,7 +85,7 @@ const styles = theme => ({
   },
 });
 
-class LeftPanel extends React.Component {
+class MainApp extends React.Component {
   state = {
     open: false,
   };
@@ -169,17 +169,19 @@ class LeftPanel extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography variant="display2" noWrap>{'Bienvenue'}</Typography>
+		  <div className{classes.insideContent}>
+		  </div>
         </main>
       </div>
     );
   }
 }
 
-LeftPanel.propTypes = {
+MainApp.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
 
-LeftPanel = withStyles(styles)(LeftPanel);
-export {LeftPanel}; 
+MainApp = withStyles(styles)(MainApp);
+export {MainApp}; 

@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import logo from '../logo.svg';
+import NopeIcon from 'material-ui-icons/Report';
 import Button from 'material-ui/Button';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
@@ -28,8 +29,10 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 		color: theme.palette.text.secondary,
 	  },
 	  formLabel: {
-		  color: '#c6ebd6',
 		  borderColor: '#c6ebd6!important',
+	  },
+	  loginBtn: {
+		backgroundColor: '#c6ebd6!important',
 	  }
 	});
 		
@@ -46,10 +49,14 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 				const response = await fetch(url);
 				const body = await response.json();
 
-				if (response.status !== 200) {
-					document.getElementById('serveranswer').innerHTML = "Invalide";
+				if (response.status === '(pending)') {
+					document.getElementById('serveranswer').innerHTML = "Pending...";
 				} else if (response.status === 200) {
-					document.getElementById('serveranswer').innerHTML = ''+ body +'';
+					if (body == 'true') {
+						window.location.replace("http://localhost:3000/home");
+					} else {
+						document.getElementById('serveranswer').innerHTML = "<NopeIcon/><p class='errormsg'>Nous n'avons pas pu vous identifier, veuillez réessayer.</p> ";
+					}
 				}
 				
 				return body;
@@ -70,7 +77,6 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 				<div className="Main">
 					<header className="App-header">
 					  <img src={logo} className="App-logo" alt="logo" />
-					  <h1 className="App-title">Lab Companion</h1>
 					</header>
 					<br/><br/><br/>
 					<Grid container spacing={16} align="center">
@@ -91,14 +97,16 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 									  <InputLabel htmlFor="name-simple">Password</InputLabel>
 									  <Input className={classes.formLabel} 
 										id="pwd" 
+										type="password"
 										onChange={this.handlePwd('pwd').bind(this)}	
 										value={this.state.pwd} 
 									  />
 									</FormControl>
 								  </div>
 								</Grid>
+								<br/>
 								<Grid container spacing={16} justify="center" alignItems="center">
-									<Button color="primary" type="submit" onClick={this.handleSubmit.bind(this)} className={classes.button}>Login</Button>
+									<Button className={classes.loginBtn} variant="raised" color="primary" type="submit" onClick={this.handleSubmit.bind(this)} className={classes.button}>Login</Button>
 								</Grid>
 							</Paper>
 							<div id="serveranswer"></div>

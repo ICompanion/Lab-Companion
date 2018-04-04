@@ -9,10 +9,10 @@ bddController.start = function(){
   client.connect(function(err){
     if(err)
     {
-      console.log("Erreur lors de la connection: " +err);
+      console.log("Erreur lors de la connexion: " +err);
       return;
     }
-    console.log('Connecté à Burger');
+    console.log('Connecté à la base');
   });
 };
 
