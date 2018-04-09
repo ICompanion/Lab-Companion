@@ -1,5 +1,7 @@
 const pg = require('pg');
-const connection = 'postgresql://lab:Adminpwd@localhost:5000/LAB';
+//const connection = 'postgresql://lab:Adminpwd@localhost:5000/LAB';
+const confBDD = require('../config');
+const connection = confBDD.database;
 const bddController = function(){ };
 var client;
 

@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
 const patientController = controllers.patientController;
+const auth = require('../utils/auth');
 
 const patientRouter = express.Router();
 patientRouter.use(bodyParser.json());
@@ -34,10 +35,9 @@ patientRouter.get('/connect/:identifiant/:password', function(req, res){
   patientController.connect(req.params.identifiant, req.params.password, function(data){
     if(data !== undefined){
       res.json('true').status(200).end();
-      return;
+      auth.connect(req, res, result);
     }
     res.json('false').status(404).end();
-    return;
   });
 });
 
