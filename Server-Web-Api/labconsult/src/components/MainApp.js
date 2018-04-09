@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
 import {Component404} from './404Component.js';
 import {OptionComponent} from './OptionComponent.js';
 import {DisconnectComponent} from './DisconnectComponent.js';
+import {ResultsList} from './ResultsList.js';
 import classNames from 'classnames';
 import SettingsIcon from 'material-ui-icons/Settings';
 import ExitIcon from 'material-ui-icons/ExitToApp';
@@ -101,7 +102,8 @@ class MainApp extends React.Component {
   
   _renderSubComp(){
 	switch(this.state.render) {
-		case 'results': return <Component404/>
+		case 'results': return <ResultsList type='résultats'/>
+		case 'studies': return <ResultsList type='études'/>
 		case 'options': return <OptionComponent/>
 		case 'disconnect': return <DisconnectComponent/>
 		case '': return <Typography variant="display2" noWrap>{'Welcome'}</Typography>
@@ -162,7 +164,7 @@ class MainApp extends React.Component {
 			  <ListItemText primary="Your results" />
 			</ListItem>
 			<Divider />
-			<ListItem button>
+			<ListItem button onClick={this.renderingSwitch.bind(this, 'studies')}>
 			  <ListItemIcon>
 				<StudiesIcon />
 			  </ListItemIcon>

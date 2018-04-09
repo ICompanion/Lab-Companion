@@ -13,7 +13,7 @@ import './App.css';
 const theme = createMuiTheme({
   palette: {
     primary: { light: green[100], main: green[200], dark: green[300]},
-	secondary: { light: yellow[100], main: yellow[500], dark: yellow[700]},
+	secondary: { light: yellow[300], main: yellow[600], dark: yellow[700]},
 	alternateTextColor: 'white',
   },
   overrides: {
