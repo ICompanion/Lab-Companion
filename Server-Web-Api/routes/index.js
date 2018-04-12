@@ -1,9 +1,8 @@
-const patientRouter = require('./patient');
-
 const RouterManager = function() { };
 
 RouterManager.attach = function(app){
-  app.use('/patient' , patientRouter);
+  app.use('/patient' , require('./patient'));
+  app.use('/authenticate', require('./authenticate'));
 };
 
 module.exports = RouterManager;

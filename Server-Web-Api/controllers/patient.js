@@ -8,28 +8,20 @@ var query = {
 }
 
 patientController.getAll = function(callback) {
-  var res;
-  patientController.makeQuery('select * from patient');
   bddController.start();
-  bddController.executeQuery(query, function(data){
-    res = data;
+  bddController.executeQuery('select * from patient', '', function(data){
     bddController.stop();
-	callback(res);
+    console.log(data);
+	   callback(data);
   });
-
-  return res;
 };
 
-patientController.getByIdentifiant = function(identifiant) {
-  var res;
-  patientController.makeQuery('select * from patient where identifiant = $1', [identifiant])
+patientController.getByIdentifiant = function(identifiant, callback) {
   bddController.start();
-  bddController.executeQuery(query, function(data){
-    res = data;
+  bddController.executeQuery('select * from patient where identifiant = $1', [identifiant], function(data){
     bddController.stop();
+    callback(data);
   });
-
-  return res;
 };
 
 patientController.connect = function(identifiant, password, callback) {
