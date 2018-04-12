@@ -1,9 +1,23 @@
-const auth = function() {};
+const authenticateController = function(){ };
+const db = require('./bdd');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const CookieParser = require('cookie-parser');
 
-auth.connect = function(req, res, result){
+authenticateController.signIn = function(values, callback){
+  db.start();
+  db.executeQuery('select nom from employe where employe.identifiant = $1 and employe.password = $2 union select nom from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
+    db.stop();
+    data = JSON.parse(data);
+    if(data.length === 0)
+    {
+      state = false;
+    }
+    callback(state);
+  });
+};
+
+authenticateController.connect = function(req, res, result){
   if (result === false) {
     res.json({ success: false, message: 'Authentication failed. User not found.' }).status(404).end();
   }
@@ -15,7 +29,7 @@ auth.connect = function(req, res, result){
     admin: result
     };
     var token = jwt.sign(payload, req.app.get('secret'), {
-    expiresIn: 60 // expires in 24 hours
+    expiresIn: 60 // expires in 60 min
     });
 
     res.cookie('x-access-token', token)
@@ -29,7 +43,7 @@ auth.connect = function(req, res, result){
   }
 };
 
-auth.check = function(req, res){
+authenticateController.check = function(req, res){
   var token = req.cookies['x-access-token'];
   // decode token
   if (token) {
@@ -54,4 +68,4 @@ auth.check = function(req, res){
   }
 };
 
-module.exports = auth;
+module.exports = authenticateController;

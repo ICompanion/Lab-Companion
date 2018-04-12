@@ -1,32 +1,11 @@
 const express = require('express');
 const authenticate = express.Router();
 const controllers = require('../controllers');
-const bddController = controllers.bdd;
-const auth = require('../utils/auth');
-
-var query = {
-  text: '',
-  values: []
-};
-
-
+const anthenticateController = controllers.authenticate;
 
 authenticate.get('/:name/:password', function(req, res){
-  bddController.start();
-  var result;
-  query.text = 'select * from admin where name = $1 and password = $2';
-  query.values = [req.params.name, req.params.password];
-  bddController.executeQuery(query, function(data){
-    if(data === undefined)
-    {
-      result = false;
-    }else {
-      result = true;
-    }
-
-    bddController.stop();
-
-
+  anthenticateController.signIn([req.params.name, req.params.password], function(state){
+    anthenticateController.connect(req, res, state);
   });
 });
 
