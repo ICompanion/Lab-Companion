@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
-const patientController = controllers.patientController;
+const patientController = controllers.patient;
 
 const patientRouter = express.Router();
 patientRouter.use(bodyParser.json());

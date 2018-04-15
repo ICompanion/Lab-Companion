@@ -2,11 +2,6 @@ const bddController = require('./bdd');
 
 const patientController = function(){};
 
-var query = {
-  text: "",
-  values: undefined,
-}
-
 patientController.getAll = function(callback) {
   bddController.start();
   bddController.executeQuery('select * from patient', '', function(data){
@@ -57,9 +52,3 @@ patientController.getByCity = function(ville, callback) {
 };
 
 module.exports = patientController;
-
-patientController.makeQuery = function(text, values){
-  query.text = text;
-  query.values = values;
-  return;
-}

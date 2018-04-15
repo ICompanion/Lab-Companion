@@ -1,13 +1,13 @@
 const authenticateController = function(){ };
-const db = require('./bdd');
+const bddController = require('./bdd');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const CookieParser = require('cookie-parser');
 
 authenticateController.signIn = function(values, callback){
-  db.start();
-  db.executeQuery('select nom from employe where employe.identifiant = $1 and employe.password = $2 union select nom from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
-    db.stop();
+  bddController.start();
+  bddController.executeQuery('select nom from employe where employe.identifiant = $1 and employe.password = $2 union select nom from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
+    bddController.stop();
     data = JSON.parse(data);
     if(data.length === 0)
     {
