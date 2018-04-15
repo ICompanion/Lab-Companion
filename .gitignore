@@ -17,10 +17,8 @@ bin-release/
 # Api/web useless files
 Server-Web-Api/node_modules/
 Server-Web-Api/yarn-error.log
-Server-Web-Api/yarn.lock
 Server-Web-Api/package-lock.json
 
 Server-Web-Api/labconsult/package-lock.json
 Server-Web-Api/labconsult/yarn-error.log
-Server-Web-Api/labconsult/yarn.lock
 Server-Web-Api/labconsult/node_modules/
