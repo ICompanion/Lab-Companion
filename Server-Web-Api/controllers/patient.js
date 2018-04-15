@@ -24,14 +24,35 @@ patientController.getByIdentifiant = function(identifiant, callback) {
   });
 };
 
-patientController.connect = function(identifiant, password, callback) {
-  var res;
-  patientController.makeQuery('select * from patient where identifiant = $1 and password = $2', [identifiant, password]);
+patientController.getByName = function(name, callback) {
   bddController.start();
-  bddController.executeQuery(query, function(data){
-    res = data;
+  bddController.executeQuery('select * from patient where nom = $1 or prenom = $1', [name], function(data){
     bddController.stop();
-    callback(res);
+    callback(data);
+  });
+};
+
+patientController.getById = function(id, callback) {
+  bddController.start();
+  bddController.executeQuery('select * from patient where id = $1', [id], function(data){
+    bddController.stop();
+    callback(data);
+  });
+};
+
+patientController.getByCp = function(cp, callback) {
+  bddController.start();
+  bddController.executeQuery('select * from patient where cp = $1', [cp], function(data){
+    bddController.stop();
+    callback(data);
+  });
+};
+
+patientController.getByCity = function(ville, callback) {
+  bddController.start();
+  bddController.executeQuery('select * from patient where ville = $1', [ville], function(data){
+    bddController.stop();
+    callback(data);
   });
 };
 
