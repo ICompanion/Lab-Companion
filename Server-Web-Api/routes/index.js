@@ -1,8 +1,11 @@
 const RouterManager = function() { };
 
 RouterManager.attach = function(app){
-  app.use('/patient' , require('./patient'));
   app.use('/authenticate', require('./authenticate'));
+  app.use('/patient' , require('./patient'));
+  app.use('/employe', require('./employe'));
+  app.use('/facture', require('./facture'));
+  app.use('/visite', require('./visite'));
 };
 
 module.exports = RouterManager;

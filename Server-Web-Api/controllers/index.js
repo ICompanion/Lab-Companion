@@ -1,5 +1,8 @@
 module.exports = {
-  bddController: require('./bdd'),
-  patientController: require('./patient'),
-  authenticate: require('./authenticate')
+  bdd: require('./bdd'),
+  patient: require('./patient'),
+  authenticate: require('./authenticate'),
+  employe: require('./employe'),
+  facture: require('./facture'),
+  visite: require('./visite')
 }
