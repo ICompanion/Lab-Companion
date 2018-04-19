@@ -61,4 +61,49 @@ visiteRouter.get('/date/:date', function(req, res){
   });
 });
 
+visiteRouter.post('/new', function(req, res){
+  var values = [req.body.date, req.body.heure, req.body.status, req.body.patient_id,
+                req.body.employe_id];
+
+  visiteController.new(values, function(state){
+    if(state === true)
+  {
+    res.json(state).status(200).end();
+    return;
+  }
+  res.status(500).end();
+  });
+});
+
+visiteRouter.put('/:id', function(req, res){
+  var values = []
+  var columns = []
+
+  for(var key in req.body){
+    values.push(req.body[key]);
+    columns.push(key);
+  }
+  visiteController.update(columns, values, req.params.id, function(state){
+    if(state === true)
+  {
+    res.json(state).status(200).end();
+    return;
+  }
+  res.status(500).end();
+  });
+});
+
+visiteRouter.delete('/:id', function(req, res){
+  visiteController.deleteById(req.params.id, function(state){
+    if(state === true)
+    {
+      res.json(state).status(200).end();
+      return;
+    }
+
+    res.status(500).end();
+  });
+});
+
+
 module.exports = visiteRouter;
