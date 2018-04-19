@@ -39,4 +39,48 @@ factureRouter.get('/patient/:id', function(req, res){
   });
 });
 
+factureRouter.post('/new', function(req, res){
+  var values = [req.body.montant, req.body.date_creation, req.body.acquitte, req.body.adresse_facturation,
+                req.body.visite_id, req.body.patient_id, req.body.analyse_id];
+
+  factureController.new(values, function(state){
+    if(state === true)
+  {
+    res.json(state).status(200).end();
+    return;
+  }
+  res.status(500).end();
+  });
+});
+
+factureRouter.put('/:id', function(req, res){
+  var values = []
+  var columns = []
+
+  for(var key in req.body){
+    values.push(req.body[key]);
+    columns.push(key);
+  }
+  factureController.update(columns, values, req.params.id, function(state){
+    if(state === true)
+  {
+    res.json(state).status(200).end();
+    return;
+  }
+  res.status(500).end();
+  });
+});
+
+factureRouter.delete('/:id', function(req, res){
+  factureController.deleteById(req.params.id, function(state){
+    if(state === true)
+    {
+      res.json(state).status(200).end();
+      return;
+    }
+
+    res.status(500).end();
+  });
+});
+
 module.exports = factureRouter;

@@ -51,4 +51,40 @@ patientController.getByCity = function(ville, callback) {
   });
 };
 
+patientController.newPatient = function(values, callback) {
+  bddController.start();
+  bddController.executeQuery('insert into patient(nom, prenom, mail, num_secu,adresse, ville, cp, identifiant, password, date_naissance) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+                              values, function(result, state){
+    bddController.stop();
+    callback(state);
+  });
+};
+
+patientController.updatePatient = function(columns, values, id, callback) {
+  var text ='update patient set ';
+  var i = 1;
+
+  for(var column of columns)
+  {
+    text += column + ' = $' + i +', ';
+    i++;
+  }
+  text = text.slice(0,-2) + ' where id = ' + id;
+
+  bddController.start();
+  bddController.executeQuery(text, values, function(result, state){
+    bddController.stop();
+    callback(state);
+  });
+};
+
+patientController.deleteById = function(values, callback){
+  bddController.start();
+  bddController.executeQuery('delete from patient where id = $1', [values],
+                              function(result, state){
+    bddController.stop();
+    callback(state);
+  });
+};
+
 module.exports = patientController;

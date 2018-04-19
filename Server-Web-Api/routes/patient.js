@@ -73,6 +73,49 @@ patientRouter.get('/ville/:ville', function(req, res){
   });
 });
 
+patientRouter.post('/new', function(req, res){
+  var values = [req.body.nom, req.body.prenom, req.body.mail, req.body.numSecu,
+                req.body.adresse, req.body.ville, req.body.cp, req.body.identifiant,
+                req.body.password, req.body.date_naissance];
 
+  patientController.new(values, function(state){
+    if(state === true)
+  {
+    res.json(state).status(200).end();
+    return;
+  }
+  res.status(500).end();
+  });
+});
+
+patientRouter.put('/:id', function(req, res){
+  var values = []
+  var columns = []
+
+  for(var key in req.body){
+    values.push(req.body[key]);
+    columns.push(key);
+  }
+  patientController.update(columns, values, req.params.id, function(state){
+    if(state === true)
+  {
+    res.json(state).status(200).end();
+    return;
+  }
+  res.status(500).end();
+  });
+});
+
+patientRouter.delete('/:id', function(req, res){
+  patientController.deleteById(req.params.id, function(state){
+    if(state === true)
+    {
+      res.json(state).status(200).end();
+      return;
+    }
+
+    res.status(500).end();
+  });
+});
 
 module.exports = patientRouter;
