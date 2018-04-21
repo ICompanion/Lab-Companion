@@ -10,10 +10,14 @@ body {
 
 .App-logo {
   height: 150px;
+    border:1px solid #81C784;    
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+	width:150px;
 }
 
 .App-header {
-  background-color: #c6ebd6;
   height: 100px;
   padding: 20px;
   color: white;
@@ -25,6 +29,12 @@ body {
 
 .App-intro {
   font-size: large;
+}
+
+.errormsg {
+	color: red;
+	font-weight: 500;
+	font-size: 0.8em;
 }
 
 @keyframes App-logo-spin {

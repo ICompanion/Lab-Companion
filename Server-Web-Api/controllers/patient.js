@@ -2,51 +2,89 @@ const bddController = require('./bdd');
 
 const patientController = function(){};
 
-var query = {
-  text: "",
-  values: undefined,
-}
-
 patientController.getAll = function(callback) {
-  var res;
-  patientController.makeQuery('select * from patient');
   bddController.start();
-  bddController.executeQuery(query, function(data){
-    res = data;
+  bddController.executeQuery('select * from patient', '', function(data){
     bddController.stop();
-	callback(res);
+    console.log(data);
+	   callback(data);
   });
-
-  return res;
 };
 
-patientController.getByIdentifiant = function(identifiant) {
-  var res;
-  patientController.makeQuery('select * from patient where identifiant = $1', [identifiant])
+patientController.getByIdentifiant = function(identifiant, callback) {
   bddController.start();
-  bddController.executeQuery(query, function(data){
-    res = data;
+  bddController.executeQuery('select * from patient where identifiant = $1', [identifiant], function(data){
     bddController.stop();
+    callback(data);
   });
-
-  return res;
 };
 
-patientController.connect = function(identifiant, password, callback) {
-  var res;
-  patientController.makeQuery('select * from patient where identifiant = $1 and password = $2', [identifiant, password]);
+patientController.getByName = function(name, callback) {
   bddController.start();
-  bddController.executeQuery(query, function(data){
-    res = data;
+  bddController.executeQuery('select * from patient where nom = $1 or prenom = $1', [name], function(data){
     bddController.stop();
-    callback(res);
+    callback(data);
+  });
+};
+
+patientController.getById = function(id, callback) {
+  bddController.start();
+  bddController.executeQuery('select * from patient where id = $1', [id], function(data){
+    bddController.stop();
+    callback(data);
+  });
+};
+
+patientController.getByCp = function(cp, callback) {
+  bddController.start();
+  bddController.executeQuery('select * from patient where cp = $1', [cp], function(data){
+    bddController.stop();
+    callback(data);
+  });
+};
+
+patientController.getByCity = function(ville, callback) {
+  bddController.start();
+  bddController.executeQuery('select * from patient where ville = $1', [ville], function(data){
+    bddController.stop();
+    callback(data);
+  });
+};
+
+patientController.newPatient = function(values, callback) {
+  bddController.start();
+  bddController.executeQuery('insert into patient(nom, prenom, mail, num_secu,adresse, ville, cp, identifiant, password, date_naissance) values($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+                              values, function(result, state){
+    bddController.stop();
+    callback(state);
+  });
+};
+
+patientController.updatePatient = function(columns, values, id, callback) {
+  var text ='update patient set ';
+  var i = 1;
+
+  for(var column of columns)
+  {
+    text += column + ' = $' + i +', ';
+    i++;
+  }
+  text = text.slice(0,-2) + ' where id = ' + id;
+
+  bddController.start();
+  bddController.executeQuery(text, values, function(result, state){
+    bddController.stop();
+    callback(state);
+  });
+};
+
+patientController.deleteById = function(values, callback){
+  bddController.start();
+  bddController.executeQuery('delete from patient where id = $1', [values],
+                              function(result, state){
+    bddController.stop();
+    callback(state);
   });
 };
 
 module.exports = patientController;
-
-patientController.makeQuery = function(text, values){
-  query.text = text;
-  query.values = values;
-  return;
-}

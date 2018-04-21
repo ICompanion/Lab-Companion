@@ -2,11 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
+import {Component404} from './404Component.js';
+import {OptionComponent} from './OptionComponent.js';
+import {DisconnectComponent} from './DisconnectComponent.js';
+import {ResultsList} from './ResultsList.js';
 import classNames from 'classnames';
 import SettingsIcon from 'material-ui-icons/Settings';
 import ExitIcon from 'material-ui-icons/ExitToApp';
 import StudiesIcon from 'material-ui-icons/QuestionAnswer';
-import ResultIcon from 'material-ui-icons/FavoriteBorder';
+import ResultIcon from 'material-ui-icons/LocalHospital';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -30,7 +35,7 @@ const styles = theme => ({
     display: 'flex',
   },
   appBar: {
-	backgroundColor: '#c6ebd6',
+	color: 'white',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -85,10 +90,27 @@ const styles = theme => ({
   },
 });
 
-class LeftPanel extends React.Component {
+class MainApp extends React.Component {
   state = {
     open: false,
+	render: '',
   };
+  
+  renderingSwitch(compName, e) {
+	this.setState({render:compName});
+  }
+  
+  _renderSubComp(){
+	switch(this.state.render) {
+		case 'results': return <ResultsList type='résultats'/>
+		case 'studies': return <ResultsList type='études'/>
+		case 'options': return <OptionComponent/>
+		case 'disconnect': return <DisconnectComponent/>
+		case '': return <Typography variant="display2" noWrap>{'Welcome'}</Typography>
+	}
+  }
+  
+  // Drawer (don't touch)
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -135,32 +157,32 @@ class LeftPanel extends React.Component {
           </div>
           <Divider />
           <List>
-			<ListItem button>
+			<ListItem button onClick={this.renderingSwitch.bind(this, 'results')}>
 			  <ListItemIcon>
 				<ResultIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Vos résultats" />
+			  <ListItemText primary="Your results" />
 			</ListItem>
 			<Divider />
-			<ListItem button>
+			<ListItem button onClick={this.renderingSwitch.bind(this, 'studies')}>
 			  <ListItemIcon>
 				<StudiesIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Vos études" />
+			  <ListItemText primary="Your studies" />
 			</ListItem>
 			<Divider />
-			<ListItem button>
+			<ListItem button onClick={this.renderingSwitch.bind(this, 'options')}>
 			  <ListItemIcon>
 				<SettingsIcon />
 			  </ListItemIcon>
 			  <ListItemText primary="Options" />
 			</ListItem>
 			<Divider />
-			<ListItem button>
+			<ListItem button onClick={this.renderingSwitch.bind(this, 'disconnect')}>
 			  <ListItemIcon>
 				<ExitIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Se déconnecter" />
+			  <ListItemText primary="Disconnect" />
 			</ListItem>
 			<Divider />
 		  </List>
@@ -168,18 +190,20 @@ class LeftPanel extends React.Component {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography variant="display2" noWrap>{'Bienvenue'}</Typography>
+		  <div className={classes.insideContent}>
+			  {this._renderSubComp()}
+		  </div>
         </main>
       </div>
     );
   }
 }
 
-LeftPanel.propTypes = {
+MainApp.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
 
-LeftPanel = withStyles(styles)(LeftPanel);
-export {LeftPanel}; 
+MainApp = withStyles(styles)(MainApp);
+export {MainApp}; 
