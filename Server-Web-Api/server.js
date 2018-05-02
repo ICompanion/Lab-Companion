@@ -3,9 +3,13 @@ const RouterManager = require('./routes');
 const morgan = require('morgan');
 const config = require('./config');
 const CookieParser = require('cookie-parser');
+var session = require('express-session');
 
 const app = express();
-
+app.use(session({
+  key: 'app.sess',
+  secret: 'secret',
+}));
 app.use(morgan('dev'));
 app.set('secret', config.secret);
 app.use(CookieParser());

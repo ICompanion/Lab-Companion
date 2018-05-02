@@ -6,18 +6,23 @@ const CookieParser = require('cookie-parser');
 
 authenticateController.signIn = function(values, callback){
   bddController.start();
-  bddController.executeQuery('select nom from employe where employe.identifiant = $1 and employe.password = $2 union select nom from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
+  bddController.executeQuery('select nom,identifiant from employe where employe.identifiant = $1 and employe.password = $2 union select nom,identifiant from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
     bddController.stop();
     data = JSON.parse(data);
     if(data.length === 0)
     {
       state = false;
+      name = "none";
+      id = "none";
+    } else {
+      name = data[0].nom;
+      id = data[0].identifiant;
     }
-    callback(state);
+    callback(state,name,id);
   });
 };
 
-authenticateController.connect = function(req, res, result){
+authenticateController.connect = function(req, res, result, name, id){
   if (result === false) {
     res.json({ success: false, message: 'Authentication failed. User not found.' }).status(404).end();
   }
@@ -31,8 +36,9 @@ authenticateController.connect = function(req, res, result){
     var token = jwt.sign(payload, req.app.get('secret'), {
     expiresIn: 60 // expires in 60 min
     });
-
     res.cookie('x-access-token', token)
+    res.cookie('username', name)
+    res.cookie('identifiant', id)
     .json({
       success: true,
       message: 'Enjoy your token!',
@@ -44,7 +50,7 @@ authenticateController.connect = function(req, res, result){
 };
 
 authenticateController.check = function(req, res){
-  var token = req.cookies['x-access-token'];
+  var token = req.session.token;
   // decode token
   if (token) {
     // verifies secret and checks exp

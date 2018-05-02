@@ -8,6 +8,8 @@ import ReactRouter from 'react-router';
 import {LoginComponent} from './components/LoginComponent.js';
 import {MainApp} from './components/MainApp.js';
 import {Component404} from './components/404Component.js';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 import './App.css';
 
 const theme = createMuiTheme({
@@ -29,10 +31,18 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-
-	state = {
-      response: ''
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
     };
+
+    componentWillMount() {
+      const { cookies } = this.props;
+
+      this.state = {
+        response: '',
+        //token: cookies.get('x-access-token') || 'none'}
+      };
+    }
 
     componentDidMount() {
       this.callApi()
@@ -50,8 +60,18 @@ class App extends Component {
     };
 
   render() {
-	const { classes } = this.props;  
-	  
+	const { classes } = this.props;
+
+    if (this.state.token == "none") {
+      return(
+        <MuiThemeProvider theme={theme}>
+    			  <div className='App'>
+    				    <MainApp/>
+    			  </div>
+    		</MuiThemeProvider>
+      )
+    }
+
     return (
 		<MuiThemeProvider theme={theme}>
 			<BrowserRouter>
@@ -60,7 +80,7 @@ class App extends Component {
 					<Route path='/' exact={true}>
 						<Redirect to='/login'/>
 					</Route>
-					<Route path='/login' exact={true} component={LoginComponent} /> 
+					<Route path='/login' exact={true} component={LoginComponent} />
 					<Route path='/home' exact={true} component={MainApp} />
 					<Route path='*' component={Component404}/>
 				</Switch>
