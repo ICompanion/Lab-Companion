@@ -35,13 +35,16 @@ class App extends Component {
       cookies: instanceOf(Cookies).isRequired
     };
 
-    componentWillMount() {
-      const { cookies } = this.props;
-
-      this.state = {
-        response: '',
-        //token: cookies.get('x-access-token') || 'none'}
+  	constructor(props) {
+  	  super(props);
+  	  this.state = {
+  	      response: '',
       };
+  	  this.authentificationCheck = this.authentificationCheck.bind(this);
+  	}
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+  	    return prevState.token !== this.state.token;
     }
 
     componentDidMount() {
@@ -59,36 +62,54 @@ class App extends Component {
       return body;
     };
 
+    authentificationCheck = async () => {
+      const response = await fetch('/authenticate/check');
+      const body = await response.json();
+      console.log(body.success);
+
+      if (response.status !== 200) throw Error(body.message);
+      return true;
+    };
+
   render() {
 	const { classes } = this.props;
 
-    if (this.state.token == "none") {
-      return(
+	this.authentificationCheck()
+          .then(res => this.setState({ token: res }))
+          .catch(err => console.log(err));
+
+    if (!this.state.token) {
+        return(
         <MuiThemeProvider theme={theme}>
     			  <div className='App'>
-    				    <MainApp/>
+    				    <LoginComponent/>
     			  </div>
     		</MuiThemeProvider>
       )
+    } else {
+      return (
+  		/*<MuiThemeProvider theme={theme}>
+  			<BrowserRouter>
+  			  <div className='App'>
+  				<Switch>
+  					<Route path='/' exact={true}>
+  						<Redirect to='/login'/>
+  					</Route>
+  					<Route path='/login' exact={true} component={LoginComponent} />
+  					<Route path='/home' exact={true} component={MainApp} />
+  					<Route path='*' component={Component404}/>
+  				</Switch>
+  			  </div>
+  			</BrowserRouter>
+  		</MuiThemeProvider>*/
+        <MuiThemeProvider theme={theme}>
+            <div className='App'>
+                <MainApp/>
+            </div>
+        </MuiThemeProvider>
+      )
     }
-
-    return (
-		<MuiThemeProvider theme={theme}>
-			<BrowserRouter>
-			  <div className='App'>
-				<Switch>
-					<Route path='/' exact={true}>
-						<Redirect to='/login'/>
-					</Route>
-					<Route path='/login' exact={true} component={LoginComponent} />
-					<Route path='/home' exact={true} component={MainApp} />
-					<Route path='*' component={Component404}/>
-				</Switch>
-			  </div>
-			</BrowserRouter>
-		</MuiThemeProvider>
-    );
   }
 }
 
-export default App;
+export default withCookies(App);

@@ -3,19 +3,26 @@ const RouterManager = require('./routes');
 const morgan = require('morgan');
 const config = require('./config');
 const CookieParser = require('cookie-parser');
-var session = require('express-session');
+const controllers = require('./controllers');
+const anthenticateController = controllers.authenticate;
 
 const app = express();
-app.use(session({
-  key: 'app.sess',
-  secret: 'secret',
-}));
+app.use(CookieParser());
 app.use(morgan('dev'));
 app.set('secret', config.secret);
-app.use(CookieParser());
+
+app.get('/', function(req, res) {
+  anthenticateController.check(function(data){
+    data = JSON.parse(data);
+    if(data.length !== 0){
+      res.json(data).status(200);
+      return;
+    }
+    res.status(404).end();
+  });
+});
 
 RouterManager.attach(app);
-
 app.listen(8080, function(){
   console.log('Connected on api...');
 });

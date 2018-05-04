@@ -37,8 +37,6 @@ authenticateController.connect = function(req, res, result, name, id){
     expiresIn: 60 // expires in 60 min
     });
     res.cookie('x-access-token', token)
-    res.cookie('username', name)
-    res.cookie('identifiant', id)
     .json({
       success: true,
       message: 'Enjoy your token!',
@@ -49,18 +47,26 @@ authenticateController.connect = function(req, res, result, name, id){
   }
 };
 
-authenticateController.check = function(req, res){
-  var token = req.session.token;
+authenticateController.check = function(req, res, callback){
+  var token = req.cookies['x-access-token'];
+  console.log(req.app.get('secret'));
+
+  console.log(token);
   // decode token
   if (token) {
     // verifies secret and checks exp
     jwt.verify(token, req.app.get('secret'), function(err, decoded) {
       if (err) {
+        console.log(err);
         res.json({ success: false, message: 'Failed to authenticate token.' }).status(400).end();
+        callback(false);
+        return;
       }
       else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
+        callback(true);
+        return;
       }
     });
   }
@@ -71,6 +77,7 @@ authenticateController.check = function(req, res){
         success: false,
         message: 'No token provided.'
     }).status(403).end();
+    return;
   }
 };
 
