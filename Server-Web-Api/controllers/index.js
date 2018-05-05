@@ -4,5 +4,6 @@ module.exports = {
   authenticate: require('./authenticate'),
   employe: require('./employe'),
   facture: require('./facture'),
-  visite: require('./visite')
+  visite: require('./visite'),
+  analyse: require('./analyse')
 }
