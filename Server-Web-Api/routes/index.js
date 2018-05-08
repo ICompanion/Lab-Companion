@@ -7,6 +7,8 @@ RouterManager.attach = function(app){
   app.use('/facture', require('./facture'));
   app.use('/visite', require('./visite'));
   app.use('/analyse', require('./analyse'));
+  app.use('/resultat', require('./resultat'));
+  app.use('/categorie', require('./categorie'));
 };
 
 module.exports = RouterManager;

@@ -6,7 +6,6 @@ factureController.getAll = function(callback) {
   bddController.start();
   bddController.executeQuery('select * from facture', '', function(data){
     bddController.stop();
-    console.log(data);
 	   callback(data);
   });
 };

@@ -1,13 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
-const visiteController = controllers.visite;
+const resultatController = controllers.resultat;
 
-const visiteRouter = express.Router();
-visiteRouter.use(bodyParser.json());
+const resultatRouter = express.Router();
+resultatRouter.use(bodyParser.json());
 
-visiteRouter.get('/all', function(req, res){
-  visiteController.getAll(function(data){
+resultatRouter.get('/all', function(req, res){
+  resultatController.getAll(function(data){
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -17,10 +17,10 @@ visiteRouter.get('/all', function(req, res){
   });
 });
 
-visiteRouter.get('/:id', function(req, res){
+resultatRouter.get('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    visiteController.getById(req.params.id,function(data){
+    resultatController.getById(req.params.id,function(data){
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -33,10 +33,10 @@ visiteRouter.get('/:id', function(req, res){
   res.json("parameter is not an integer").status(500).end();
 });
 
-visiteRouter.get('/patient/:id', function(req, res){
+resultatRouter.get('/categorie/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    visiteController.getByPatientId(req.params.id,function(data){
+    resultatController.getByCategory(req.params.id, function(data){
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -49,33 +49,11 @@ visiteRouter.get('/patient/:id', function(req, res){
   res.json("parameter is not an integer").status(500).end();
 });
 
-visiteRouter.get('/date/:date', function(req, res){
-  visiteController.getByDate(req.params.date,function(data){
-    data = JSON.parse(data);
-    if(data.length !== 0){
-      res.json(data).status(200);
-      return;
-    }
-    res.status(404).end();
-  });
+resultatRouter.post('/new', function(req, res){
+  var values = [req.body.nom, req.body.description, req.body.valeur_min,
+                req.body.valeur_max, req.body.categorie_id];
 
-  visiteRouter.get('/status/:status', function(req, res){
-    visiteController.getByStatus(req.params.status,function(data){
-      data = JSON.parse(data);
-      if(data.length !== 0){
-        res.json(data).status(200);
-        return;
-      }
-      res.status(404).end();
-    });
-  });
-});
-
-visiteRouter.post('/new', function(req, res){
-  var values = [req.body.date, req.body.heure, req.body.status, req.body.patient_id,
-                req.body.employe_id];
-
-  visiteController.new(values, function(state){
+  resultatController.new(values, function(state){
     if(state === true)
   {
     res.json(state).status(200).end();
@@ -85,7 +63,7 @@ visiteRouter.post('/new', function(req, res){
   });
 });
 
-visiteRouter.put('/:id', function(req, res){
+resultatRouter.put('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
     var values = []
@@ -95,7 +73,7 @@ visiteRouter.put('/:id', function(req, res){
       values.push(req.body[key]);
       columns.push(key);
     }
-    visiteController.update(columns, values, req.params.id, function(state){
+    resultatController.update(columns, values, req.params.id, function(state){
       if(state === true)
     {
       res.json(state).status(200).end();
@@ -105,13 +83,13 @@ visiteRouter.put('/:id', function(req, res){
     return;
     });
   }
-    res.json("parameter is not an integer").status(500).end();
+  res.json("parameter is not an integer").status(500).end();
 });
 
-visiteRouter.delete('/:id', function(req, res){
+resultatRouter.delete('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    visiteController.deleteById(req.params.id, function(state){
+    resultatController.deleteById(req.params.id, function(state){
       if(state === true)
       {
         res.json(state).status(200).end();
@@ -125,5 +103,4 @@ visiteRouter.delete('/:id', function(req, res){
   res.json("parameter is not an integer").status(500).end();
 });
 
-
-module.exports = visiteRouter;
+module.exports = resultatRouter;

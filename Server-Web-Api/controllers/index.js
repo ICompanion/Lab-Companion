@@ -5,5 +5,7 @@ module.exports = {
   employe: require('./employe'),
   facture: require('./facture'),
   visite: require('./visite'),
-  analyse: require('./analyse')
+  analyse: require('./analyse'),
+  resultat: require('./resultat'),
+  categorie: require('./categorie')
 }
