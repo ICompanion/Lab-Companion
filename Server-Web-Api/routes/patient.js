@@ -53,7 +53,9 @@ patientRouter.get('/id/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 patientRouter.get('/cp/:cp', function(req, res){
@@ -113,7 +115,9 @@ patientRouter.put('/:id', function(req, res){
     return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 patientRouter.delete('/:id', function(req, res){
@@ -130,7 +134,9 @@ patientRouter.delete('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = patientRouter;

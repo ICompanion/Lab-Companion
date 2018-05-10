@@ -30,8 +30,9 @@ factureRouter.get('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
-});
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }});
 
 factureRouter.get('/patient/:id', function(req, res){
   if(Number.parseInt(req.params.id))
@@ -46,8 +47,9 @@ factureRouter.get('/patient/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
-});
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }});
 
 factureRouter.post('/new', function(req, res){
   var values = [req.body.montant, req.body.date_creation, req.body.acquitte, req.body.adresse_facturation,
@@ -83,7 +85,9 @@ factureRouter.put('/:id', function(req, res){
     return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 factureRouter.delete('/:id', function(req, res){
@@ -100,7 +104,9 @@ factureRouter.delete('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = factureRouter;

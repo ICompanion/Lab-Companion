@@ -30,7 +30,9 @@ resultatRouter.get('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 resultatRouter.get('/categorie/:id', function(req, res){
@@ -46,7 +48,9 @@ resultatRouter.get('/categorie/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 resultatRouter.post('/new', function(req, res){
@@ -83,7 +87,9 @@ resultatRouter.put('/:id', function(req, res){
     return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 resultatRouter.delete('/:id', function(req, res){
@@ -100,7 +106,9 @@ resultatRouter.delete('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = resultatRouter;

@@ -30,7 +30,9 @@ visiteRouter.get('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 visiteRouter.get('/patient/:id', function(req, res){
@@ -46,7 +48,9 @@ visiteRouter.get('/patient/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 visiteRouter.get('/date/:date', function(req, res){
@@ -105,7 +109,9 @@ visiteRouter.put('/:id', function(req, res){
     return;
     });
   }
-    res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 visiteRouter.delete('/:id', function(req, res){
@@ -122,7 +128,9 @@ visiteRouter.delete('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 

@@ -52,7 +52,9 @@ employeRouter.get('/id/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 employeRouter.post('/new', function(req, res){
@@ -91,7 +93,9 @@ employeRouter.put('/:id', function(req, res){
     return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 employeRouter.delete('/:id', function(req, res){
@@ -108,7 +112,9 @@ employeRouter.delete('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = employeRouter;

@@ -30,7 +30,9 @@ categorieRouter.get('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 categorieRouter.post('/new', function(req, res){
@@ -66,7 +68,9 @@ categorieRouter.put('/:id', function(req, res){
     return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 categorieRouter.delete('/:id', function(req, res){
@@ -83,7 +87,9 @@ categorieRouter.delete('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = categorieRouter;

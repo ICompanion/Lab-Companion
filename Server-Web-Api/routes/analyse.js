@@ -29,7 +29,7 @@ analyseRouter.get('/:code', function(req, res){
 });
 
 analyseRouter.get('/patient/:id', function(req, res){
-  if(Number.parseInt(req.params.patient_id))
+  if(Number.parseInt(req.params.id))
   {
     analyseController.getPatientAnalyses(req.params.id, function(data){
       data = JSON.parse(data);
@@ -41,7 +41,9 @@ analyseRouter.get('/patient/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 analyseRouter.post('/new', function(req, res){
@@ -92,7 +94,9 @@ analyseRouter.put('/:id', function(req, res){
     return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 analyseRouter.put('/result/:id', function(req, res){
@@ -115,7 +119,9 @@ analyseRouter.put('/result/:id', function(req, res){
     return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 analyseRouter.delete('/:id', function(req, res){
@@ -132,7 +138,9 @@ analyseRouter.delete('/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 analyseRouter.delete('/result/:id', function(req, res){
@@ -149,7 +157,9 @@ analyseRouter.delete('/result/:id', function(req, res){
       return;
     });
   }
-  res.json("parameter is not an integer").status(500).end();
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = analyseRouter;
