@@ -1,13 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const controllers = require('../controllers');
-const factureController = controllers.facture;
+const categorieController = controllers.categorie;
 
-const factureRouter = express.Router();
-factureRouter.use(bodyParser.json());
+const categorieRouter = express.Router();
+categorieRouter.use(bodyParser.json());
 
-factureRouter.get('/all', function(req, res){
-  factureController.getAll(function(data){
+categorieRouter.get('/all', function(req, res){
+  categorieController.getAll(function(data){
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -17,10 +17,10 @@ factureRouter.get('/all', function(req, res){
   });
 });
 
-factureRouter.get('/:id', function(req, res){
+categorieRouter.get('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    factureController.getById(req.params.id,function(data){
+    categorieController.getById(req.params.id,function(data){
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -32,30 +32,13 @@ factureRouter.get('/:id', function(req, res){
   }
   else{
       res.json("parameter is not an integer").status(500).end();
-  }});
-
-factureRouter.get('/patient/:id', function(req, res){
-  if(Number.parseInt(req.params.id))
-  {
-    factureController.getByPatientId(req.params.id,function(data){
-      data = JSON.parse(data);
-      if(data.length !== 0){
-        res.json(data).status(200);
-        return;
-      }
-      res.status(404).end();
-      return;
-    });
   }
-  else{
-      res.json("parameter is not an integer").status(500).end();
-  }});
+});
 
-factureRouter.post('/new', function(req, res){
-  var values = [req.body.montant, req.body.date_creation, req.body.acquitte, req.body.adresse_facturation,
-                req.body.visite_id, req.body.patient_id, req.body.analyse_id];
+categorieRouter.post('/new', function(req, res){
+  var values = [req.body.nom, req.body.description];
 
-  factureController.new(values, function(state){
+  categorieController.new(values, function(state){
     if(state === true)
   {
     res.json(state).status(200).end();
@@ -65,7 +48,7 @@ factureRouter.post('/new', function(req, res){
   });
 });
 
-factureRouter.put('/:id', function(req, res){
+categorieRouter.put('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
     var values = []
@@ -75,7 +58,7 @@ factureRouter.put('/:id', function(req, res){
       values.push(req.body[key]);
       columns.push(key);
     }
-    factureController.update(columns, values, req.params.id, function(state){
+    categorieController.update(columns, values, req.params.id, function(state){
       if(state === true)
     {
       res.json(state).status(200).end();
@@ -90,10 +73,10 @@ factureRouter.put('/:id', function(req, res){
   }
 });
 
-factureRouter.delete('/:id', function(req, res){
+categorieRouter.delete('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    factureController.deleteById(req.params.id, function(state){
+    categorieController.deleteById(req.params.id, function(state){
       if(state === true)
       {
         res.json(state).status(200).end();
@@ -109,4 +92,4 @@ factureRouter.delete('/:id', function(req, res){
   }
 });
 
-module.exports = factureRouter;
+module.exports = categorieRouter;

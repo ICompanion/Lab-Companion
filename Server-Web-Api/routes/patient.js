@@ -7,14 +7,14 @@ const patientRouter = express.Router();
 patientRouter.use(bodyParser.json());
 
 patientRouter.get('/all', function(req, res){
-  patientController.getAll(function(data){
-    data = JSON.parse(data);
-    if(data.length !== 0){
-      res.json(data).status(200);
-      return;
-    }
-    res.status(404).end();
-  });
+    patientController.getAll(function(data){
+      data = JSON.parse(data);
+      if(data.length !== 0){
+        res.json(data).status(200);
+        return;
+      }
+      res.status(404).end();
+    });
 });
 
 patientRouter.get('/:identifiant', function(req, res){
@@ -41,14 +41,21 @@ patientRouter.get('/name/:nom', function(req, res){
 });
 
 patientRouter.get('/id/:id', function(req, res){
-  patientController.getById(req.params.id,function(data){
-    data = JSON.parse(data);
-    if(data.length !== 0){
-      res.json(data).status(200);
+  if(Number.parseInt(req.params.id))
+  {
+    patientController.getById(req.params.id,function(data){
+      data = JSON.parse(data);
+      if(data.length !== 0){
+        res.json(data).status(200);
+        return;
+      }
+      res.status(404).end();
       return;
-    }
-    res.status(404).end();
-  });
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 patientRouter.get('/cp/:cp', function(req, res){
@@ -89,33 +96,47 @@ patientRouter.post('/new', function(req, res){
 });
 
 patientRouter.put('/:id', function(req, res){
-  var values = []
-  var columns = []
-
-  for(var key in req.body){
-    values.push(req.body[key]);
-    columns.push(key);
-  }
-  patientController.update(columns, values, req.params.id, function(state){
-    if(state === true)
+  if(Number.parseInt(req.params.id))
   {
-    res.json(state).status(200).end();
-    return;
-  }
-  res.status(500).end();
-  });
-});
+    var values = []
+    var columns = []
 
-patientRouter.delete('/:id', function(req, res){
-  patientController.deleteById(req.params.id, function(state){
-    if(state === true)
+    for(var key in req.body){
+      values.push(req.body[key]);
+      columns.push(key);
+    }
+    patientController.update(columns, values, req.params.id, function(state){
+      if(state === true)
     {
       res.json(state).status(200).end();
       return;
     }
-
     res.status(500).end();
-  });
+    return;
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
+});
+
+patientRouter.delete('/:id', function(req, res){
+  if(Number.parseInt(req.params.id))
+  {
+    patientController.deleteById(req.params.id, function(state){
+      if(state === true)
+      {
+        res.json(state).status(200).end();
+        return;
+      }
+
+      res.status(500).end();
+      return;
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = patientRouter;
