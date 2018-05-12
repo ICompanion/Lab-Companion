@@ -37,7 +37,7 @@ authenticateController.connect = function(req, res, result, name, id){
     var token = jwt.sign(payload, req.app.get('secret'));
     res.cookie('x-access-token', token,{
         expire: new Date() + 3600000, // expires in 60 min
-        httpOnly: true
+        httpOnly: false
     })
     .json({
       success: true,
@@ -50,7 +50,12 @@ authenticateController.connect = function(req, res, result, name, id){
 };
 
 authenticateController.check = function(req, res, callback){
-  var token = req.cookies['x-access-token'];
+  if(req.cookies['x-access-token']) {
+    var token = req.cookies['x-access-token'];
+  } else {
+    console.log("Not defined");
+  }
+  console.log(token);
   // decode token
   if (token) {
     // verifies secret and checks exp
@@ -64,7 +69,8 @@ authenticateController.check = function(req, res, callback){
       else {
         // if everything is good, save to request for use in other routes
         req.decoded = decoded;
-        callback(true);
+        res.json({ success: true, message: 'Authentication passed.' }).status(400).end();
+        callback(false);
         return;
       }
     });

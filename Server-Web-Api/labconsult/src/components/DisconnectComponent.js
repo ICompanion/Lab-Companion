@@ -27,6 +27,16 @@ const styles = theme => ({
 	});
 
 class DisconnectComponent extends React.Component {
+
+    disconnect = async (answer) => {
+        if(answer == 'yes') {
+            fetch('/authenticate/disconnect',{
+                method: 'GET',
+                credentials: 'include'
+            });
+		}
+        window.location.reload();
+    };
 	
 	render() {
 		const { classes } = this.props;
@@ -35,8 +45,8 @@ class DisconnectComponent extends React.Component {
 			<div>
 				<WarningIcon color="error"/><Typography variant="display1" noWrap>{'Are you sure?'}</Typography>
 				<br/><br/><br/>
-				<Button variant="raised" color="secondary" type="submit" className={classes.button}>Yes</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<Button variant="raised" color="primary" type="submit" className={classes.button}>No</Button>
+				<Button variant="raised" color="secondary" type="submit" className={classes.button} onClick={this.disconnect.bind(this, 'yes')}>Yes</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<Button variant="raised" color="primary" type="submit" className={classes.button} onClick={this.disconnect.bind(this, 'no')}>No</Button>
 			</div>
 		)
 	}

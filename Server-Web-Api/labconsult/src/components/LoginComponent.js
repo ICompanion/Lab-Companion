@@ -44,20 +44,23 @@ import { withCookies, Cookies } from 'react-cookie';
   	  super(props);
   	  this.state = {
 				login: '',
-				pwd: ''
+				pwd: '',
       };
   	}
 
 		handleSubmit = async () => {
 				let url = '/authenticate/'+this.state.login+'/'+this.state.pwd+'';
-				const response = await fetch(url);
+				const response = await fetch(url,{
+					method: 'GET',
+					credentials: 'include'
+				});
 				const result = await response.json();
 
 				if (response.status === '(pending)') {
 					document.getElementById('serveranswer').innerHTML = "Pending...";
 				} else if (response.status === 200) {
 					if (result.success == true) {
-						//window.location.replace("http://localhost:3000/home");
+						window.location.reload();
 					} else {
 						document.getElementById('serveranswer').innerHTML = "<NopeIcon/><p class='errormsg'>"+result.message+"</p> ";
 					}
