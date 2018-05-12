@@ -5,11 +5,18 @@ const config = require('./config');
 const CookieParser = require('cookie-parser');
 const controllers = require('./controllers');
 const anthenticateController = controllers.authenticate;
+const cors = require('cors');
+
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials:  true
+}
 
 const app = express();
 app.use(CookieParser());
 app.use(morgan('dev'));
 app.set('secret', config.secret);
+app.use(cors(corsOptions));
 
 app.get('/', function(req, res) {
   anthenticateController.check(function(data){
