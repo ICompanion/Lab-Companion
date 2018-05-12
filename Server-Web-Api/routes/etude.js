@@ -28,6 +28,17 @@ etudeRouter.get('/:code', function(req, res){
     });
 });
 
+etudeRouter.get('/:code/questions', function(req, res){
+    etudeController.getQuestions(req.params.code, function(data){
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 etudeRouter.get('/:code/reponses', function(req, res){
     etudeController.getAnswers(req.params.code, function(data){
         data = JSON.parse(data);
@@ -39,8 +50,7 @@ etudeRouter.get('/:code/reponses', function(req, res){
     });
 });
 
-etudeRouter.get('/paul', function(req, res){
-    console.log("okok");
+etudeRouter.get('/reponses', function(req, res){
     etudeController.getAllAnswers(function(data){
 
         data = JSON.parse(data);

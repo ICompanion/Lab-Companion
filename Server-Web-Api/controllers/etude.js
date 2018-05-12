@@ -4,7 +4,7 @@ const etudeController = function(){};
 
 etudeController.getAll = function(callback) {
     bddController.start();
-    bddController.executeQuery('select * from etude', '', function(data){
+    bddController.executeQuery('select distinct code_etude, nom_etude, date, description_etude from etudes_reponses', '', function(data){
         bddController.stop();
         callback(data);
     });
@@ -12,7 +12,7 @@ etudeController.getAll = function(callback) {
 
 etudeController.getByCode = function(code, callback) {
     bddController.start();
-    bddController.executeQuery('select * from etude where code_etude = $1', [code], function(data){
+    bddController.executeQuery('select distinct code_etude, nom_etude, date, description_etude from etudes_reponses where code_etude = $1', [code], function(data){
         bddController.stop();
         callback(data);
     });
@@ -20,7 +20,14 @@ etudeController.getByCode = function(code, callback) {
 
 etudeController.getAnswers = function(code, callback) {
     bddController.start();
-    bddController.executeQuery('select * from etudes_reponses where code_etude = $1', [code], function(data){
+    bddController.executeQuery('select code_etude, question, reponse, nbr_reponses from etudes_reponses where code_etude = $1', [code], function(data){
+        bddController.stop();
+        callback(data);
+    });
+};
+etudeController.getQuestions = function(code, callback) {
+    bddController.start();
+    bddController.executeQuery('select distinct question, code_etude from etudes_reponses where code_etude = $1', [code], function(data){
         bddController.stop();
         callback(data);
     });
@@ -28,7 +35,7 @@ etudeController.getAnswers = function(code, callback) {
 
 etudeController.getAllAnswers = function(callback) {
     bddController.start();
-    bddController.executeQuery('select * from etudes_reponses;', '', function(data){
+    bddController.executeQuery('select code_etude, question, reponse, nbr_reponses from etudes_reponses', '', function(data){
         bddController.stop();
         console.log(data);
         callback(data);

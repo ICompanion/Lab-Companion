@@ -8,12 +8,13 @@ authenticateController.signIn = function(values, callback){
   bddController.start();
   bddController.executeQuery('select nom,identifiant from employe where employe.identifiant = $1 and employe.password = $2 union select nom,identifiant from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
     bddController.stop();
+    var name = "none";
+    var id = "none";
     data = JSON.parse(data);
+
     if(data.length === 0)
     {
       state = false;
-      name = "none";
-      id = "none";
     } else {
       name = data[0].nom;
       id = data[0].identifiant;
@@ -33,10 +34,11 @@ authenticateController.connect = function(req, res, result, name, id){
     const payload = {
     admin: result
     };
-    var token = jwt.sign(payload, req.app.get('secret'), {
-    expiresIn: 60 // expires in 60 min
-    });
-    res.cookie('x-access-token', token)
+    var token = jwt.sign(payload, req.app.get('secret'));
+    res.cookie('x-access-token', token,{
+        expire: new Date() + 3600000, // expires in 60 min
+        httpOnly: true
+    })
     .json({
       success: true,
       message: 'Enjoy your token!',
@@ -49,9 +51,6 @@ authenticateController.connect = function(req, res, result, name, id){
 
 authenticateController.check = function(req, res, callback){
   var token = req.cookies['x-access-token'];
-  console.log(req.app.get('secret'));
-
-  console.log(token);
   // decode token
   if (token) {
     // verifies secret and checks exp
