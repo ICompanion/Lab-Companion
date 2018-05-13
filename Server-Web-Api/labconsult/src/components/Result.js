@@ -45,11 +45,7 @@ function displayResults(props) {
     if (props.type == 'résultats') {
 
         data = [
-            createData('Résultat n°LY587', '12/04/2018', 6.0, 24, 4.0),
-            createData('Résultat n°MZ286', '08/04/2018', 9.0, 37, 4.3),
-            createData('Résultat n°NA239', '08/04/2018', 16.0, 24, 6.0),
-            createData('Résultat n°MJ405', '07/04/2018', 3.7, 67, 4.3),
-            createData('Résultat n°ZA211', '02/04/2018', 16.0, 49, 3.9),
+            createData('Test n°LY587', '12/04/2018', 6.0, 24, 4.0),
         ];
 
     } else if (props.type == 'études') {
@@ -60,7 +56,7 @@ function displayResults(props) {
     }
 }
 
-class ResultsList extends React.Component {
+class Result extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -72,8 +68,8 @@ class ResultsList extends React.Component {
 
         return (
             <div>
-                <Typography variant="title" noWrap>{'Bienvenue Mr. VILALARD,'}</Typography>
-                <Typography variant="subheading" noWrap>{'Liste de vos '}{this.props.type}{' :'}</Typography>
+                <Typography variant="title" noWrap>{'Analyse: '}{this.props.analyseID}</Typography>
+                <Button>Retour</Button>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                         <TableHead>
@@ -99,9 +95,9 @@ class ResultsList extends React.Component {
     }
 }
 
-ResultsList.propTypes = {
+Result.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-ResultsList = withStyles(styles)(ResultsList);
-export {ResultsList};
+Result = withStyles(styles)(Result);
+export {Result};
