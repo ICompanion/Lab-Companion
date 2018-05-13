@@ -39,6 +39,8 @@ authenticateController.connect = function(req, res, result, name, id){
         expire: new Date() + 3600000, // expires in 60 min
         httpOnly: false
     })
+    res.cookie('name', name)
+    res.cookie('id', id)
     .json({
       success: true,
       message: 'Enjoy your token!',
@@ -85,5 +87,13 @@ authenticateController.check = function(req, res, callback){
     return;
   }
 };
+
+authenticateController.getInfos = function(req, res, callback){
+    var name = req.cookies['name'];
+    var id = req.cookies['id'];
+    res.json({ name: name, id: id }).status(400).end();
+    callback(false)
+    return;
+}
 
 module.exports = authenticateController;

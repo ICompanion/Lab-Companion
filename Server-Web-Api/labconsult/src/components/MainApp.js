@@ -91,11 +91,22 @@ const styles = theme => ({
 });
 
 class MainApp extends React.Component {
-  state = {
-    open: false,
-	render: '',
-  };
-  
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            render: '',
+            name: ''
+        };
+
+        this.getName = this.getName.bind(this);
+        this.getName()
+            .then(res => this.setState({ name: res }))
+            .catch(err => console.log(err));
+    }
+
+
   renderingSwitch(compName, e) {
 	this.setState({render:compName});
   }
@@ -106,8 +117,18 @@ class MainApp extends React.Component {
 		case 'studies': return <ResultsList type='études'/>
 		case 'options': return <OptionComponent/>
 		case 'disconnect': return <DisconnectComponent/>
-		case '': return <Typography variant="display2" noWrap>{'Welcome'}</Typography>
+		case '': return <Typography variant="display2" noWrap>{'Welcome M. '+this.state.name}</Typography>
 	}
+  }
+
+  getName = async () => {
+      const response = await fetch('/authenticate/infos',{
+          method: 'GET',
+          credentials: 'include'
+      });
+      const infos = await response.json();
+      console.log(infos);
+      return infos.name;
   }
   
   // Drawer (don't touch)
@@ -122,7 +143,6 @@ class MainApp extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-
     return (
       <div className={classes.root}>
         <AppBar

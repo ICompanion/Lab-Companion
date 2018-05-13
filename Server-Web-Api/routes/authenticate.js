@@ -17,6 +17,14 @@ authenticate.get('/check', function(req, res) {
   });
 });
 
+authenticate.get('/infos', function(req, res) {
+    anthenticateController.getInfos(req, res, function(state){
+        if(state === true){
+            res.json(state).status(200);
+        }
+    });
+});
+
 authenticate.get('/disconnect', function(req, res){
   res.clearCookie('x-access-token').json("disconnected").status(200).end();
 });

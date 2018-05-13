@@ -63,7 +63,26 @@ function displayResults(props) {
 class ResultsList extends React.Component {
   constructor(props) {
       super(props);
+      this.state = {
+          name: ''
+      }
+      this.getName = this.getName.bind(this);
+      this.getName()
+          .then(res => this.setState({ name: res }))
+          .catch(err => console.log(err));
+
   }
+
+    getName = async () => {
+        const response = await fetch('/authenticate/infos',{
+            method: 'GET',
+            credentials: 'include'
+        });
+        const infos = await response.json();
+        console.log(infos);
+        return infos.name;
+    }
+
   
   render() {
 	  
@@ -72,7 +91,7 @@ class ResultsList extends React.Component {
 	  
 	  return (
 		<div>
-			<Typography variant="title" noWrap>{'Bienvenue Mr. VILALARD,'}</Typography>
+			<Typography variant="title" noWrap>{'Bienvenue M. '+this.state.name}</Typography>
 			<Typography variant="subheading" noWrap>{'Liste de vos '}{this.props.type}{' :'}</Typography>
 			<Paper className={classes.root}>
 			  <Table className={classes.table}>

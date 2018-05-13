@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
-import { withCookies, Cookies } from 'react-cookie';
 
 
 	const styles = theme => ({
@@ -41,12 +40,12 @@ import { withCookies, Cookies } from 'react-cookie';
 	class LoginComponent extends React.Component {
 
 		constructor(props) {
-  	  super(props);
-  	  this.state = {
-				login: '',
-				pwd: '',
-      };
-  	}
+          super(props);
+          this.state = {
+                login: '',
+                pwd: '',
+          };
+  	    }
 
 		handleSubmit = async () => {
 				let url = '/authenticate/'+this.state.login+'/'+this.state.pwd+'';

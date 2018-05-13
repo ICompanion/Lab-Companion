@@ -29,21 +29,15 @@ analyseRouter.get('/:code', function(req, res){
 });
 
 analyseRouter.get('/patient/:id', function(req, res){
-  if(Number.parseInt(req.params.id))
-  {
-    analyseController.getPatientAnalyses(req.params.id, function(data){
-      data = JSON.parse(data);
-      if(data.length !== 0){
-        res.json(data).status(200);
-        return;
-      }
-      res.status(404).end();
+  analyseController.getPatientAnalyses(req.params.id, function(data){
+    data = JSON.parse(data);
+    if(data.length !== 0){
+      res.json(data).status(200);
       return;
-    });
-  }
-  else{
-      res.json("parameter is not an integer").status(500).end();
-  }
+    }
+    res.status(404).end();
+    return;
+  });
 });
 
 analyseRouter.post('/new', function(req, res){
