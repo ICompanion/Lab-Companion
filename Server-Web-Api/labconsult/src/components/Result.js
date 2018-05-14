@@ -69,7 +69,7 @@ class Result extends React.Component {
         return (
             <div>
                 <Typography variant="title" noWrap>{'Analyse: '}{this.props.analyseID}</Typography>
-                <Button>Retour</Button>
+                <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                         <TableHead>

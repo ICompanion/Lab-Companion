@@ -29,6 +29,15 @@ analyseController.getPatientAnalyses = function(patient_id, callback) {
   });
 };
 
+analyseController.getPatientAnalysesList = function(patient_id, callback) {
+    bddController.start();
+    bddController.executeQuery('select code_analyse, date_analyse from public.analyse where patient_id = $1', [patient_id], function(data){
+        bddController.stop();
+        console.log(data);
+        callback(data);
+    });
+};
+
 analyseController.new = function(values, callback) {
   bddController.start();
   bddController.executeQuery('insert into public.analyse(code_analyse, description, employe_id, patient_id, date_analyse) values($1, $2, $3, $4, $5)',

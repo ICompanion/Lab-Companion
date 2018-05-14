@@ -34,71 +34,69 @@ const styles = theme => ({
 });
 
 let id = 0;
-function createData(name, calories, fat, carbs, protein) {
+function createData(analysisid, date) {
   id += 1;
-  return { id, name, calories, fat, carbs, protein };
+  return { id, analysisid, date};
 }
 
 let data = []
 let display = "";
-function displayResults(props) {
-	data = [];
-	if (props.type == 'résultats') {
-	
-		data = [
-		  createData('SG-MO-1245', '12/04/2018', 6.0, 24, 4.0),
-		  createData('SG-MO-1784', '08/04/2018', 9.0, 37, 4.3),
-		  createData('SG-MO-2145', '08/04/2018', 16.0, 24, 6.0),
-		  createData('SG-MO-0345', '07/04/2018', 3.7, 67, 4.3),
-		  createData('SG-MO-9843', '02/04/2018', 16.0, 49, 3.9),
-		];
-
-	} else if (props.type == 'études') {
-		display = "display:none";
-		data = [
-		  createData('', 'Pas d\'études pour le moment :(', 6.0, 24, 4.0),
-		];
-	}
-}
 
 class ResultsList extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-          name: '',
-          display: 'list'
+          display: 'list',
       }
-      this.getName = this.getName.bind(this);
       this.handleDisplay = this.handleDisplay.bind(this);
-      this.getName()
-          .then(res => this.setState({ name: res }))
-          .catch(err => console.log(err));
+      this.displayResults = this.displayResults.bind(this);
 
   }
 
-    getName = async () => {
-        const response = await fetch('/authenticate/infos',{
+    handleDisplay = (id) => {
+      this.setState({display: id})
+        console.log("id changed to"+id)
+    }
+
+    displayResults = async (props) => {
+        data = [];
+        const url = '/analyse/patient/liste/'+props.id
+        const response = await fetch(url,{
             method: 'GET',
             credentials: 'include'
         });
-        const infos = await response.json();
-        console.log(infos);
-        return infos.name;
-    }
+        const datas = await response.json();
+        console.log(datas);
 
-    handleDisplay(id) {
-      this.setState({display: id})
+        if (props.type == 'résultats') {
+
+            data = [
+                createData('SG-MO-1245', '12/04/2018'),
+                createData('SG-MO-1784', '08/04/2018'),
+                createData('SG-MO-2145', '08/04/2018'),
+                createData('SG-MO-0345', '07/04/2018'),
+                createData('SG-MO-9843', '02/04/2018')
+            ];
+
+        } else if (props.type == 'études') {
+            display = "display:none";
+            data = [
+                createData('', 'Pas d\'études pour le moment :(', 6.0, 24, 4.0),
+            ];
+        }
+
+        return data;
     }
 
   
   render() {
 	  
 	  const { classes } = this.props;
-      displayResults(this.props);
 	  if(this.state.display == 'list') {
-          return (
+          this.displayResults(this.props);
+	      return (
               <div>
-                  <Typography variant="title" noWrap>{'Bienvenue M. '+this.state.name}</Typography>
+                  <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('+this.props.id+')'}</Typography>
                   <Typography variant="subheading" noWrap>{'Liste de vos '}{this.props.type}{' :'}</Typography>
                   <Paper className={classes.root}>
                       <Table className={classes.table}>
@@ -112,7 +110,7 @@ class ResultsList extends React.Component {
                               {data.map(n => {
                                   return (
                                       <TableRow className={classes.row} key={n.id}>
-                                          <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.setState({display: n.name})}>{'Résultat n° '}{n.name}</Button></CustomTableCell>
+                                          <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.name)}>{'Résultat n° '}{n.name}</Button></CustomTableCell>
                                           <CustomTableCell numeric><i>{n.calories}</i></CustomTableCell>
                                       </TableRow>
                                   );

@@ -97,12 +97,13 @@ class MainApp extends React.Component {
         this.state = {
             open: false,
             render: '',
-            name: ''
+            name: '',
+            id: ''
         };
 
         this.getName = this.getName.bind(this);
         this.getName()
-            .then(res => this.setState({ name: res }))
+            .then(res => this.setState({ name: res.name, id: res.id }))
             .catch(err => console.log(err));
     }
 
@@ -113,8 +114,8 @@ class MainApp extends React.Component {
   
   _renderSubComp(){
 	switch(this.state.render) {
-		case 'results': return <ResultsList type='résultats'/>
-		case 'studies': return <ResultsList type='études'/>
+		case 'results': return <ResultsList type='résultats' name={this.state.name} id={this.state.id}/>
+		case 'studies': return <ResultsList type='études' name={this.state.name} id={this.state.id}/>
 		case 'options': return <OptionComponent/>
 		case 'disconnect': return <DisconnectComponent/>
 		case '': return <Typography variant="display2" noWrap>{'Welcome M. '+this.state.name}</Typography>
@@ -127,8 +128,7 @@ class MainApp extends React.Component {
           credentials: 'include'
       });
       const infos = await response.json();
-      console.log(infos);
-      return infos.name;
+      return infos;
   }
   
   // Drawer (don't touch)

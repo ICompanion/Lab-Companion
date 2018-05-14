@@ -40,6 +40,18 @@ analyseRouter.get('/patient/:id', function(req, res){
   });
 });
 
+analyseRouter.get('/patient/liste/:id', function(req, res){
+    analyseController.getPatientAnalysesList(req.params.id, function(data){
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+        return;
+    });
+});
+
 analyseRouter.post('/new', function(req, res){
   var values = [req.body.code_analyse, req.body.description,
                 req.body.employe_id, req.body.patient_id, req.body.date_analyse];

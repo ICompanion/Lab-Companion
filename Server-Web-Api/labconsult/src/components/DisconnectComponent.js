@@ -28,7 +28,7 @@ const styles = theme => ({
 
 class DisconnectComponent extends React.Component {
 
-    disconnect = async (answer) => {
+    disconnect = (answer) => {
         if(answer == 'yes') {
             fetch('/authenticate/disconnect',{
                 method: 'GET',
