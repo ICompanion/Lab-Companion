@@ -18,3 +18,6 @@ après ça vous devrez lancer la commande:
 create-react-app labconsult en étant à la racine du projet node.js.
 
 A partir de la, vous pourrer mettre à jour depuis git.
+
+#Library à ajouter au Classpath
+lib/tools.jar

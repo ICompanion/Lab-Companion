@@ -22,3 +22,8 @@ Server-Web-Api/package-lock.json
 Server-Web-Api/labconsult/package-lock.json
 Server-Web-Api/labconsult/yarn-error.log
 Server-Web-Api/labconsult/node_modules/
+
+# LabCompanion useless files
+LabCompanion/.idea/
+LabCompanion/*.iml
+LabCompanion/.iws
