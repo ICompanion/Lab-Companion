@@ -20,9 +20,9 @@ analyseController.getByCode = function(code, callback) {
   });
 };
 
-analyseController.getPatientAnalyses = function(patient_id, callback) {
+analyseController.getAnalyse = function(code_analyse, callback) {
   bddController.start();
-  bddController.executeQuery('select * from analyses where identifiant = $1', [patient_id], function(data){
+  bddController.executeQuery('select * from analyses where code_analyse = $1', [code_analyse], function(data){
     bddController.stop();
     console.log(data);
 	   callback(data);

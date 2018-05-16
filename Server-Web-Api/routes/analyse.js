@@ -28,8 +28,8 @@ analyseRouter.get('/:code', function(req, res){
   });
 });
 
-analyseRouter.get('/patient/:id', function(req, res){
-  analyseController.getPatientAnalyses(req.params.id, function(data){
+analyseRouter.get('/display/:id', function(req, res){
+  analyseController.getAnalyse(req.params.id, function(data){
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);

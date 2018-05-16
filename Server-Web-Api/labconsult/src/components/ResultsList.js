@@ -47,10 +47,16 @@ class ResultsList extends React.Component {
       super(props);
       this.state = {
           display: 'list',
+          datas: []
       }
       this.handleDisplay = this.handleDisplay.bind(this);
       this.displayResults = this.displayResults.bind(this);
 
+      if (this.state.display == 'list') {
+          this.displayResults(props)
+              .then(res => this.setState({datas: res}))
+              .catch(err => console.log(err))
+      }
   }
 
     handleDisplay = (id) => {
@@ -85,7 +91,7 @@ class ResultsList extends React.Component {
             ];
         }
 
-        return data;
+        return datas;
     }
 
   
@@ -93,7 +99,8 @@ class ResultsList extends React.Component {
 	  
 	  const { classes } = this.props;
 	  if(this.state.display == 'list') {
-          this.displayResults(this.props);
+          var promise = this.displayResults(this.props);
+          promise.then(result => {data = result});
 	      return (
               <div>
                   <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('+this.props.id+')'}</Typography>
@@ -107,11 +114,12 @@ class ResultsList extends React.Component {
                               </TableRow>
                           </TableHead>
                           <TableBody>
-                              {data.map(n => {
+                              <Typography>{data.toString()}</Typography>
+                              {this.state.datas.map(n => {
                                   return (
                                       <TableRow className={classes.row} key={n.id}>
-                                          <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.name)}>{'Résultat n° '}{n.name}</Button></CustomTableCell>
-                                          <CustomTableCell numeric><i>{n.calories}</i></CustomTableCell>
+                                          <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_analyse)}>{'Résultat n° '}<i>{n.code_analyse}</i></Button></CustomTableCell>
+                                          <CustomTableCell numeric><i>{n.date_analyse.substring(0,10)}</i></CustomTableCell>
                                       </TableRow>
                                   );
                               })}

@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { green } from 'material-ui/colors';
 import { yellow } from 'material-ui/colors';
+import { red } from 'material-ui/colors';
 import ReactRouter from 'react-router';
 import {LoginComponent} from './components/LoginComponent.js';
 import {MainApp} from './components/MainApp.js';

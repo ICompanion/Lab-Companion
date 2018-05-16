@@ -5,6 +5,8 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import PositiveIcon from 'material-ui-icons/Done';
+import NegativeIcon from 'material-ui-icons/Clear';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -32,39 +34,45 @@ const styles = theme => ({
     },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-    id += 1;
-    return { id, name, calories, fat, carbs, protein };
-}
-
-let data = []
-let display = "";
-function displayResults(props) {
-    data = [];
-    if (props.type == 'résultats') {
-
-        data = [
-            createData('Test n°LY587', '12/04/2018', 6.0, 24, 4.0),
-        ];
-
-    } else if (props.type == 'études') {
-        display = "display:none";
-        data = [
-            createData('', 'Pas d\'études pour le moment :(', 6.0, 24, 4.0),
-        ];
-    }
-}
-
 class Result extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            results: []
+        }
+
+        this.displayResult = this.displayResult.bind(this);
+        this.evaluate = this.evaluate.bind(this);
+
+        this.displayResult(props)
+            .then(res => this.setState({results: res}))
+            .catch(err => console.log(err))
+    }
+
+    displayResult = async (props) => {
+        var data = []
+        const url = '/analyse/display/'+props.analyseID
+        const response = await fetch(url,{
+            method: 'GET',
+            credentials: 'include'
+        });
+        const datas = await response.json();
+        console.log(datas);
+
+        return datas;
+    }
+
+    evaluate = (value, valuemin, valuemax) => {
+        if (value > valuemin && value < valuemax) {
+            return <PositiveIcon color="primary"/>
+        } else {
+            return <NegativeIcon color="error"/>
+        }
     }
 
     render() {
 
         const { classes } = this.props;
-        displayResults(this.props);
 
         return (
             <div>
@@ -74,16 +82,24 @@ class Result extends React.Component {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <CustomTableCell>Numéro</CustomTableCell>
-                                <CustomTableCell numeric>Date</CustomTableCell>
+                                <CustomTableCell>Name</CustomTableCell>
+                                <CustomTableCell numeric>Min Value</CustomTableCell>
+                                <CustomTableCell numeric>Max Value</CustomTableCell>
+                                <CustomTableCell numeric>Your Value</CustomTableCell>
+                                <CustomTableCell>Unit</CustomTableCell>
+                                <CustomTableCell></CustomTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {data.map(n => {
+                            {this.state.results.map(n => {
                                 return (
                                     <TableRow className={classes.row} key={n.id}>
-                                        <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button}>{n.name}</Button></CustomTableCell>
-                                        <CustomTableCell numeric><i>{n.calories}</i></CustomTableCell>
+                                        <CustomTableCell>{n.resultat_nom}</CustomTableCell>
+                                        <CustomTableCell numeric><i>{n.valeur_min}</i></CustomTableCell>
+                                        <CustomTableCell numeric><i>{n.valeur_max}</i></CustomTableCell>
+                                        <CustomTableCell numeric><i>{n.valeur}</i></CustomTableCell>
+                                        <CustomTableCell><b>{n.unit}</b></CustomTableCell>
+                                        <CustomTableCell>{this.evaluate(n.valeur, n.valeur_min, n.valeur_max)}</CustomTableCell>
                                     </TableRow>
                                 );
                             })}
