@@ -17,6 +17,17 @@ etudeRouter.get('/all', function(req, res){
     });
 });
 
+etudeRouter.get('/patient/liste/:id', function(req, res){
+    etudeController.getByPatientId(req.params.id, function(data){
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 etudeRouter.get('/:code', function(req, res){
     etudeController.getByCode(req.params.code, function(data){
         data = JSON.parse(data);

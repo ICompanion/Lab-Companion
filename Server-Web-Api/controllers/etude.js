@@ -18,16 +18,24 @@ etudeController.getByCode = function(code, callback) {
     });
 };
 
+etudeController.getByPatientId = function(code, callback) {
+    bddController.start();
+    bddController.executeQuery('select * from participations where identifiant = $1', [code], function(data){
+        bddController.stop();
+        callback(data);
+    });
+};
+
 etudeController.getAnswers = function(code, callback) {
     bddController.start();
-    bddController.executeQuery('select code_etude, question, reponse, nbr_reponses from etudes_reponses where code_etude = $1', [code], function(data){
+    bddController.executeQuery('select * from propositions where id_question = $1', [code], function(data){
         bddController.stop();
         callback(data);
     });
 };
 etudeController.getQuestions = function(code, callback) {
     bddController.start();
-    bddController.executeQuery('select distinct question, code_etude from etudes_reponses where code_etude = $1', [code], function(data){
+    bddController.executeQuery('select * from questions where code_etude = $1', [code], function(data){
         bddController.stop();
         callback(data);
     });

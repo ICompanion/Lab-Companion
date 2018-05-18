@@ -6,7 +6,8 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import PositiveIcon from 'material-ui-icons/Done';
-import NegativeIcon from 'material-ui-icons/Clear';
+import DownIcon from 'material-ui-icons/ArrowDropDown';
+import UpIcon from 'material-ui-icons/ArrowDropUp';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -63,10 +64,12 @@ class Result extends React.Component {
     }
 
     evaluate = (value, valuemin, valuemax) => {
-        if (value > valuemin && value < valuemax) {
+        if (value >= valuemin && value <= valuemax) {
             return <PositiveIcon color="primary"/>
-        } else {
-            return <NegativeIcon color="error"/>
+        } else if (value < valuemin) {
+            return <DownIcon color="error"/>
+        } else if (value > valuemax) {
+            return <UpIcon color="error"/>
         }
     }
 

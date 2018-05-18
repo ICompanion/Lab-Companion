@@ -6,6 +6,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import {Result} from './Result.js';
+import {Study} from './Study.js';
 
 const CustomTableCell = withStyles(theme => ({
   head: {
@@ -51,6 +52,7 @@ class ResultsList extends React.Component {
       }
       this.handleDisplay = this.handleDisplay.bind(this);
       this.displayResults = this.displayResults.bind(this);
+      this.evaluateStudy = this.evaluateStudy.bind(this);
 
       if (this.state.display == 'list') {
           this.displayResults(props)
@@ -61,12 +63,24 @@ class ResultsList extends React.Component {
 
     handleDisplay = (id) => {
       this.setState({display: id})
-        console.log("id changed to"+id)
+    }
+
+    evaluateStudy = (status) => {
+        if (status == true) {
+            return <Typography color="primary" variant="body2">Completed</Typography>
+        } else {
+            return <Typography color="error" variant="body2">Not Completed</Typography>
+        }
     }
 
     displayResults = async (props) => {
         data = [];
-        const url = '/analyse/patient/liste/'+props.id
+        var url = '';
+        if (this.props.type == 'résultats') {
+            url = '/analyse/patient/liste/'+props.id
+        } else if (this.props.type == 'études') {
+            url = '/etude/patient/liste/'+props.id
+        }
         const response = await fetch(url,{
             method: 'GET',
             credentials: 'include'
@@ -98,7 +112,7 @@ class ResultsList extends React.Component {
   render() {
 	  
 	  const { classes } = this.props;
-	  if(this.state.display == 'list') {
+	  if(this.state.display == 'list' && this.props.type == 'résultats') {
           var promise = this.displayResults(this.props);
           promise.then(result => {data = result});
 	      return (
@@ -109,7 +123,7 @@ class ResultsList extends React.Component {
                       <Table className={classes.table}>
                           <TableHead>
                               <TableRow>
-                                  <CustomTableCell>Numéro</CustomTableCell>
+                                  <CustomTableCell>Référence</CustomTableCell>
                                   <CustomTableCell numeric>Date</CustomTableCell>
                               </TableRow>
                           </TableHead>
@@ -128,10 +142,46 @@ class ResultsList extends React.Component {
                   </Paper>
               </div>
           );
-      } else {
-	      return (
-              <Result analyseID={this.state.display} backHandler={this.handleDisplay}/>
+      }  else if (this.state.display == 'list' && this.props.type == 'études') {
+          var promise = this.displayResults(this.props);
+          promise.then(result => {data = result});
+          return (
+              <div>
+                  <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('+this.props.id+')'}</Typography>
+                  <Typography variant="subheading" noWrap>{'Liste de vos '}{this.props.type}{' :'}</Typography>
+                  <Paper className={classes.root}>
+                      <Table className={classes.table}>
+                          <TableHead>
+                              <TableRow>
+                                  <CustomTableCell>Référence</CustomTableCell>
+                                  <CustomTableCell>Participation</CustomTableCell>
+                              </TableRow>
+                          </TableHead>
+                          <TableBody>
+                              <Typography>{data.toString()}</Typography>
+                              {this.state.datas.map(n => {
+                                  return (
+                                      <TableRow className={classes.row} key={n.id}>
+                                          <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_etude)}>{'Etude n° '}<i>{n.code_etude}</i></Button></CustomTableCell>
+                                          <CustomTableCell><i>{this.evaluateStudy(n.statut)}</i></CustomTableCell>
+                                      </TableRow>
+                                  );
+                              })}
+                          </TableBody>
+                      </Table>
+                  </Paper>
+              </div>
           );
+      } else {
+	      if (this.props.type == 'résultats') {
+              return (
+                  <Result analyseID={this.state.display} backHandler={this.handleDisplay}/>
+              );
+          } else if (this.props.type == 'études') {
+              return (
+                  <Study etudeID={this.state.display} backHandler={this.handleDisplay}/>
+              );
+          }
       }
 
   }
