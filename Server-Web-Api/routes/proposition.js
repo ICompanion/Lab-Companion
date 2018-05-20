@@ -7,7 +7,8 @@ const propositionRouter = express.Router();
 propositionRouter.use(bodyParser.json());
 
 propositionRouter.get('/all', function(req, res){
-    propositionController.getAll(function(data){
+    propositionController.getAll(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -20,7 +21,8 @@ propositionRouter.get('/all', function(req, res){
 propositionRouter.get('/:id', function(req, res){
     if(Number.parseInt(req.params.id))
     {
-        propositionController.getById(req.params.id,function(data){
+        propositionController.getById(req.params.id,function(data, state){
+            if(state === false) {res.status(500).end(); return;}
             data = JSON.parse(data);
             if(data.length !== 0){
                 res.json(data).status(200);

@@ -7,7 +7,8 @@ const etudeRouter = express.Router();
 etudeRouter.use(bodyParser.json());
 
 etudeRouter.get('/all', function(req, res){
-    etudeController.getAll(function(data){
+    etudeController.getAll(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -18,7 +19,8 @@ etudeRouter.get('/all', function(req, res){
 });
 
 etudeRouter.get('/patient/liste/:id', function(req, res){
-    etudeController.getByPatientId(req.params.id, function(data){
+    etudeController.getByPatientId(req.params.id, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -29,7 +31,8 @@ etudeRouter.get('/patient/liste/:id', function(req, res){
 });
 
 etudeRouter.get('/:code', function(req, res){
-    etudeController.getByCode(req.params.code, function(data){
+    etudeController.getByCode(req.params.code, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -40,7 +43,8 @@ etudeRouter.get('/:code', function(req, res){
 });
 
 etudeRouter.get('/:code/questions', function(req, res){
-    etudeController.getQuestions(req.params.code, function(data){
+    etudeController.getQuestions(req.params.code, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -51,7 +55,8 @@ etudeRouter.get('/:code/questions', function(req, res){
 });
 
 etudeRouter.get('/:code/reponses', function(req, res){
-    etudeController.getAnswers(req.params.code, function(data){
+    etudeController.getAnswers(req.params.code, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -62,8 +67,8 @@ etudeRouter.get('/:code/reponses', function(req, res){
 });
 
 etudeRouter.get('/reponses', function(req, res){
-    etudeController.getAllAnswers(function(data){
-
+    etudeController.getAllAnswers(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);

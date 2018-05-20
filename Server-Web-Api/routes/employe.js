@@ -7,7 +7,8 @@ const employeRouter = express.Router();
 employeRouter.use(bodyParser.json());
 
 employeRouter.get('/all', function(req, res){
-  employeController.getAll(function(data){
+  employeController.getAll(function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -18,7 +19,8 @@ employeRouter.get('/all', function(req, res){
 });
 
 employeRouter.get('/:identifiant', function(req, res){
-  employeController.getByIdentifiant(req.params.identifiant,function(data){
+  employeController.getByIdentifiant(req.params.identifiant,function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -29,7 +31,8 @@ employeRouter.get('/:identifiant', function(req, res){
 });
 
 employeRouter.get('/name/:nom', function(req, res){
-  employeController.getByName(req.params.nom,function(data){
+  employeController.getByName(req.params.nom,function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -42,7 +45,8 @@ employeRouter.get('/name/:nom', function(req, res){
 employeRouter.get('/id/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    employeController.getById(req.params.id,function(data){
+    employeController.getById(req.params.id,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
