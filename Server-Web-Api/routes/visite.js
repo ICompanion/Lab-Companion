@@ -7,7 +7,8 @@ const visiteRouter = express.Router();
 visiteRouter.use(bodyParser.json());
 
 visiteRouter.get('/all', function(req, res){
-  visiteController.getAll(function(data){
+  visiteController.getAll(function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -20,7 +21,8 @@ visiteRouter.get('/all', function(req, res){
 visiteRouter.get('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    visiteController.getById(req.params.id,function(data){
+    visiteController.getById(req.params.id,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -38,7 +40,8 @@ visiteRouter.get('/:id', function(req, res){
 visiteRouter.get('/patient/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    visiteController.getByPatientId(req.params.id,function(data){
+    visiteController.getByPatientId(req.params.id,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -54,7 +57,8 @@ visiteRouter.get('/patient/:id', function(req, res){
 });
 
 visiteRouter.get('/date/:date', function(req, res){
-  visiteController.getByDate(req.params.date,function(data){
+  visiteController.getByDate(req.params.date,function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -64,7 +68,8 @@ visiteRouter.get('/date/:date', function(req, res){
   });
 
   visiteRouter.get('/status/:status', function(req, res){
-    visiteController.getByStatus(req.params.status,function(data){
+    visiteController.getByStatus(req.params.status,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);

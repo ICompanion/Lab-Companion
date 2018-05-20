@@ -7,7 +7,8 @@ const analyseRouter = express.Router();
 analyseRouter.use(bodyParser.json());
 
 analyseRouter.get('/all', function(req, res){
-  analyseController.getAll(function(data){
+  analyseController.getAll(function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -18,7 +19,8 @@ analyseRouter.get('/all', function(req, res){
 });
 
 analyseRouter.get('/:code', function(req, res){
-  analyseController.getByCode(req.params.code, function(data){
+  analyseController.getByCode(req.params.code, function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -28,22 +30,30 @@ analyseRouter.get('/:code', function(req, res){
   });
 });
 
-analyseRouter.get('/patient/:id', function(req, res){
-  if(Number.parseInt(req.params.id))
-  {
-    analyseController.getPatientAnalyses(req.params.id, function(data){
-      data = JSON.parse(data);
-      if(data.length !== 0){
-        res.json(data).status(200);
-        return;
-      }
-      res.status(404).end();
+analyseRouter.get('/display/:id', function(req, res){
+  analyseController.getAnalyse(req.params.id, function(data, state){
+    if(state === false) {res.status(500).end(); return;}
+    data = JSON.parse(data);
+    if(data.length !== 0){
+      res.json(data).status(200);
       return;
+    }
+    res.status(404).end();
+    return;
+  });
+});
+
+analyseRouter.get('/patient/liste/:id', function(req, res){
+    analyseController.getPatientAnalysesList(req.params.id, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+        return;
     });
-  }
-  else{
-      res.json("parameter is not an integer").status(500).end();
-  }
 });
 
 analyseRouter.post('/new', function(req, res){
