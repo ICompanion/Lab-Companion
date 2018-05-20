@@ -7,10 +7,10 @@ import org.json.*;
 
 public class JSONParser{
 
-    private static HashMap<String, Object> parsedResult;
+    private static HashMap<String, Object> parsedResult = new HashMap<String, Object>();
     private static JSONObject jsonResult;
 
-    public static HashMap<String, Object> parseResults(JSONObject object){
+    public static HashMap<String, Object> parseResults(JSONObject object)throws JSONException{
 
         Iterator<String> keysItr = object.keys();
         while(keysItr.hasNext()) {
@@ -26,7 +26,7 @@ public class JSONParser{
         return parsedResult;
     }
 
-    public static JSONObject makeObject(HashMap<String, String> values){
+    public static JSONObject makeObject(HashMap<String, Object> values){
 
         jsonResult = new JSONObject(values);
         return jsonResult;

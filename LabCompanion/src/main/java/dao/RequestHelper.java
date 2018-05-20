@@ -4,10 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import Utils.JSONParser;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,7 +16,7 @@ public class RequestHelper {
     private static HttpURLConnection con;
 
     public static boolean postOrPut(String url,
-                                  HashMap<String, String> parameters,String requestType)throws Exception
+                                  HashMap<String, Object> parameters,String requestType)throws Exception
     {
         JSONObject body = JSONParser.makeObject(parameters);
 
@@ -35,19 +32,19 @@ public class RequestHelper {
         return getRequestState(con.getResponseCode());
     }
 
-    public static JSONObject get(String url)throws Exception
+    public static String get(String url)throws Exception
     {
         connect(url,"GET", null);
         boolean state =  getRequestState(con.getResponseCode());
         if(state){
-            JSONObject data =  getResponse();
+            String data =  getResponse();
             return data;
         }
 
         return null;
     }
 
-    public static void connect(String url, String type, JSONObject body)throws Exception
+    private static void connect(String url, String type, JSONObject body)throws Exception
     {
         try{
             obj = new URL(url);
@@ -91,19 +88,24 @@ public class RequestHelper {
         return state;
     }
 
-    private static JSONObject getResponse() throws IOException, JSONException
+    private static String getResponse() throws IOException, JSONException
     {
-        JSONObject jsonObject;
+        StringBuffer response;
         try{
-            InputStream in = new BufferedInputStream(con.getInputStream());
-            String result = new String (in.toString().getBytes(), "UTF-8");
-            jsonObject = new JSONObject(result);
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+
+            }
+            in.close();
         }
         catch(IOException ex){
             throw new IOException("Error on reading API response");
         }
 
-        return jsonObject;
+        return response.toString();
     }
 }
 

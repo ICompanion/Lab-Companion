@@ -27,3 +27,6 @@ Server-Web-Api/labconsult/node_modules/
 LabCompanion/.idea/
 LabCompanion/*.iml
 LabCompanion/.iws
+LabCompanion/out/
+LabCompanion/target/
+LabCompanion/.vs/
