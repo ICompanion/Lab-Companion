@@ -16,6 +16,8 @@ bin-release/
 
 # Api/web useless files
 Server-Web-Api/node_modules/
+Server-Web-Api/.idea/
+Server-Web-Api/.vs/
 Server-Web-Api/yarn-error.log
 Server-Web-Api/package-lock.json
 
