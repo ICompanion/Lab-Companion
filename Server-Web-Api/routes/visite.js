@@ -18,25 +18,39 @@ visiteRouter.get('/all', function(req, res){
 });
 
 visiteRouter.get('/:id', function(req, res){
-  visiteController.getById(req.params.id,function(data){
-    data = JSON.parse(data);
-    if(data.length !== 0){
-      res.json(data).status(200);
+  if(Number.parseInt(req.params.id))
+  {
+    visiteController.getById(req.params.id,function(data){
+      data = JSON.parse(data);
+      if(data.length !== 0){
+        res.json(data).status(200);
+        return;
+      }
+      res.status(404).end();
       return;
-    }
-    res.status(404).end();
-  });
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 visiteRouter.get('/patient/:id', function(req, res){
-  visiteController.getByPatientId(req.params.id,function(data){
-    data = JSON.parse(data);
-    if(data.length !== 0){
-      res.json(data).status(200);
+  if(Number.parseInt(req.params.id))
+  {
+    visiteController.getByPatientId(req.params.id,function(data){
+      data = JSON.parse(data);
+      if(data.length !== 0){
+        res.json(data).status(200);
+        return;
+      }
+      res.status(404).end();
       return;
-    }
-    res.status(404).end();
-  });
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 visiteRouter.get('/date/:date', function(req, res){
@@ -76,33 +90,47 @@ visiteRouter.post('/new', function(req, res){
 });
 
 visiteRouter.put('/:id', function(req, res){
-  var values = []
-  var columns = []
-
-  for(var key in req.body){
-    values.push(req.body[key]);
-    columns.push(key);
-  }
-  visiteController.update(columns, values, req.params.id, function(state){
-    if(state === true)
+  if(Number.parseInt(req.params.id))
   {
-    res.json(state).status(200).end();
-    return;
-  }
-  res.status(500).end();
-  });
-});
+    var values = []
+    var columns = []
 
-visiteRouter.delete('/:id', function(req, res){
-  visiteController.deleteById(req.params.id, function(state){
-    if(state === true)
+    for(var key in req.body){
+      values.push(req.body[key]);
+      columns.push(key);
+    }
+    visiteController.update(columns, values, req.params.id, function(state){
+      if(state === true)
     {
       res.json(state).status(200).end();
       return;
     }
-
     res.status(500).end();
-  });
+    return;
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
+});
+
+visiteRouter.delete('/:id', function(req, res){
+  if(Number.parseInt(req.params.id))
+  {
+    visiteController.deleteById(req.params.id, function(state){
+      if(state === true)
+      {
+        res.json(state).status(200).end();
+        return;
+      }
+
+      res.status(500).end();
+      return;
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 

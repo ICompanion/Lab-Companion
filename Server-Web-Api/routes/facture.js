@@ -18,26 +18,38 @@ factureRouter.get('/all', function(req, res){
 });
 
 factureRouter.get('/:id', function(req, res){
-  factureController.getById(req.params.id,function(data){
-    data = JSON.parse(data);
-    if(data.length !== 0){
-      res.json(data).status(200);
+  if(Number.parseInt(req.params.id))
+  {
+    factureController.getById(req.params.id,function(data){
+      data = JSON.parse(data);
+      if(data.length !== 0){
+        res.json(data).status(200);
+        return;
+      }
+      res.status(404).end();
       return;
-    }
-    res.status(404).end();
-  });
-});
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }});
 
 factureRouter.get('/patient/:id', function(req, res){
-  factureController.getByPatientId(req.params.id,function(data){
-    data = JSON.parse(data);
-    if(data.length !== 0){
-      res.json(data).status(200);
+  if(Number.parseInt(req.params.id))
+  {
+    factureController.getByPatientId(req.params.id,function(data){
+      data = JSON.parse(data);
+      if(data.length !== 0){
+        res.json(data).status(200);
+        return;
+      }
+      res.status(404).end();
       return;
-    }
-    res.status(404).end();
-  });
-});
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }});
 
 factureRouter.post('/new', function(req, res){
   var values = [req.body.montant, req.body.date_creation, req.body.acquitte, req.body.adresse_facturation,
@@ -54,33 +66,47 @@ factureRouter.post('/new', function(req, res){
 });
 
 factureRouter.put('/:id', function(req, res){
-  var values = []
-  var columns = []
-
-  for(var key in req.body){
-    values.push(req.body[key]);
-    columns.push(key);
-  }
-  factureController.update(columns, values, req.params.id, function(state){
-    if(state === true)
+  if(Number.parseInt(req.params.id))
   {
-    res.json(state).status(200).end();
-    return;
-  }
-  res.status(500).end();
-  });
-});
+    var values = []
+    var columns = []
 
-factureRouter.delete('/:id', function(req, res){
-  factureController.deleteById(req.params.id, function(state){
-    if(state === true)
+    for(var key in req.body){
+      values.push(req.body[key]);
+      columns.push(key);
+    }
+    factureController.update(columns, values, req.params.id, function(state){
+      if(state === true)
     {
       res.json(state).status(200).end();
       return;
     }
-
     res.status(500).end();
-  });
+    return;
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
+});
+
+factureRouter.delete('/:id', function(req, res){
+  if(Number.parseInt(req.params.id))
+  {
+    factureController.deleteById(req.params.id, function(state){
+      if(state === true)
+      {
+        res.json(state).status(200).end();
+        return;
+      }
+
+      res.status(500).end();
+      return;
+    });
+  }
+  else{
+      res.json("parameter is not an integer").status(500).end();
+  }
 });
 
 module.exports = factureRouter;
