@@ -8,6 +8,7 @@ import Button from 'material-ui/Button';
 import PositiveIcon from 'material-ui-icons/Done';
 import DownIcon from 'material-ui-icons/ArrowDropDown';
 import UpIcon from 'material-ui-icons/ArrowDropUp';
+import Tooltip from 'material-ui/Tooltip';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -33,13 +34,22 @@ const styles = theme => ({
             backgroundColor: theme.palette.background.default,
         },
     },
+    fab: {
+        margin: theme.spacing.unit * 2,
+    },
+    absolute: {
+        position: 'absolute',
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 3,
+    },
 });
 
 class Result extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: []
+            results: [],
+            doctor: ''
         }
 
         this.displayResult = this.displayResult.bind(this);
@@ -65,11 +75,23 @@ class Result extends React.Component {
 
     evaluate = (value, valuemin, valuemax) => {
         if (value >= valuemin && value <= valuemax) {
-            return <PositiveIcon color="primary"/>
+            return (
+                <Tooltip title="Result interpretation is correct.">
+                    <PositiveIcon color="primary"/>
+                </Tooltip>
+            );
         } else if (value < valuemin) {
-            return <DownIcon color="error"/>
+            return (
+                <Tooltip title="Result interpretation is lower than average, please refer to your doctor.">
+                    <DownIcon color="error"/>
+                </Tooltip>
+            );
         } else if (value > valuemax) {
-            return <UpIcon color="error"/>
+            return (
+                <Tooltip title="Result interpretation is higher than average, please refer to your doctor.">
+                    <UpIcon color="error"/>
+                </Tooltip>
+            );
         }
     }
 
@@ -80,6 +102,7 @@ class Result extends React.Component {
         return (
             <div>
                 <Typography variant="title" noWrap>{'Analyse: '}{this.props.analyseID}</Typography>
+                <Typography variant="title" noWrap>{'Docteur: '}</Typography>
                 <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>

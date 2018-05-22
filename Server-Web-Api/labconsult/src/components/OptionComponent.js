@@ -52,7 +52,7 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 			const { classes } = this.props;
 
 			return (
-					<Grid container spacing={16} align="center">
+					<Grid container spacing={16} alignItems="center">
 						<Grid item xs={4}/>
 						<Grid item xs={4}>
 							<Paper className={classes.paper} justify="center" alignItems="center">
