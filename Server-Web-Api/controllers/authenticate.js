@@ -5,9 +5,8 @@ const config = require('../config');
 const CookieParser = require('cookie-parser');
 
 authenticateController.signIn = function(values, callback){
-  bddController.start();
   bddController.executeQuery('select nom,identifiant from employe where employe.identifiant = $1 and employe.password = $2 union select nom,identifiant from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
-    bddController.stop();
+
     var name = "none";
     var id = "none";
     data = JSON.parse(data);

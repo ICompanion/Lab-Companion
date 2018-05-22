@@ -30,6 +30,18 @@ analyseRouter.get('/:code', function(req, res){
   });
 });
 
+analyseRouter.get('/employe/:employe_id', function(req, res){
+    analyseController.getByEmploye(req.params.employe_id, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 analyseRouter.get('/display/:id', function(req, res){
   analyseController.getAnalyse(req.params.id, function(data, state){
     if(state === false) {res.status(500).end(); return;}
@@ -41,6 +53,19 @@ analyseRouter.get('/display/:id', function(req, res){
     res.status(404).end();
     return;
   });
+});
+
+analyseRouter.get('/:code_analyse/resultats', function(req, res){
+    analyseController.getAnalyseResults(req.params.code_analyse, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+        return;
+    });
 });
 
 analyseRouter.get('/patient/liste/:id', function(req, res){

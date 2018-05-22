@@ -56,6 +56,25 @@ resultatRouter.get('/categorie/:id', function(req, res){
   }
 });
 
+resultatRouter.get('/:id/categorie', function(req, res){
+    if(Number.parseInt(req.params.id))
+    {
+        resultatController.getCategory(req.params.id, function(data, state){
+            if(state === false) {res.status(500).end(); return;}
+            data = JSON.parse(data);
+            if(data.length !== 0){
+                res.json(data).status(200);
+                return;
+            }
+            res.status(404).end();
+            return;
+        });
+    }
+    else{
+        res.json("parameter is not an integer").status(500).end();
+    }
+});
+
 resultatRouter.post('/new', function(req, res){
   var values = [req.body.nom, req.body.description, req.body.valeur_min,
                 req.body.valeur_max, req.body.categorie_id];

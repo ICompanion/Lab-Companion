@@ -1,7 +1,9 @@
 package Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import org.json.*;
 
@@ -30,5 +32,23 @@ public class JSONParser{
 
         jsonResult = new JSONObject(values);
         return jsonResult;
+    }
+
+    public static ArrayList<JSONObject> makeObjectList(String stringArray){
+        ArrayList<JSONObject> jsonArray = new ArrayList<JSONObject>();
+
+        String[] array;
+        stringArray = stringArray.replace("[", "").replace("]", "");
+        array = stringArray.split("},");
+        for(int i = 0; i < array.length; i++){
+            if(i != array.length -1)
+            {
+                array[i] += "}";
+            }
+            jsonArray.add(new JSONObject(array[i]));
+
+        }
+
+        return jsonArray;
     }
 }

@@ -1,14 +1,10 @@
 package dao;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import Utils.JSONParser;
-
+import org.json.*;
 import java.io.*;
-import java.net.ConnectException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
+import java.net.*;
+import java.util.*;
 
 public class RequestHelper {
 
@@ -22,25 +18,37 @@ public class RequestHelper {
 
         connect(url,requestType, body);
 
-        return getRequestState(con.getResponseCode());
+        if(con.getErrorStream() == null)
+        {
+            return getRequestState(con.getResponseCode());
+
+        }
+        return false;
     }
 
     public static boolean delete(String url)throws Exception
     {
         connect(url,"DELETE", null);
+        if(con.getErrorStream() == null)
+        {
+            return getRequestState(con.getResponseCode());
 
-        return getRequestState(con.getResponseCode());
+        }
+        return false;
     }
 
-    public static String get(String url)throws Exception
+    public static ArrayList<JSONObject> get(String url)throws Exception
     {
         connect(url,"GET", null);
-        boolean state =  getRequestState(con.getResponseCode());
-        if(state){
-            String data =  getResponse();
-            return data;
+        if(con.getErrorStream() == null) {
+            boolean state = getRequestState(con.getResponseCode());
+            if (state) {
+                String data = getResponse();
+                ArrayList<JSONObject> arrayList = JSONParser.makeObjectList(data);
+                System.out.println(data);
+                return arrayList;
+            }
         }
-
         return null;
     }
 
@@ -60,9 +68,10 @@ public class RequestHelper {
             throw  new ConnectException("Unable to connect to the API");
         }
 
-        if(body != null){
+        if (body != null) {
             sendBody(body);
         }
+
     }
 
     private static void sendBody(JSONObject body) throws IOException
