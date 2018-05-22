@@ -46,6 +46,7 @@ class Study extends React.Component {
         }
 
         this.displayQuestions = this.displayQuestions.bind(this);
+        this.displayAnswers = this.displayAnswers.bind(this);
 
         this.displayQuestions(props)
             .then(res => this.setState({results: res}))
@@ -64,17 +65,17 @@ class Study extends React.Component {
         return datas;
     }
 
-    /*displayQuestions = async (props) => {
-        const url = '/etude/'+props.etudeID+'/answer/'
-        const response = await fetch(url,{
+    displayAnswers = (questionID) => {
+        const url = '/etude/'+questionID+'/answer/'
+        const response = fetch(url,{
             method: 'GET',
             credentials: 'include'
         });
-        const datas = await response.json();
-        console.log(datas);
+        /*const datas = response.json();
+        console.log(datas);*/
 
-        return datas;
-    }*/
+        return response;
+    }
 
     render() {
 
