@@ -22,6 +22,8 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import logo from '../logowhitehorizontal.svg';
+import {StudiesList} from "./StudiesList";
 
 const drawerWidth = 240;
 
@@ -114,8 +116,8 @@ class MainApp extends React.Component {
   
   _renderSubComp(){
 	switch(this.state.render) {
-		case 'results': return <ResultsList type='résultats' name={this.state.name} id={this.state.id}/>
-		case 'studies': return <ResultsList type='études' name={this.state.name} id={this.state.id}/>
+		case 'results': return <ResultsList name={this.state.name} id={this.state.id}/>
+		case 'studies': return <StudiesList name={this.state.name} id={this.state.id}/>
 		case 'options': return <OptionComponent/>
 		case 'disconnect': return <DisconnectComponent/>
 		case '': return <Typography variant="display2" noWrap>{'Welcome M. '+this.state.name}</Typography>
@@ -158,9 +160,7 @@ class MainApp extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
-              Lab Companion
-            </Typography>
+            <img src={logo} className="main-logo" alt="logo" />
           </Toolbar>
         </AppBar>
         <Drawer

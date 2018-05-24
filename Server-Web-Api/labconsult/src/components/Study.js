@@ -1,41 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import PositiveIcon from 'material-ui-icons/Done';
-import DownIcon from 'material-ui-icons/ArrowDropDown';
-import UpIcon from 'material-ui-icons/ArrowDropUp';
-
-const CustomTableCell = withStyles(theme => ({
-    head: {
-        backgroundColor: '#a5d6a7',
-        color: theme.palette.common.white,
-    },
-    body: {
-        fontSize: 14,
-    },
-}))(TableCell);
+import Radio from 'material-ui/Radio';
+import { FormControl, FormControlLabel } from 'material-ui/Form';
 
 const styles = theme => ({
     root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-        overflowX: 'auto',
+        display: 'flex',
     },
-    table: {
-        minWidth: 700,
+    formControl: {
+        margin: theme.spacing.unit * 3,
     },
-    row: {
-        '&:nth-of-type(odd)': {
-            backgroundColor: theme.palette.background.default,
-        },
+    group: {
+        margin: `${theme.spacing.unit}px 0`,
     },
 });
 
 var idq = 0;
+var previousq = '';
 
 class Study extends React.Component {
     constructor(props) {
@@ -44,7 +29,7 @@ class Study extends React.Component {
             results: [],
             answers: []
         }
-
+        idq = 0;
         this.displayQuestions = this.displayQuestions.bind(this);
         this.displayAnswers = this.displayAnswers.bind(this);
 
@@ -86,12 +71,27 @@ class Study extends React.Component {
                 <Typography variant="title" noWrap>{'Etude: '}{this.props.etudeID}</Typography>
                 <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                     {this.state.results.map(n => {
-                        idq = idq+1;
-                        return (
-                            <Paper className={classes.root}>
-                                <Typography variant="headline"><b>Question n°{idq} : </b></Typography><Typography variant="subheading">{n.intitule}</Typography>
-                            </Paper>
-                        );
+                        console.log(previousq);
+                        if (n.intitule != previousq) {
+                            idq = idq+1;
+                            previousq = n.intitule;
+                            return (
+                                <div>
+                                    <Paper className={classes.root}>
+                                        <Typography variant="headline"><b>Question n°{idq} : </b></Typography><Typography variant="subheading">{n.intitule}</Typography>
+                                    </Paper>
+                                    <FormControl component="fieldset" required error className={classes.formControl}>
+                                        <FormControlLabel value="other" control={<Radio color="primary" />} label={n.reponse} />
+                                    </FormControl>
+                                </div>
+                            );
+
+                        } else {
+                            return (
+                                    <FormControlLabel value="other" control={<Radio color="primary" />} label={n.reponse} />
+                            );
+                        }
+
                     })}
             </div>
         );

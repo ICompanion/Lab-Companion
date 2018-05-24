@@ -43,11 +43,11 @@ etudeRouter.get('/:code', function(req, res){
 });
 
 etudeRouter.get('/:code/questions', function(req, res){
-    etudeController.getQuestions(req.params.code, function(data, state){
+    etudeController.getQuestions(req.params.code, function(questions, state){
         if(state === false) {res.status(500).end(); return;}
-        data = JSON.parse(data);
-        if(data.length !== 0){
-            res.json(data).status(200);
+        questions = JSON.parse(questions);
+        if(questions.length !== 0){
+            res.json(questions).status(200);
             return;
         }
         res.status(404).end();
