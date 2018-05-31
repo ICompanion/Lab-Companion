@@ -17,9 +17,19 @@ public class Result {
         this.id = id;
         this.title = title;
         this.unit = unit;
+
         this.value_max = value_max;
         this.value_min = value_min;
         this.category = category;
+    }
+
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public int getId() {
