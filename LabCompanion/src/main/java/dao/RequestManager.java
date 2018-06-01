@@ -42,11 +42,15 @@ public class RequestManager {
                 SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
                 JSONObject obj = it.next();
 
-                analysisResults = getAnalysisResults(obj.getString("code_analyse"));
+
                 Patient patient = getPatientById(obj.getInt("patient_id"));
                 Analysis analysis = new Analysis(obj.getInt("id"), obj.getString("code_analyse"),
                                                 date.parse(obj.getString("date_analyse")),
-                                                obj.get("description").toString(), analysisResults, patient, doctor);
+                                                obj.get("description").toString(), null, patient, doctor);
+
+                analysisResults = getAnalysisResults(analysis);
+
+                analysis.setResults(analysisResults);
 
                 analysisList.add(analysis);
             }
@@ -56,9 +60,9 @@ public class RequestManager {
         return null;
     }
 
-    public static ArrayList<AnalysisResult> getAnalysisResults(String code)throws Exception{
+    public static ArrayList<AnalysisResult> getAnalysisResults(Analysis analysis)throws Exception{
 
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/"+ code +"/resultats");
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/"+ analysis.getCode() +"/resultats");
 
         if(data != null)
         {
@@ -71,7 +75,7 @@ public class RequestManager {
                 Result result = getResult(obj.getInt("id"));
 
                 AnalysisResult analysisResult = new AnalysisResult(obj.getInt("id"), obj.getFloat("valeur"),
-                        result);
+                        result, analysis);
 
                 resultList.add(analysisResult);
             }
@@ -263,7 +267,7 @@ public class RequestManager {
         return null;
     }
 
-    public static boolean addPatientToDatabase(Patient patient) throws Exception {
+    public static boolean addPatient(Patient patient) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
         hashMap.put("nom", patient.getName());
@@ -285,7 +289,7 @@ public class RequestManager {
 
     }
 
-    public static boolean addAnalysisToDatabase(Analysis analysis) throws Exception {
+    public static boolean addAnalysis(Analysis analysis) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
         Patient patient  = analysis.getPatient();
@@ -304,7 +308,24 @@ public class RequestManager {
         return result;
     }
 
-    public static boolean addResultToDatabase(Result result)throws Exception {
+    public static boolean addAnalysisResult(AnalysisResult analysisResult) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+        Result result  = analysisResult.getResult();
+        Analysis analysis = analysisResult.getAnalysis();
+
+        hashMap.put("valeur", analysisResult.getValue());
+        hashMap.put("resultat_id", result.getId());
+        hashMap.put("analyse_id", analysis.getCode());
+
+        JSONParser.makeObject(hashMap);
+
+        boolean res = RequestHelper.postOrPut(url + "/analyse/new", hashMap, "POST");
+
+        return res;
+    }
+
+    public static boolean addResult(Result result)throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         Category category  = result.getCategory();
@@ -322,7 +343,7 @@ public class RequestManager {
         return res;
     }
 
-    public static boolean addCategoryToDatabase(Category category) throws Exception {
+    public static boolean addCategory(Category category) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("nom", category.getTitle());
@@ -334,7 +355,7 @@ public class RequestManager {
         return resultat;
     }
 
-    public static boolean addSurveyToDatabase(Survey survey) throws Exception {
+    public static boolean addSurvey(Survey survey) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         Doctor doctor  = survey.getDoctor();
@@ -352,7 +373,7 @@ public class RequestManager {
         return resultat;
     }
 
-    public static boolean addQuestionToDatabase(Question question) throws Exception{
+    public static boolean addQuestion(Question question) throws Exception{
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("intitule", question.getTitle());
@@ -364,7 +385,7 @@ public class RequestManager {
         return resultat;
     }
 
-    public static boolean addProposalToDatabase(Proposal proposal) throws Exception {
+    public static boolean addProposal(Proposal proposal) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         hashMap.put("intitule", proposal.getTitle());
@@ -376,7 +397,7 @@ public class RequestManager {
         return resultat;
     }
 
-    public static boolean addAppointmentToDatabase(Appointment appointment) throws Exception {
+    public static boolean addAppointment(Appointment appointment) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
         SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
@@ -418,7 +439,7 @@ public class RequestManager {
         return result;
     }
 
-    public static boolean answerToQuestion(Question question, Proposal proposal, Survey survey) throws Exception{
+    public static boolean addAnswerToQuestion(Question question, Proposal proposal, Survey survey) throws Exception{
         HashMap<String, Object> hashMap = new HashMap<>();
 
         boolean result = RequestHelper.postOrPut(url + "/etude/" + survey.getCode() + "/question/" + question.getId() + "/reponse/" + proposal.getId(),
@@ -436,4 +457,72 @@ public class RequestManager {
         return result;
     }
 
+    public static boolean updatePatient(Patient patient) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+        hashMap.put("nom", patient.getName());
+        hashMap.put("prenom", patient.getFirstname());
+        hashMap.put("cp", patient.getPostalCode());
+        hashMap.put("adresse", patient.getAdress());
+        hashMap.put("ville", patient.getCity());
+        hashMap.put("num_secu", patient.getSecuNumber());
+        hashMap.put("identifiant", patient.getUsername());
+        hashMap.put("password",patient.getPasswowrd());
+        hashMap.put("mail", patient.getMail());
+        hashMap.put("date_naissance", patient.getBirthdate());
+
+        JSONParser.makeObject(hashMap);
+
+        boolean result = RequestHelper.postOrPut(url + "/patient/" + patient.getId(), hashMap, "PUT");
+
+        return result;
+
+    }
+
+    public static boolean updateAppointment(Appointment appointment) throws Exception{
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+        SimpleDateFormat hours = new SimpleDateFormat("H-mm-ss");
+
+        Patient patient = appointment.getPatient();
+        Doctor doctor = appointment.getDoctor();
+
+
+        hashMap.put("date", date.parse(appointment.getDate().toString()));
+        hashMap.put("heure", hours.parse(appointment.getDate().toString()));
+        hashMap.put("status", appointment.getStatus());
+        hashMap.put("patient_id", patient.getId());
+        hashMap.put("employe_id", doctor.getId());
+
+        JSONParser.makeObject(hashMap);
+
+        boolean resultat = RequestHelper.postOrPut(url + "/visite/" + appointment.getId(), hashMap, "PUT");
+
+        return resultat;
+    }
+
+    public static boolean updateAnalysisResult(AnalysisResult analysisResult) throws Exception{
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+        Result result  = analysisResult.getResult();
+        Analysis analysis = analysisResult.getAnalysis();
+
+        hashMap.put("valeur", analysisResult.getValue());
+        hashMap.put("resultat_id", result.getId());
+        hashMap.put("analyse_id", analysis.getCode());
+
+        JSONParser.makeObject(hashMap);
+
+        boolean res = RequestHelper.postOrPut(url + "/resultat/" + analysisResult.getId(), hashMap, "PUT");
+
+        return res;
+    }
+
+    public static boolean removeQuestionFromSurvey(Survey survey, Question question) throws Exception{
+
+        boolean result = RequestHelper.delete(url + "/etude/" + survey.getId() + "/question/" + question.getId());
+
+        return result;
+    }
 }
