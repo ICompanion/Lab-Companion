@@ -9,8 +9,6 @@ text: "",
 values: undefined,
 }
 
-pool.connect()
-
 bddController.start = function(){
   pool.connect(function(err){
     if(err)
