@@ -1,17 +1,18 @@
-const pg = require('pg');
+const Pool = require('pg-pool');
 const config= require('../config');
 const connection = config.database;
 const bddController = function(){ };
-var client;
 
+var pool = new Pool(connection);
 var query = {
 text: "",
 values: undefined,
 }
 
+pool.connect()
+
 bddController.start = function(){
-  client  = new pg.Client(connection);
-  client.connect(function(err){
+  pool.connect(function(err){
     if(err)
     {
       console.log("Erreur lors de la connexion: " +err);
@@ -26,7 +27,7 @@ bddController.executeQuery = function(text, values, callback){
     var state = false;
 
     bddController.makeQuery(text, values);
-    client.query(query, function(err, res){
+    pool.query(query, function(err, res){
       if(err){
         console.log('Erreur lors de l\'execution de la requête: '+err);
         callback(state);
@@ -43,7 +44,7 @@ bddController.executeQuery = function(text, values, callback){
 
 
 bddController.stop = function(){
-  client.end(function(){
+  pool.end(function(){
     console.log('Déconnecté de la base de données');
   });
 };
