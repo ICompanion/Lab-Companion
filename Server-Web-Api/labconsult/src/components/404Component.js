@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import NopeIcon from 'material-ui-icons/Report';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
+import NopeIcon from '@material-ui/icons/Report';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
   main: {

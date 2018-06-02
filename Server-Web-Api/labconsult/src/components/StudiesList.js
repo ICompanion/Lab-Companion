@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import {Result} from './Result.js';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import {Study} from './Study.js';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
-        backgroundColor: '#a5d6a7',
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
     },
     body: {
@@ -88,7 +91,7 @@ class StudiesList extends React.Component {
             var promise = this.displayResults(this.props);
             promise.then(result => {data = result});
             return (
-                <>
+                <div>
                 <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('}<i>{this.props.id}</i>{')'}</Typography><br/>
                     <Typography variant="subheading" noWrap>{'Liste de vos études :'}</Typography>
                     <Paper className={classes.root}>
@@ -100,7 +103,6 @@ class StudiesList extends React.Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                <Typography>{data.toString()}</Typography>
                                 {this.state.datas.map(n => {
                                     return (
                                         <TableRow className={classes.row} key={n.id}>
@@ -116,7 +118,7 @@ class StudiesList extends React.Component {
             );
         } else {
             return (
-                <Study etudeID={this.state.display} backHandler={this.handleDisplay}/>
+                <Study etudeID={this.state.display} backHandler={this.handleDisplay} qcount={this.countQuestions}/>
             );
         }
 

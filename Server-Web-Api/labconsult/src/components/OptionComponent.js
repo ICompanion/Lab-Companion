@@ -1,11 +1,12 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import Input, { InputLabel } from 'material-ui/Input';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import FormControl from '@material-ui/core/FormControl';
 
 	const styles = theme => ({	
 	  grid: {

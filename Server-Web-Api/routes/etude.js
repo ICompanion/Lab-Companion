@@ -66,6 +66,18 @@ etudeRouter.get('/:code/reponses', function(req, res){
     });
 });
 
+etudeRouter.get('/:code/qcount', function(req, res){
+    etudeController.countByCode(req.params.code, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 etudeRouter.get('/reponses', function(req, res){
     etudeController.getAllAnswers(function(data, state){
         if(state === false) {res.status(500).end(); return;}
@@ -109,6 +121,19 @@ etudeRouter.post('/:code/participate/:id', function(req, res){
     var values = [req.body.statut, req.params.id, req.params.code];
 
     etudeController.addParticipation(values, function(state){
+        if(state === true)
+        {
+            res.json(state).status(200).end();
+            return;
+        }
+        res.status(500).end();
+    });
+});
+
+etudeRouter.post('/:code/answer/add/:idq/:ida', function(req, res){
+    var values = [req.params.idq, req.params.ida, req.params.code];
+
+    etudeController.addAnswer(values, function(state){
         if(state === true)
         {
             res.json(state).status(200).end();

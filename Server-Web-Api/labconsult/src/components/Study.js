@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Radio from 'material-ui/Radio';
-import { FormControl, FormControlLabel } from 'material-ui/Form';
+import { withStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 const styles = theme => ({
     root: {
@@ -21,21 +25,57 @@ const styles = theme => ({
 
 var idq = 0;
 var previousq = '';
+var questionName = '';
+var radioGroupId = '';
 
 class Study extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            details: [],
             results: [],
-            answers: []
+            answers: [],
+            value: 'female',
+            qcount: 0
         }
         idq = 0;
+        this.studyDetails = this.studyDetails.bind(this);
         this.displayQuestions = this.displayQuestions.bind(this);
-        this.displayAnswers = this.displayAnswers.bind(this);
+        this.generateQuestions = this.generateQuestions.bind(this);
+        this.countQuestions = this.countQuestions.bind(this);
+        this.submitQuestions = this.submitQuestions.bind(this);
+        this.submitAnswer = this.submitAnswer.bind(this);
 
-        this.displayQuestions(props)
+        setTimeout(this.studyDetails(props)
+            .then(res => this.setState({details: res}))
+            .catch(err => console.log(err)),0)
+
+        setTimeout(this.displayQuestions(props)
             .then(res => this.setState({results: res}))
-            .catch(err => console.log(err))
+            .catch(err => console.log(err)),1000)
+
+        setTimeout(this.countQuestions(props)
+            .then(res => {
+                for (var i = 1; i <= res[0].count; i++) {
+                    questionName = 'question' + i;
+                    this.setState({[questionName]: 0})
+                    this.setState({qcount: res[0].count})
+                }
+            })
+            .catch(err => console.log(err)),2000)
+
+    }
+
+    studyDetails = async (props) => {
+        const url = '/etude/'+props.etudeID
+        const response = await fetch(url,{
+            method: 'GET',
+            credentials: 'include'
+        });
+        const datas = await response.json();
+        console.log(datas);
+
+        return datas;
     }
 
     displayQuestions = async (props) => {
@@ -50,49 +90,95 @@ class Study extends React.Component {
         return datas;
     }
 
-    displayAnswers = (questionID) => {
-        const url = '/etude/'+questionID+'/answer/'
-        const response = fetch(url,{
+    countQuestions = async (props) => {
+        var url =  '/etude/'+props.etudeID+'/qcount/'
+        const response = await fetch(url,{
             method: 'GET',
             credentials: 'include'
         });
-        /*const datas = response.json();
-        console.log(datas);*/
+        const datas = await response.json();
+        console.log(datas);
 
-        return response;
+        return datas;
+    }
+
+    handleChange = event => {
+        console.log(event.target.name);
+        this.setState({ [event.target.name]: parseInt(event.target.value) });
+    };
+
+    generateQuestions = (datas,question,classes) => {
+        questionName = 'question'+idq;
+        radioGroupId = 'rg'+questionName;
+        return (
+            <div>
+                <Typography variant="body2" id={questionName}>Question n°{idq} : {question.intitule}</Typography>
+                <FormControl>
+                    <RadioGroup className={classes.group} value={this.state[questionName]} id={questionName} onChange={this.handleChange}>
+                        {datas.map(answer => {
+                            if (question.id_question === answer.id_question) {
+                                return (<FormControlLabel value={answer.id_reponse} control={<Radio name={questionName}/>} label={answer.reponse}/>)
+                            }
+                        })}
+                    </RadioGroup>
+                </FormControl>
+            </div>
+        );
+    }
+
+    submitAnswer = async (etudeID, answerID, questionID) => {
+        var url =  '/etude/'+etudeID+'/answer/add/'+answerID+'/'+questionID
+        fetch(url,{
+            method: 'POST',
+            credentials: 'include'
+        });
+    }
+
+    submitQuestions = (props) => {
+        var index = '';
+        var completeq = true;
+        for (var i = 1; i<=this.state.qcount; i++) {
+            index = 'question'+i;
+            if (this.state[index] === 0) {
+                completeq = false;
+                //document.getElementById(index).innerHTML+= " <p style='color: red; margin-top: -5px; margin-bottom: 0px'>Please answer the question.</p>"
+            }
+        }
+
+        if (completeq === true) {
+            previousq = '';
+            this.state.results.map(question => {
+                if (question.intitule !== previousq) {
+                    i = 1;
+                    previousq = question.intitule;
+                    index = 'question'+i;
+                    this.submitAnswer(this.state.details[0].id,this.state[index],question.id_question)
+                    i += 1;
+                }
+            })
+        }
     }
 
     render() {
 
         const { classes } = this.props;
-
+        idq = 0;
         return (
             <div>
-                <Typography variant="title" noWrap>{'Etude: '}{this.props.etudeID}</Typography>
+                <Typography variant="title" noWrap>{'Etude: '}{this.props.etudeID}{' Number: '}{this.state.qcount}</Typography>
                 <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
-                    {this.state.results.map(n => {
-                        console.log(previousq);
-                        if (n.intitule != previousq) {
-                            idq = idq+1;
-                            previousq = n.intitule;
-                            return (
-                                <div>
-                                    <Paper className={classes.root}>
-                                        <Typography variant="headline"><b>Question n°{idq} : </b></Typography><Typography variant="subheading">{n.intitule}</Typography>
-                                    </Paper>
-                                    <FormControl component="fieldset" required error className={classes.formControl}>
-                                        <FormControlLabel value="other" control={<Radio color="primary" />} label={n.reponse} />
-                                    </FormControl>
-                                </div>
-                            );
-
-                        } else {
-                            return (
-                                    <FormControlLabel value="other" control={<Radio color="primary" />} label={n.reponse} />
-                            );
-                        }
-
-                    })}
+                    <br/><br/>
+                    <Paper>
+                        {this.state.results.map(question => {
+                            if (question.intitule !== previousq) {
+                                idq = idq+1;
+                                previousq = question.intitule;
+                                return (this.generateQuestions(this.state.results,question,classes))
+                            }
+                        })}
+                    </Paper>
+                    <br/>
+                    <Button variant="raised" size="small" color ="secondary" type="submit" onClick={() => {this.submitQuestions(this.props)}}>Envoyer</Button>
             </div>
         );
     }

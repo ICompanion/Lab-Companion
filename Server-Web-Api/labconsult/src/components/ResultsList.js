@@ -1,21 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import {Result} from './Result.js';
-import {Study} from './Study.js';
 
 const CustomTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: '#a5d6a7',
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
+    head: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
 }))(TableCell);
 
 const styles = theme => ({

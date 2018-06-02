@@ -9,7 +9,13 @@ etudeController.getAll = function(callback) {
 };
 
 etudeController.getByCode = function(code, callback) {
-    bddController.executeQuery('select distinct code_etude, nom_etude, date, description_etude from etudes_reponses where code_etude = $1', [code], function(data, state){
+    bddController.executeQuery('select * from study_detail where code_etude = $1', [code], function(data, state){
+        callback(data, state);
+    });
+};
+
+etudeController.countByCode = function(code, callback) {
+    bddController.executeQuery('select count(distinct id_question) from questions where code_etude = $1', [code], function(data, state){
         callback(data, state);
     });
 };
@@ -51,8 +57,22 @@ etudeController.addQuestion = function(values, callback) {
         });
 };
 
+etudeController.addAnswer = function(values, callback) {
+    bddController.executeQuery('insert into public.reponses(etude_id, proposition_id, question_id) values($1, $2, $3)',
+        values, function(data, state){
+            callback(state);
+        });
+};
+
 etudeController.addParticipation = function(values, callback) {
     bddController.executeQuery('insert into public.participation(participation_statut, patient_id, etude_id) values($1, $2, $3)',
+        values, function(data, state){
+            callback(state);
+        });
+};
+
+etudeController.updateParticipation = function(values, callback) {
+    bddController.executeQuery('update public.participation set participation_statut = $1 where patient_id = $2 and etude_id = $3',
         values, function(data, state){
             callback(state);
         });
