@@ -1,17 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import PositiveIcon from 'material-ui-icons/Done';
-import DownIcon from 'material-ui-icons/ArrowDropDown';
-import UpIcon from 'material-ui-icons/ArrowDropUp';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import PositiveIcon from '@material-ui/icons/Done';
+import DownIcon from '@material-ui/icons/ArrowDropDown';
+import UpIcon from '@material-ui/icons/ArrowDropUp';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const CustomTableCell = withStyles(theme => ({
     head: {
-        backgroundColor: '#a5d6a7',
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
     },
     body: {
@@ -33,13 +38,22 @@ const styles = theme => ({
             backgroundColor: theme.palette.background.default,
         },
     },
+    fab: {
+        margin: theme.spacing.unit * 2,
+    },
+    absolute: {
+        position: 'absolute',
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 3,
+    },
 });
 
 class Result extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            results: []
+            results: [],
+            doctor: ''
         }
 
         this.displayResult = this.displayResult.bind(this);
@@ -65,11 +79,23 @@ class Result extends React.Component {
 
     evaluate = (value, valuemin, valuemax) => {
         if (value >= valuemin && value <= valuemax) {
-            return <PositiveIcon color="primary"/>
+            return (
+                <Tooltip title="Result interpretation is correct.">
+                    <PositiveIcon color="primary"/>
+                </Tooltip>
+            );
         } else if (value < valuemin) {
-            return <DownIcon color="error"/>
+            return (
+                <Tooltip title="Result interpretation is lower than average, please refer to your doctor.">
+                    <DownIcon color="error"/>
+                </Tooltip>
+            );
         } else if (value > valuemax) {
-            return <UpIcon color="error"/>
+            return (
+                <Tooltip title="Result interpretation is higher than average, please refer to your doctor.">
+                    <UpIcon color="error"/>
+                </Tooltip>
+            );
         }
     }
 
@@ -80,6 +106,7 @@ class Result extends React.Component {
         return (
             <div>
                 <Typography variant="title" noWrap>{'Analyse: '}{this.props.analyseID}</Typography>
+                <Typography variant="title" noWrap>{'Docteur: '}</Typography>
                 <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>

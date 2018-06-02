@@ -1,16 +1,11 @@
-import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom'
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { green } from 'material-ui/colors';
-import { yellow } from 'material-ui/colors';
-import { red } from 'material-ui/colors';
-import ReactRouter from 'react-router';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import { yellow } from '@material-ui/core/colors';
 import {LoginComponent} from './components/LoginComponent.js';
 import {MainApp} from './components/MainApp.js';
-import {Component404} from './components/404Component.js';
 import { instanceOf } from 'prop-types';
-import { withCookies, Cookies } from 'react-cookie';
 import './App.css';
 
 const theme = createMuiTheme({
@@ -32,10 +27,6 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
-    static propTypes = {
-        cookies: instanceOf(Cookies).isRequired
-    };
-
     constructor(props) {
         super(props);
         this.state = {
@@ -98,4 +89,4 @@ class App extends Component {
     }
 }
 
-export default withCookies(App);
+export default App;

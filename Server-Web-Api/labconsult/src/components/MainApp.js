@@ -1,27 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import { BrowserRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
-import {Component404} from './404Component.js';
+import { withStyles } from '@material-ui/core/styles';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import {OptionComponent} from './OptionComponent.js';
 import {DisconnectComponent} from './DisconnectComponent.js';
 import {ResultsList} from './ResultsList.js';
 import classNames from 'classnames';
-import SettingsIcon from 'material-ui-icons/Settings';
-import ExitIcon from 'material-ui-icons/ExitToApp';
-import StudiesIcon from 'material-ui-icons/QuestionAnswer';
-import ResultIcon from 'material-ui-icons/LocalHospital';
-import Drawer from 'material-ui/Drawer';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import List from 'material-ui/List';
-import Typography from 'material-ui/Typography';
-import Divider from 'material-ui/Divider';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
-import ChevronRightIcon from 'material-ui-icons/ChevronRight';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExitIcon from '@material-ui/icons/ExitToApp';
+import StudiesIcon from '@material-ui/icons/QuestionAnswer';
+import ResultIcon from '@material-ui/icons/LocalHospital';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import HomeIcon from '@material-ui/icons/Home';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import logo from '../logowhitehorizontal.svg';
+import {StudiesList} from "./StudiesList";
 
 const drawerWidth = 240;
 
@@ -88,6 +89,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
+    insideContent: {
+        height: '100%'
+    },
 });
 
 class MainApp extends React.Component {
@@ -114,8 +118,8 @@ class MainApp extends React.Component {
   
   _renderSubComp(){
 	switch(this.state.render) {
-		case 'results': return <ResultsList type='résultats' name={this.state.name} id={this.state.id}/>
-		case 'studies': return <ResultsList type='études' name={this.state.name} id={this.state.id}/>
+		case 'results': return <ResultsList name={this.state.name} id={this.state.id}/>
+		case 'studies': return <StudiesList name={this.state.name} id={this.state.id}/>
 		case 'options': return <OptionComponent/>
 		case 'disconnect': return <DisconnectComponent/>
 		case '': return <Typography variant="display2" noWrap>{'Welcome M. '+this.state.name}</Typography>
@@ -156,11 +160,9 @@ class MainApp extends React.Component {
               onClick={this.handleDrawerOpen}
               className={classNames(classes.menuButton, this.state.open && classes.hide)}
             >
-              <MenuIcon />
+              <HomeIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
-              Lab Companion
-            </Typography>
+            <img src={logo} className="main-logo" alt="logo" />
           </Toolbar>
         </AppBar>
         <Drawer
@@ -211,7 +213,7 @@ class MainApp extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
 		  <div className={classes.insideContent}>
-			  {this._renderSubComp()}
+                {this._renderSubComp()}
 		  </div>
         </main>
       </div>

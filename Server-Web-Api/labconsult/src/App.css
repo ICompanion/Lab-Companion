@@ -1,5 +1,18 @@
+html {
+    height: 100%;
+}
+
 body {
 	height: 100%;
+}
+
+#root {
+    height: 100%;
+}
+
+.Main {
+    background-color: #a5d6a7;
+    height: 100%;
 }
 
 .App {
@@ -10,11 +23,17 @@ body {
 
 .App-logo {
   height: 150px;
-    border:1px solid #81C784;    
+    border:1px solid #81C784;
     border-radius:50%;
     -moz-border-radius:50%;
     -webkit-border-radius:50%;
 	width:150px;
+    background-color:white;
+}
+
+.main-logo {
+    height:65px;
+    width:200px;
 }
 
 .App-header {

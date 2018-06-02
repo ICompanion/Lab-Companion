@@ -7,7 +7,8 @@ const analyseRouter = express.Router();
 analyseRouter.use(bodyParser.json());
 
 analyseRouter.get('/all', function(req, res){
-  analyseController.getAll(function(data){
+  analyseController.getAll(function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -18,7 +19,8 @@ analyseRouter.get('/all', function(req, res){
 });
 
 analyseRouter.get('/:code', function(req, res){
-  analyseController.getByCode(req.params.code, function(data){
+  analyseController.getByCode(req.params.code, function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -29,7 +31,8 @@ analyseRouter.get('/:code', function(req, res){
 });
 
 analyseRouter.get('/display/:id', function(req, res){
-  analyseController.getAnalyse(req.params.id, function(data){
+  analyseController.getAnalyse(req.params.id, function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -41,7 +44,8 @@ analyseRouter.get('/display/:id', function(req, res){
 });
 
 analyseRouter.get('/patient/liste/:id', function(req, res){
-    analyseController.getPatientAnalysesList(req.params.id, function(data){
+    analyseController.getPatientAnalysesList(req.params.id, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);

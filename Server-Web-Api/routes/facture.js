@@ -7,7 +7,8 @@ const factureRouter = express.Router();
 factureRouter.use(bodyParser.json());
 
 factureRouter.get('/all', function(req, res){
-  factureController.getAll(function(data){
+  factureController.getAll(function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -20,7 +21,8 @@ factureRouter.get('/all', function(req, res){
 factureRouter.get('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    factureController.getById(req.params.id,function(data){
+    factureController.getById(req.params.id,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -37,7 +39,8 @@ factureRouter.get('/:id', function(req, res){
 factureRouter.get('/patient/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    factureController.getByPatientId(req.params.id,function(data){
+    factureController.getByPatientId(req.params.id,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);

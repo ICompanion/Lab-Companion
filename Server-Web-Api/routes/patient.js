@@ -7,7 +7,9 @@ const patientRouter = express.Router();
 patientRouter.use(bodyParser.json());
 
 patientRouter.get('/all', function(req, res){
-    patientController.getAll(function(data){
+    patientController.getAll(function(data, state){
+      if(state === false) {res.status(500).end(); return;}
+
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -18,7 +20,8 @@ patientRouter.get('/all', function(req, res){
 });
 
 patientRouter.get('/:identifiant', function(req, res){
-  patientController.getByIdentifiant(req.params.identifiant,function(data){
+  patientController.getByIdentifiant(req.params.identifiant, function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -29,7 +32,8 @@ patientRouter.get('/:identifiant', function(req, res){
 });
 
 patientRouter.get('/name/:nom', function(req, res){
-  patientController.getByName(req.params.nom,function(data){
+  patientController.getByName(req.params.nom, function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     console.log(data);
     if(data.length !== 0){
@@ -43,7 +47,8 @@ patientRouter.get('/name/:nom', function(req, res){
 patientRouter.get('/id/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    patientController.getById(req.params.id,function(data){
+    patientController.getById(req.params.id,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -59,7 +64,8 @@ patientRouter.get('/id/:id', function(req, res){
 });
 
 patientRouter.get('/cp/:cp', function(req, res){
-  patientController.getByCp(req.params.cp,function(data){
+  patientController.getByCp(req.params.cp,function(data, state){
+  if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -70,7 +76,8 @@ patientRouter.get('/cp/:cp', function(req, res){
 });
 
 patientRouter.get('/ville/:ville', function(req, res){
-  patientController.getByCity(req.params.ville,function(data){
+  patientController.getByCity(req.params.ville,function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -81,7 +88,7 @@ patientRouter.get('/ville/:ville', function(req, res){
 });
 
 patientRouter.post('/new', function(req, res){
-  var values = [req.body.nom, req.body.prenom, req.body.mail, req.body.numSecu,
+  var values = [req.body.nom, req.body.prenom, req.body.mail, req.body.num_secu,
                 req.body.adresse, req.body.ville, req.body.cp, req.body.identifiant,
                 req.body.password, req.body.date_naissance];
 
