@@ -5,6 +5,7 @@ module.exports ={
           database: 'LAB',
           user: 'lab',
           password: 'adminpwd!',
+          host: 'localhost',
           port: 5000,
           ssl: true,
           max: 20, // set pool max size to 20

@@ -38,7 +38,7 @@ etudeController.getQuestions = function(code, callback) {
 };
 
 etudeController.getAllAnswers = function(callback) {
-    bddController.executeQuery('select code_etude, question, reponse, nbr_reponses from etudes_reponses', '', function(data, state){
+    bddController.executeQuery('select code_etude, question, reponse, nbr_reponses from reponses', '', function(data, state){
         callback(data, state);
     });
 };
