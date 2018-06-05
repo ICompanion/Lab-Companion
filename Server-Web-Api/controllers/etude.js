@@ -58,6 +58,7 @@ etudeController.addQuestion = function(values, callback) {
 };
 
 etudeController.addAnswer = function(values, callback) {
+    console.log('insert into public.reponses(etude_id, proposition_id, question_id) values($1, $2, $3)',values);
     bddController.executeQuery('insert into public.reponses(etude_id, proposition_id, question_id) values($1, $2, $3)',
         values, function(data, state){
             callback(state);

@@ -50,6 +50,7 @@ class StudiesList extends React.Component {
         this.handleDisplay = this.handleDisplay.bind(this);
         this.displayResults = this.displayResults.bind(this);
         this.evaluateStudy = this.evaluateStudy.bind(this);
+        this.evaluateButton = this.evaluateButton.bind(this);
 
         if (this.state.display == 'list') {
             this.displayResults(props)
@@ -67,6 +68,14 @@ class StudiesList extends React.Component {
             return <Typography color="primary" variant="body2">Completed</Typography>
         } else {
             return <Typography color="error" variant="body2">Not Completed</Typography>
+        }
+    }
+
+    evaluateButton = (status) => {
+        if (status == true) {
+            return "disabled"
+        } else {
+            return ""
         }
     }
 
@@ -106,7 +115,7 @@ class StudiesList extends React.Component {
                                 {this.state.datas.map(n => {
                                     return (
                                         <TableRow className={classes.row} key={n.id}>
-                                            <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_etude)}>{'Etude n° '}<i>{n.code_etude}</i></Button></CustomTableCell>
+                                            <CustomTableCell><Button variant="raised"  size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_etude)}>{'Etude n° '}<i>{n.code_etude}</i></Button></CustomTableCell>
                                             <CustomTableCell numeric><i>{this.evaluateStudy(n.statut)}</i></CustomTableCell>
                                         </TableRow>
                                     );
@@ -118,7 +127,7 @@ class StudiesList extends React.Component {
             );
         } else {
             return (
-                <Study etudeID={this.state.display} backHandler={this.handleDisplay} qcount={this.countQuestions}/>
+                <Study etudeID={this.state.display} patientID={this.props.id} backHandler={this.handleDisplay} qcount={this.countQuestions}/>
             );
         }
 

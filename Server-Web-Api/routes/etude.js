@@ -131,9 +131,22 @@ etudeRouter.post('/:code/participate/:id', function(req, res){
 });
 
 etudeRouter.post('/:code/answer/add/:idq/:ida', function(req, res){
-    var values = [req.params.idq, req.params.ida, req.params.code];
+    var values = [req.params.code, req.params.idq, req.params.ida];
 
     etudeController.addAnswer(values, function(state){
+        if(state === true)
+        {
+            res.json(state).status(200).end();
+            return;
+        }
+        res.status(500).end();
+    });
+});
+
+etudeRouter.post('/answer/participate/:status/:idp/:code', function(req, res){
+    var values = [req.params.statusp, req.params.idp, req.params.code];
+
+    etudeController.updateParticipation(values, function(state){
         if(state === true)
         {
             res.json(state).status(200).end();

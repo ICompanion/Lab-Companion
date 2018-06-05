@@ -46,15 +46,15 @@ class Study extends React.Component {
         this.submitQuestions = this.submitQuestions.bind(this);
         this.submitAnswer = this.submitAnswer.bind(this);
 
-        setTimeout(this.studyDetails(props)
+        this.studyDetails(props)
             .then(res => this.setState({details: res}))
-            .catch(err => console.log(err)),0)
+            .catch(err => console.log(err))
 
-        setTimeout(this.displayQuestions(props)
+        this.displayQuestions(props)
             .then(res => this.setState({results: res}))
-            .catch(err => console.log(err)),1000)
+            .catch(err => console.log(err))
 
-        setTimeout(this.countQuestions(props)
+        this.countQuestions(props)
             .then(res => {
                 for (var i = 1; i <= res[0].count; i++) {
                     questionName = 'question' + i;
@@ -62,7 +62,7 @@ class Study extends React.Component {
                     this.setState({qcount: res[0].count})
                 }
             })
-            .catch(err => console.log(err)),2000)
+            .catch(err => console.log(err))
 
     }
 
@@ -156,6 +156,12 @@ class Study extends React.Component {
                     i += 1;
                 }
             })
+
+            var url =  '/etude/answer/participate/true/'+this.props.patientID+'/'+this.state.details[0].id
+            fetch(url,{
+                method: 'POST',
+                credentials: 'include'
+            });
         }
     }
 
