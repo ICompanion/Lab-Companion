@@ -14,8 +14,14 @@ etudeController.getByCode = function(code, callback) {
     });
 };
 
-etudeController.getByPatientId = function(code, callback) {
+etudeController.getParticipatingPatient = function(code, callback) {
     bddController.executeQuery('select * from participations where identifiant = $1', [code], function(data, state){
+        callback(data, state);
+    });
+};
+
+etudeController.getByEmployeId = function(id, callback) {
+    bddController.executeQuery('select * from etude where employe_id = $1', [id], function(data, state){
         callback(data, state);
     });
 };
@@ -52,7 +58,7 @@ etudeController.addQuestion = function(values, callback) {
 };
 
 etudeController.addParticipation = function(values, callback) {
-    bddController.executeQuery('insert into public.participation(participation_statut, patient_id, etude_id) values($1, $2, $3)',
+    bddController.executeQuery('insert into public.participation(participation_statut, patient_id, etude_id) values($1, $3, $2)',
         values, function(data, state){
             callback(state);
         });

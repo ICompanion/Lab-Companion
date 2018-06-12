@@ -37,8 +37,8 @@ questionRouter.get('/:id', function(req, res){
     }
 });
 
-questionRouter.post('/:id/reponse/:id', function(req, res){
-    var values = [req.params.code, req.params.id];
+questionRouter.post('/:id/reponse/:idAnswer', function(req, res){
+    var values = [req.params.id, req.params.idAnswer];
 
     questionController.addAnswer(values, function(state){
         if(state === true)

@@ -14,6 +14,12 @@ analyseController.getByCode = function(code, callback) {
   });
 };
 
+analyseController.getById = function(id, callback) {
+    bddController.executeQuery('select * from public.analyse where id = $1', [id], function(data, state){
+        callback(data, state);
+    });
+};
+
 analyseController.getByEmploye = function(id, callback) {
     bddController.executeQuery('select * from public.analyse where employe_id = $1', [id], function(data, state){
         callback(data, state);

@@ -76,7 +76,7 @@ resultatRouter.get('/:id/categorie', function(req, res){
 });
 
 resultatRouter.post('/new', function(req, res){
-  var values = [req.body.nom, req.body.description, req.body.valeur_min,
+  var values = [req.body.nom, req.body.unit, req.body.valeur_min,
                 req.body.valeur_max, req.body.categorie_id];
 
   resultatController.new(values, function(state){

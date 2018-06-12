@@ -38,7 +38,7 @@ categorieRouter.get('/:id', function(req, res){
 });
 
 categorieRouter.post('/new', function(req, res){
-  var values = [req.body.nom, req.body.description];
+  var values = [req.body.nom];
 
   categorieController.new(values, function(state){
     if(state === true)

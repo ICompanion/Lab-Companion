@@ -30,6 +30,18 @@ analyseRouter.get('/:code', function(req, res){
   });
 });
 
+analyseRouter.get('/id/:id', function(req, res){
+    analyseController.getById(req.params.id, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 analyseRouter.get('/employe/:employe_id', function(req, res){
     analyseController.getByEmploye(req.params.employe_id, function(data, state){
         if(state === false) {res.status(500).end(); return;}
