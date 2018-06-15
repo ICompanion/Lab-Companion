@@ -47,22 +47,28 @@ class Study extends React.Component {
         this.submitAnswer = this.submitAnswer.bind(this);
 
         this.studyDetails(props)
-            .then(res => this.setState({details: res}))
-            .catch(err => console.log(err))
-
-        this.displayQuestions(props)
-            .then(res => this.setState({results: res}))
-            .catch(err => console.log(err))
-
-        this.countQuestions(props)
             .then(res => {
-                for (var i = 1; i <= res[0].count; i++) {
-                    questionName = 'question' + i;
-                    this.setState({[questionName]: 0})
-                    this.setState({qcount: res[0].count})
-                }
+                this.setState({details: res});
+                this.displayQuestions(props)
+                    .then(res => {
+                        this.setState({results: res});
+                        this.countQuestions(props)
+                            .then(res => {
+                                for (var i = 1; i <= res[0].count; i++) {
+                                    questionName = 'question' + i;
+                                    this.setState({[questionName]: 0})
+                                    this.setState({qcount: res[0].count})
+                                }
+                            })
+                            .catch(err => console.log(' error 1 ' + err))
+                    })
+                    .catch(err => console.log(' error 2 ' + err))
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(' error 3 ' + err))
+
+
+
+
 
     }
 
