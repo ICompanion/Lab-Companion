@@ -1,19 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow'
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import {Result} from './Result.js';
 
 const CustomTableCell = withStyles(theme => ({
-  head: {
-    backgroundColor: '#a5d6a7',
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
+    head: {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
 }))(TableCell);
 
 const styles = theme => ({
@@ -32,70 +37,83 @@ const styles = theme => ({
   },
 });
 
-let id = 0;
-function createData(name, calories, fat, carbs, protein) {
-  id += 1;
-  return { id, name, calories, fat, carbs, protein };
-}
-
 let data = []
 let display = "";
-function displayResults(props) {
-	data = [];
-	if (props.type == 'résultats') {
-	
-		data = [
-		  createData('Résultat n°LY587', '12/04/2018', 6.0, 24, 4.0),
-		  createData('Résultat n°MZ286', '08/04/2018', 9.0, 37, 4.3),
-		  createData('Résultat n°NA239', '08/04/2018', 16.0, 24, 6.0),
-		  createData('Résultat n°MJ405', '07/04/2018', 3.7, 67, 4.3),
-		  createData('Résultat n°ZA211', '02/04/2018', 16.0, 49, 3.9),
-		];
-
-	} else if (props.type == 'études') {
-		display = "display:none";
-		data = [
-		  createData('', 'Pas d\'études pour le moment :(', 6.0, 24, 4.0),
-		];
-	}
-}
 
 class ResultsList extends React.Component {
   constructor(props) {
       super(props);
+      this.state = {
+          display: 'list',
+          datas: []
+      }
+      this.handleDisplay = this.handleDisplay.bind(this);
+      this.displayResults = this.displayResults.bind(this);
+
+      if (this.state.display == 'list') {
+          this.displayResults(props)
+              .then(res => this.setState({datas: res}))
+              .catch(err => console.log(err))
+      }
   }
+
+    handleDisplay = (id) => {
+      this.setState({display: id})
+    }
+
+    displayResults = async (props) => {
+        data = [];
+        var url = '/analyse/patient/liste/'+props.id
+        const response = await fetch(url,{
+            method: 'GET',
+            credentials: 'include'
+        });
+        const datas = await response.json();
+        console.log(datas);
+
+        return datas;
+    }
+
   
   render() {
 	  
 	  const { classes } = this.props;
-	  displayResults(this.props);
-	  
-	  return (
-		<div>
-			<Typography variant="title" noWrap>{'Bienvenue Mr. VILALARD,'}</Typography>
-			<Typography variant="subheading" noWrap>{'Liste de vos '}{this.props.type}{' :'}</Typography>
-			<Paper className={classes.root}>
-			  <Table className={classes.table}>
-				<TableHead>
-				  <TableRow>
-					<CustomTableCell>Numéro</CustomTableCell>
-					<CustomTableCell numeric>Date</CustomTableCell>
-				  </TableRow>
-				</TableHead>
-				<TableBody>
-				  {data.map(n => {
-					return (
-					  <TableRow className={classes.row} key={n.id}>
-						<CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button}>{n.name}</Button></CustomTableCell>
-						<CustomTableCell numeric><i>{n.calories}</i></CustomTableCell>
-					  </TableRow>
-					);
-				  })}
-				</TableBody>
-			  </Table>
-			</Paper>
-		</div>
-	  );
+	  if(this.state.display == 'list') {
+          var promise = this.displayResults(this.props);
+          promise.then(result => {data = result});
+	      return (
+              <div>
+                  <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('}<i>{this.props.id}</i>{')'}</Typography><br/>
+                  <Typography variant="subheading" noWrap>{'Liste de vos résultats :'}</Typography>
+                  <Paper className={classes.root}>
+                      <Table className={classes.table}>
+                          <TableHead>
+                              <TableRow>
+                                  <CustomTableCell>Référence</CustomTableCell>
+                                  <CustomTableCell numeric>Date</CustomTableCell>
+                              </TableRow>
+                          </TableHead>
+                          <TableBody>
+                              <Typography>{data.toString()}</Typography>
+                              {this.state.datas.map(n => {
+                                  return (
+                                      <TableRow className={classes.row} key={n.id}>
+                                          <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_analyse)}>{'Résultat n° '}<i>{n.code_analyse}</i></Button></CustomTableCell>
+                                          <CustomTableCell numeric><i>{n.date_analyse.substring(0,10)}</i></CustomTableCell>
+                                      </TableRow>
+                                  );
+                              })}
+                          </TableBody>
+                      </Table>
+                  </Paper>
+              </div>
+          );
+      } else {
+          return (
+              <Result analyseID={this.state.display} backHandler={this.handleDisplay}/>
+          );
+      }
+
   }
 }
 

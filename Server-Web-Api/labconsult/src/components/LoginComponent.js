@@ -1,15 +1,17 @@
 import React from 'react';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import logo from '../logo.svg';
-import NopeIcon from 'material-ui-icons/Report';
-import Button from 'material-ui/Button';
+import NopeIcon from '@material-ui/icons/Report';
+import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-	
-	const styles = theme => ({	
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+
+
+	const styles = theme => ({
 	  grid: {
 		alignContent: 'center',
 	  },
@@ -35,41 +37,46 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 		backgroundColor: '#c6ebd6!important',
 	  }
 	});
-		
+
 	class LoginComponent extends React.Component {
-		
-		state = 
-		{
-			login: '', 
-			pwd: '',
-		};
-		
+
+		constructor(props) {
+          super(props);
+          this.state = {
+                login: '',
+                pwd: '',
+          };
+  	    }
+
 		handleSubmit = async () => {
-				let url = '/patient/connect/'+this.state.login+'/'+this.state.pwd+'';
-				const response = await fetch(url);
-				const body = await response.json();
+				let url = '/authenticate/'+this.state.login+'/'+this.state.pwd+'';
+				const response = await fetch(url,{
+					method: 'GET',
+					credentials: 'include'
+				});
+				const result = await response.json();
 
 				if (response.status === '(pending)') {
 					document.getElementById('serveranswer').innerHTML = "Pending...";
 				} else if (response.status === 200) {
-					if (body == 'true') {
-						window.location.replace("http://localhost:3000/home");
+					if (result.success == true) {
+						window.location.reload();
 					} else {
-						document.getElementById('serveranswer').innerHTML = "<NopeIcon/><p class='errormsg'>Nous n'avons pas pu vous identifier, veuillez réessayer.</p> ";
+						document.getElementById('serveranswer').innerHTML = "<NopeIcon/><p class='errormsg'>"+result.message+"</p> ";
 					}
 				}
-				
-				return body;
+
+				return result;
 		};
-		
+
 		handleLogin = login => event => {
 			this.setState({ [login]: event.target.value });
 		};
-		
+
 		handlePwd = pwd => event => {
 			this.setState({ [pwd]: event.target.value });
 		};
-		
+
 		render() {
 			const { classes } = this.props;
 
@@ -87,7 +94,7 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 								  <div className={classes.container}>
 									<FormControl className={classes.formControl}>
 									  <InputLabel htmlFor="name-simple">ID</InputLabel>
-									  <Input 
+									  <Input
 										id="login"
 										onChange={this.handleLogin('login').bind(this)}
 										value={this.state.login}
@@ -95,11 +102,11 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 									</FormControl>
 									<FormControl className={classes.formControl}>
 									  <InputLabel htmlFor="name-simple">Password</InputLabel>
-									  <Input className={classes.formLabel} 
-										id="pwd" 
+									  <Input className={classes.formLabel}
+										id="pwd"
 										type="password"
-										onChange={this.handlePwd('pwd').bind(this)}	
-										value={this.state.pwd} 
+										onChange={this.handlePwd('pwd').bind(this)}
+										value={this.state.pwd}
 									  />
 									</FormControl>
 								  </div>
@@ -116,10 +123,10 @@ import { FormControl, FormHelperText } from 'material-ui/Form';
 			);
 		  }
 	}
-	
+
 	LoginComponent.propTypes = {
 		classes: PropTypes.object.isRequired,
 	}
-	
+
 	LoginComponent = withStyles(styles)(LoginComponent);
 	export {LoginComponent};

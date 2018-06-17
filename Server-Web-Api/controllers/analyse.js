@@ -3,46 +3,39 @@ const bddController = require('./bdd');
 const analyseController = function(){};
 
 analyseController.getAll = function(callback) {
-  bddController.start();
-  bddController.executeQuery('select * from analyses', '', function(data){
-    bddController.stop();
-    console.log(data);
-	   callback(data);
+  bddController.executeQuery('select * from analyses', '', function(data, state){
+      callback(data, state);
   });
 };
 
 analyseController.getByCode = function(code, callback) {
-  bddController.start();
-  bddController.executeQuery('select * from analyses where code_analyse = $1', [code], function(data){
-    bddController.stop();
-    console.log(data);
-	   callback(data);
+  bddController.executeQuery('select * from analyses where code_analyse = $1', [code], function(data, state){
+      callback(data, state);
   });
 };
 
-analyseController.getPatientAnalyses = function(patient_id, callback) {
-  bddController.start();
-  bddController.executeQuery('select * from analyses where identifiant = $1', [patient_id], function(data){
-    bddController.stop();
-    console.log(data);
-	   callback(data);
+analyseController.getAnalyse = function(code_analyse, callback) {
+  bddController.executeQuery('select * from analyses where code_analyse = $1', [code_analyse], function(data, state){
+      callback(data, state);
   });
+};
+
+analyseController.getPatientAnalysesList = function(patient_id, callback) {
+    bddController.executeQuery('select code_analyse, date_analyse from public.analyse where patient_id = $1', [patient_id], function(data, state){
+        callback(data, state);
+    });
 };
 
 analyseController.new = function(values, callback) {
-  bddController.start();
   bddController.executeQuery('insert into public.analyse(code_analyse, description, employe_id, patient_id, date_analyse) values($1, $2, $3, $4, $5)',
-                              values, function(result, state){
-    bddController.stop();
+                              values, function(data, state){
     callback(state);
   });
 };
 
 analyseController.newResult = function(values, callback) {
-  bddController.start();
   bddController.executeQuery('insert into public.resultat_analyse (valeur, analyse_id, resultat_id) values($1, $2, $3)',
-                              values, function(result, state){
-    bddController.stop();
+                              values, function(data, state){
     callback(state);
   });
 };
@@ -58,9 +51,7 @@ analyseController.update = function(columns, values, id, callback) {
   }
   text = text.slice(0,-2) + ' where id = ' + id;
 
-  bddController.start();
-  bddController.executeQuery(text, values, function(result, state){
-    bddController.stop();
+  bddController.executeQuery(text, values, function(data, state){
     callback(state);
   });
 };
@@ -76,27 +67,21 @@ analyseController.updateResult = function(columns, values, id, callback) {
   }
   text = text.slice(0,-2) + ' where id = ' + id;
 
-  bddController.start();
-  bddController.executeQuery(text, values, function(result, state){
-    bddController.stop();
+  bddController.executeQuery(text, values, function(data, state){
     callback(state);
   });
 };
 
 analyseController.deleteById = function(values, callback){
-  bddController.start();
   bddController.executeQuery('delete from public.analyse where id = $1; delete from resultat_analyse where analyse_id = $1; ',
-                              [values], function(result, state){
-    bddController.stop();
+                              [values], function(data, state){
     callback(state);
   });
 };
 
 analyseController.deleteResult = function(values, callback){
-  bddController.start();
   bddController.executeQuery('delete from resultat_analyse where id = $1;',
-                              [values], function(result, state){
-    bddController.stop();
+                              [values], function(data, state){
     callback(state);
   });
 };
