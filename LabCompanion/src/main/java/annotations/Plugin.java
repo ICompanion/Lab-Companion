@@ -8,6 +8,6 @@ import java.lang.annotation.*;
 public @interface Plugin {
     String name();
     String description();
-    Class pluginClass();
-    boolean used() default false;
+    String version();
+    String author();
 }
