@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -36,7 +37,8 @@ class Study extends React.Component {
             results: [],
             answers: [],
             value: 'female',
-            qcount: 0
+            qcount: 0,
+            confirmCb: false
         }
         idq = 0;
         this.studyDetails = this.studyDetails.bind(this);
@@ -45,10 +47,12 @@ class Study extends React.Component {
         this.countQuestions = this.countQuestions.bind(this);
         this.submitQuestions = this.submitQuestions.bind(this);
         this.submitAnswer = this.submitAnswer.bind(this);
+        this.handleCheckbox = this.handleCheckbox.bind(this);
 
         this.studyDetails(props)
             .then(res => {
                 this.setState({details: res});
+                document.getElementById('details').innerHTML = "<b>Nom : </b><i>"+res[0].nom+"</i><br/><b>Description : </b><i>"+res[0].description+"</i><br/>"
                 this.displayQuestions(props)
                     .then(res => {
                         this.setState({results: res});
@@ -113,6 +117,10 @@ class Study extends React.Component {
         this.setState({ [event.target.name]: parseInt(event.target.value) });
     };
 
+    handleCheckbox = name => event => {
+        this.setState({ [name]: event.target.checked });
+    };
+
     generateQuestions = (datas,question,classes) => {
         questionName = 'question'+idq;
         radioGroupId = 'rg'+questionName;
@@ -151,7 +159,7 @@ class Study extends React.Component {
             }
         }
 
-        if (completeq === true) {
+        if (completeq === true && this.state.confirmCb === true) {
             previousq = '';
             this.state.results.map(question => {
                 if (question.intitule !== previousq) {
@@ -168,6 +176,13 @@ class Study extends React.Component {
                 method: 'POST',
                 credentials: 'include'
             });
+
+            alert("Formulaire envoyé. Vous allez maintenant être redirigé vers la page d'accueil.")
+            window.location.reload();
+        }
+
+        if (this.state.confirmCb === false) {
+            alert("Veuillez cocher la checkbox afin de soumettre votre autorisation");
         }
     }
 
@@ -177,9 +192,11 @@ class Study extends React.Component {
         idq = 0;
         return (
             <div>
-                <Typography variant="title" noWrap>{'Etude: '}{this.props.etudeID}{' Number: '}{this.state.qcount}</Typography>
+                <Typography variant="title" noWrap>{'Etude: '}{this.props.etudeID}</Typography>
+                <div id="details"></div>
                 <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                     <br/><br/>
+                    <div id="errormsg"></div>
                     <Paper>
                         {this.state.results.map(question => {
                             if (question.intitule !== previousq) {
@@ -190,6 +207,17 @@ class Study extends React.Component {
                         })}
                     </Paper>
                     <br/>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                id="confirm"
+                                color="secondary"
+                                checked={this.state.confirmCb}
+                                onChange={this.handleCheckbox('confirmCb')}
+                            />
+                        }
+                        label="J'accepte de partager des données confidentielles à des fins statistiques"
+                    /><br/>
                     <Button variant="raised" size="small" color ="secondary" type="submit" onClick={() => {this.submitQuestions(this.props)}}>Envoyer</Button>
             </div>
         );

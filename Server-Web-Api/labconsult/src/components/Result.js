@@ -60,7 +60,11 @@ class Result extends React.Component {
         this.evaluate = this.evaluate.bind(this);
 
         this.displayResult(props)
-            .then(res => this.setState({results: res}))
+            .then(res => {
+                document.getElementById('details').innerHTML = "<b>Date : </b><i>"+res[0].date_analyse.substring(0,10)+"</i><br/><b>Realized by Dr. : </b><i>"+res[0].employe_nom.toUpperCase()+"</i><br/>"
+                this.setState({results: res})
+                }
+            )
             .catch(err => console.log(err))
     }
 
@@ -99,6 +103,13 @@ class Result extends React.Component {
         }
     }
 
+    print = () => {
+        var printwindow = window.open('', 'PRINT', 'height=400,width=600');
+        printwindow.document.write('<html><body><center>' + document.getElementById('content').innerHTML + '</center></body></html>');
+        printwindow.print();
+        printwindow.close();
+    }
+
     render() {
 
         const { classes } = this.props;
@@ -106,7 +117,7 @@ class Result extends React.Component {
         return (
             <div>
                 <Typography variant="title" noWrap>{'Analyse: '}{this.props.analyseID}</Typography>
-                <Typography variant="title" noWrap>{'Docteur: '}</Typography>
+                <div id="details"></div>
                 <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
@@ -135,7 +146,8 @@ class Result extends React.Component {
                             })}
                         </TableBody>
                     </Table>
-                </Paper>
+                </Paper><br/>
+                <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.print()}>Imprimer</Button>
             </div>
         );
     }
