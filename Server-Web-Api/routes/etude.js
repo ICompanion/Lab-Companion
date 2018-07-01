@@ -7,7 +7,32 @@ const etudeRouter = express.Router();
 etudeRouter.use(bodyParser.json());
 
 etudeRouter.get('/all', function(req, res){
-    etudeController.getAll(function(data){
+    etudeController.getAll(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
+etudeRouter.get('/patient/liste/:id', function(req, res){
+    etudeController.getParticipatingPatient(req.params.id, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
+etudeRouter.get('/employe/:id', function(req, res){
+    etudeController.getByEmployeId(req.params.id, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -18,7 +43,20 @@ etudeRouter.get('/all', function(req, res){
 });
 
 etudeRouter.get('/:code', function(req, res){
-    etudeController.getByCode(req.params.code, function(data){
+    etudeController.getByCode(req.params.code, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
+etudeRouter.get('/:code/questions', function(req, res){
+    etudeController.getQuestions(req.params.code, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -29,7 +67,8 @@ etudeRouter.get('/:code', function(req, res){
 });
 
 etudeRouter.get('/:code/reponses', function(req, res){
-    etudeController.getAnswers(req.params.code, function(data){
+    etudeController.getAnswers(req.params.code, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -39,10 +78,9 @@ etudeRouter.get('/:code/reponses', function(req, res){
     });
 });
 
-etudeRouter.get('/paul', function(req, res){
-    console.log("okok");
-    etudeController.getAllAnswers(function(data){
-
+etudeRouter.get('/reponses', function(req, res){
+    etudeController.getAllAnswers(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -66,8 +104,8 @@ etudeRouter.post('/new', function(req, res){
     });
 });
 
-etudeRouter.post('/:code/add question/:id', function(req, res){
-    var values = [req.params.code, req.params.id];
+etudeRouter.post('/:id/addQuestion/:idQuestion', function(req, res){
+    var values = [req.params.id, req.params.idQuestion];
 
     etudeController.addQuestion(values, function(state){
         if(state === true)
@@ -79,8 +117,8 @@ etudeRouter.post('/:code/add question/:id', function(req, res){
     });
 });
 
-etudeRouter.post('/:code/participate/:id', function(req, res){
-    var values = [req.body.statut, req.params.id, req.params.code];
+etudeRouter.post('/:id/participate/:idPatient', function(req, res){
+    var values = [req.body.statut, req.params.id, req.params.idPatient];
 
     etudeController.addParticipation(values, function(state){
         if(state === true)

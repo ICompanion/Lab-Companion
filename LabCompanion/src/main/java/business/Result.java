@@ -4,17 +4,32 @@ public class Result {
 
     private int id;
     private String title;
-    private String description;
-    private float value;
+    private String unit;
+    private float value_max;
+
+
+
+    private float value_min;
     private Category category;
 
-    public Result(int id, String title, String description, float value,
+    public Result(int id, String title, String unit, float value_max, float value_min,
                   Category category) {
         this.id = id;
         this.title = title;
-        this.description = description;
-        this.value = value;
+        this.unit = unit;
+
+        this.value_max = value_max;
+        this.value_min = value_min;
         this.category = category;
+    }
+
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
     public int getId() {
@@ -33,20 +48,28 @@ public class Result {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getValue() {
+        return unit;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setValue(String value) {
+        this.unit = value;
     }
 
-    public float getValue() {
-        return value;
+    public float getValue_max() {
+        return value_max;
     }
 
-    public void setValue(float value) {
-        this.value = value;
+    public void setValue_max(float value_max) {
+        this.value_max = value_max;
+    }
+
+    public float getValue_min() {
+        return value_min;
+    }
+
+    public void setValue_min(float value_min) {
+        this.value_min = value_min;
     }
 
     public Category getCategory() {

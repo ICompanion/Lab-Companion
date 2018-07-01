@@ -6,23 +6,20 @@ import java.util.Date;
 public class Analysis {
     private int id;
     private String code;
-    private String name;
-    private Date starDate;
-    private Date endDate;
+    private Date dateAnalyse;
     private String description;
-    private ArrayList<Result> results;
+    private ArrayList<AnalysisResult> results;
     private Patient patient;
     private Doctor doctor;
 
-    public Analysis(int id, String code, String name, Date starDate,
-                    Date endDate, String description, ArrayList<Result> results) {
+    public Analysis(int id, String code, Date dateAnalyse, String description, ArrayList<AnalysisResult> results, Patient patient, Doctor doctor) {
         this.id = id;
         this.code = code;
-        this.name = name;
-        this.starDate = starDate;
-        this.endDate = endDate;
+        this.dateAnalyse = dateAnalyse;
         this.description = description;
         this.results = results;
+        this.patient = patient;
+        this.doctor = doctor;
     }
 
     public int getId() {
@@ -41,29 +38,14 @@ public class Analysis {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public Date getDateAnalyse() {
+        return dateAnalyse;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDateAnalyse(Date starDate) {
+        this.dateAnalyse = starDate;
     }
 
-    public Date getStarDate() {
-        return starDate;
-    }
-
-    public void setStarDate(Date starDate) {
-        this.starDate = starDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
 
     public String getDescription() {
         return description;
@@ -73,11 +55,11 @@ public class Analysis {
         this.description = description;
     }
 
-    public ArrayList<Result> getResults() {
+    public ArrayList<AnalysisResult> getResults() {
         return results;
     }
 
-    public void setResults(ArrayList<Result> results) {
+    public void setResults(ArrayList<AnalysisResult> results) {
         this.results = results;
     }
 

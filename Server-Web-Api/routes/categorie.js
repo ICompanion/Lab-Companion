@@ -7,7 +7,8 @@ const categorieRouter = express.Router();
 categorieRouter.use(bodyParser.json());
 
 categorieRouter.get('/all', function(req, res){
-  categorieController.getAll(function(data){
+  categorieController.getAll(function(data, state){
+    if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -20,7 +21,8 @@ categorieRouter.get('/all', function(req, res){
 categorieRouter.get('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    categorieController.getById(req.params.id,function(data){
+    categorieController.getById(req.params.id,function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -36,7 +38,7 @@ categorieRouter.get('/:id', function(req, res){
 });
 
 categorieRouter.post('/new', function(req, res){
-  var values = [req.body.nom, req.body.description];
+  var values = [req.body.nom];
 
   categorieController.new(values, function(state){
     if(state === true)

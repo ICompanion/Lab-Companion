@@ -7,7 +7,8 @@ const questionRouter = express.Router();
 questionRouter.use(bodyParser.json());
 
 questionRouter.get('/all', function(req, res){
-    questionController.getAll(function(data){
+    questionController.getAll(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
             res.json(data).status(200);
@@ -20,7 +21,8 @@ questionRouter.get('/all', function(req, res){
 questionRouter.get('/:id', function(req, res){
     if(Number.parseInt(req.params.id))
     {
-        questionController.getById(req.params.id,function(data){
+        questionController.getById(req.params.id,function(data, state){
+            if(state === false) {res.status(500).end(); return;}
             data = JSON.parse(data);
             if(data.length !== 0){
                 res.json(data).status(200);
@@ -35,8 +37,8 @@ questionRouter.get('/:id', function(req, res){
     }
 });
 
-questionRouter.post('/:id/reponse/:id', function(req, res){
-    var values = [req.params.code, req.params.id];
+questionRouter.post('/:id/reponse/:idAnswer', function(req, res){
+    var values = [req.params.id, req.params.idAnswer];
 
     questionController.addAnswer(values, function(state){
         if(state === true)

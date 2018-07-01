@@ -7,7 +7,8 @@ const resultatRouter = express.Router();
 resultatRouter.use(bodyParser.json());
 
 resultatRouter.get('/all', function(req, res){
-  resultatController.getAll(function(data){
+  resultatController.getAll(function(data, state){
+  if(state === false) {res.status(500).end(); return;}
     data = JSON.parse(data);
     if(data.length !== 0){
       res.json(data).status(200);
@@ -20,7 +21,8 @@ resultatRouter.get('/all', function(req, res){
 resultatRouter.get('/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    resultatController.getById(req.params.id,function(data){
+    resultatController.getById(req.params.id,function(data, state){
+    if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -38,7 +40,8 @@ resultatRouter.get('/:id', function(req, res){
 resultatRouter.get('/categorie/:id', function(req, res){
   if(Number.parseInt(req.params.id))
   {
-    resultatController.getByCategory(req.params.id, function(data){
+    resultatController.getByCategory(req.params.id, function(data, state){
+      if(state === false) {res.status(500).end(); return;}
       data = JSON.parse(data);
       if(data.length !== 0){
         res.json(data).status(200);
@@ -53,8 +56,27 @@ resultatRouter.get('/categorie/:id', function(req, res){
   }
 });
 
+resultatRouter.get('/:id/categorie', function(req, res){
+    if(Number.parseInt(req.params.id))
+    {
+        resultatController.getCategory(req.params.id, function(data, state){
+            if(state === false) {res.status(500).end(); return;}
+            data = JSON.parse(data);
+            if(data.length !== 0){
+                res.json(data).status(200);
+                return;
+            }
+            res.status(404).end();
+            return;
+        });
+    }
+    else{
+        res.json("parameter is not an integer").status(500).end();
+    }
+});
+
 resultatRouter.post('/new', function(req, res){
-  var values = [req.body.nom, req.body.description, req.body.valeur_min,
+  var values = [req.body.nom, req.body.unit, req.body.valeur_min,
                 req.body.valeur_max, req.body.categorie_id];
 
   resultatController.new(values, function(state){
