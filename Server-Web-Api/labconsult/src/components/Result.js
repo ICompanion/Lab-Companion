@@ -58,6 +58,7 @@ class Result extends React.Component {
 
         this.displayResult = this.displayResult.bind(this);
         this.evaluate = this.evaluate.bind(this);
+        this.print = this.print.bind(this);
 
         this.displayResult(props)
             .then(res => {
@@ -84,20 +85,20 @@ class Result extends React.Component {
     evaluate = (value, valuemin, valuemax) => {
         if (value >= valuemin && value <= valuemax) {
             return (
-                <Tooltip title="Result interpretation is correct.">
-                    <PositiveIcon color="primary"/>
+                <Tooltip name="evalmsg" title="Result interpretation is correct.">
+                    <PositiveIcon name="okresult" color="primary"/>
                 </Tooltip>
             );
         } else if (value < valuemin) {
             return (
-                <Tooltip title="Result interpretation is lower than average, please refer to your doctor.">
-                    <DownIcon color="error"/>
+                <Tooltip name="evalmsg" title="Result interpretation is lower than average, please refer to your doctor.">
+                    <DownIcon name="downresult" color="error"/>
                 </Tooltip>
             );
         } else if (value > valuemax) {
             return (
-                <Tooltip title="Result interpretation is higher than average, please refer to your doctor.">
-                    <UpIcon color="error"/>
+                <Tooltip name="evalmsg" title="Result interpretation is higher than average, please refer to your doctor.">
+                    <UpIcon name="upresult" color="error"/>
                 </Tooltip>
             );
         }
@@ -105,7 +106,7 @@ class Result extends React.Component {
 
     print = () => {
         var printwindow = window.open('', 'PRINT', 'height=400,width=600');
-        printwindow.document.write('<html><body><center>' + document.getElementById('content').innerHTML + '</center></body></html>');
+        printwindow.document.write('<html><head><style>#details {margin-bottom: 15px; width:fit-content;} button {display: none} body {border-left: 35px solid #a5d6a7; font-family: sans-serif}</style></head></head.><body><center>' + document.getElementById('content').innerHTML + '</center></body></html>');
         printwindow.print();
         printwindow.close();
     }
@@ -118,7 +119,7 @@ class Result extends React.Component {
             <div>
                 <Typography variant="title" noWrap>{'Analyse: '}{this.props.analyseID}</Typography>
                 <div id="details"></div>
-                <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
+                <Button variant="raised" id="backbtn" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                         <TableHead>

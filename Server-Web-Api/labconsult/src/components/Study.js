@@ -155,7 +155,7 @@ class Study extends React.Component {
             index = 'question'+i;
             if (this.state[index] === 0) {
                 completeq = false;
-                //document.getElementById(index).innerHTML+= " <p style='color: red; margin-top: -5px; margin-bottom: 0px'>Please answer the question.</p>"
+                document.getElementById("errormsg").innerHTML = " <p style='color: red; margin-top: -5px; margin-bottom: 0px'>Please answer to every questions.</p>"
             }
         }
 
@@ -194,7 +194,7 @@ class Study extends React.Component {
             <div>
                 <Typography variant="title" noWrap>{'Etude: '}{this.props.etudeID}</Typography>
                 <div id="details"></div>
-                <Button variant="raised" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
+                <Button variant="raised" id="backbtn" size="small" color="secondary" type="submit" onClick={() => this.props.backHandler('list')}>Retour</Button>
                     <br/><br/>
                     <div id="errormsg"></div>
                     <Paper>
@@ -218,7 +218,7 @@ class Study extends React.Component {
                         }
                         label="J'accepte de partager des données confidentielles à des fins statistiques"
                     /><br/>
-                    <Button variant="raised" size="small" color ="secondary" type="submit" onClick={() => {this.submitQuestions(this.props)}}>Envoyer</Button>
+                    <Button id="submitform" variant="raised" size="small" color ="secondary" type="submit" onClick={() => {this.submitQuestions(this.props)}}>Envoyer</Button>
             </div>
         );
     }

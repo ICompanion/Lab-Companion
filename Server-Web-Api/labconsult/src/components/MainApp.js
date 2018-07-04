@@ -130,7 +130,7 @@ class MainApp extends React.Component {
 		case 'disconnect': return <DisconnectComponent/>
 		case '': return (
 		    <div>
-		        <Typography variant="display2" noWrap>{'Welcome M. '+this.state.name}</Typography><br/><br/>
+		        <Typography variant="display2" id="welcome" noWrap>{'Welcome M. '+this.state.name}</Typography><br/><br/>
                 <Typography variant="headline" color="primary" noWrap>{d}</Typography><br/><br/>
                 <Typography variant="headline" color="primary" noWrap>{h}</Typography>
             </div>
@@ -191,28 +191,28 @@ class MainApp extends React.Component {
           </div>
           <Divider />
           <List>
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'results')}>
+			<ListItem button id="analysis" onClick={this.renderingSwitch.bind(this, 'results')}>
 			  <ListItemIcon>
 				<ResultIcon />
 			  </ListItemIcon>
 			  <ListItemText primary="Your results" />
 			</ListItem>
 			<Divider />
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'studies')}>
+			<ListItem button id="studies" onClick={this.renderingSwitch.bind(this, 'studies')}>
 			  <ListItemIcon>
 				<StudiesIcon />
 			  </ListItemIcon>
 			  <ListItemText primary="Your studies" />
 			</ListItem>
 			<Divider />
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'options')}>
+			<ListItem button id="options" onClick={this.renderingSwitch.bind(this, 'options')}>
 			  <ListItemIcon>
 				<SettingsIcon />
 			  </ListItemIcon>
 			  <ListItemText primary="Options" />
 			</ListItem>
 			<Divider />
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'disconnect')}>
+			<ListItem button id="disconnect" onClick={this.renderingSwitch.bind(this, 'disconnect')}>
 			  <ListItemIcon>
 				<ExitIcon />
 			  </ListItemIcon>

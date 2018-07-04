@@ -113,7 +113,7 @@ import FormControl from '@material-ui/core/FormControl';
 								</Grid>
 								<br/>
 								<Grid container spacing={16} justify="center" alignItems="center">
-									<Button className={classes.loginBtn} variant="raised" color="primary" type="submit" onClick={this.handleSubmit.bind(this)} className={classes.button}>Login</Button>
+									<Button className={classes.loginBtn} id="loginsubmit" variant="raised" color="primary" type="submit" onClick={this.handleSubmit.bind(this)} className={classes.button}>Login</Button>
 								</Grid>
 							</Paper>
 							<div id="serveranswer"></div>
