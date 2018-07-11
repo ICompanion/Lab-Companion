@@ -11,15 +11,16 @@ values: undefined,
 }
 
 bddController.start = function(callback){
-    pool.connect(function(err){
+    pool.connect(function(err, client, done){
         if(err)
         {
             console.log("Erreur lors de la connection: " +err);
             callback(false);
             return;
         }
+        done
         console.log('Connecté à la base de données');
-        callback(true);
+        callback(true, done);
         return;
     });
 };
@@ -28,7 +29,7 @@ bddController.start = function(callback){
 bddController.executeQuery = function(text, values, callback){
     var state = false;
 
-    bddController.start(function(state) {
+    bddController.start(function(state, done) {
         if(state === false) {callback(undefined, state); return;}
         bddController.makeQuery(text, values);
         pool.query(query, function(err, res){
@@ -42,6 +43,7 @@ bddController.executeQuery = function(text, values, callback){
             console.log('Requête executée');
             data = JSON.stringify(res.rows);
             state = true;
+            done();
             callback(data, state);
         });
     });

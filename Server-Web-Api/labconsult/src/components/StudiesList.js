@@ -45,6 +45,7 @@ class StudiesList extends React.Component {
         super(props);
         this.state = {
             display: 'list',
+            patientid: 0,
             datas: []
         }
         this.handleDisplay = this.handleDisplay.bind(this);
@@ -59,7 +60,8 @@ class StudiesList extends React.Component {
         }
     }
 
-    handleDisplay = (id) => {
+    handleDisplay = (id,id_patient) => {
+        this.setState({patientid: id_patient})
         this.setState({display: id})
     }
 
@@ -102,7 +104,7 @@ class StudiesList extends React.Component {
             return (
                 <div>
                 <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('}<i>{this.props.id}</i>{')'}</Typography><br/>
-                    <Typography variant="subheading" noWrap>{'Liste de vos études :'}</Typography>
+                    <Typography variant="subheading" id="listtype" noWrap>{'Liste de vos études :'}</Typography>
                     <Paper className={classes.root}>
                         <Table className={classes.table}>
                             <TableHead>
@@ -115,8 +117,8 @@ class StudiesList extends React.Component {
                                 {this.state.datas.map(n => {
                                     return (
                                         <TableRow className={classes.row} key={n.id}>
-                                            <CustomTableCell><Button variant="raised"  size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_etude)}>{'Etude n° '}<i>{n.code_etude}</i></Button></CustomTableCell>
-                                            <CustomTableCell numeric><i>{this.evaluateStudy(n.statut)}</i></CustomTableCell>
+                                            <CustomTableCell><Button variant="raised"  id={n.code_etude} size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_etude,n.patient_id)} disabled={n.statut}>{'Etude n° '}<i>{n.code_etude}</i></Button></CustomTableCell>
+                                            <CustomTableCell name="status" numeric><i>{this.evaluateStudy(n.statut)}</i></CustomTableCell>
                                         </TableRow>
                                     );
                                 })}
@@ -127,7 +129,7 @@ class StudiesList extends React.Component {
             );
         } else {
             return (
-                <Study etudeID={this.state.display} patientID={this.props.id} backHandler={this.handleDisplay} qcount={this.countQuestions}/>
+                <Study etudeID={this.state.display} patientID={this.state.patientid} backHandler={this.handleDisplay} qcount={this.countQuestions}/>
             );
         }
 

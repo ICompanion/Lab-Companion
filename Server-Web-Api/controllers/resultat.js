@@ -15,7 +15,6 @@ resultatController.getById = function(id, callback) {
 };
 
 resultatController.getByCategory = function(id, callback) {
-<<<<<<< HEAD
     bddController.executeQuery('select * from resultat where categorie_id = $1', [id], function(data, state){
         callback(data, state);
     });

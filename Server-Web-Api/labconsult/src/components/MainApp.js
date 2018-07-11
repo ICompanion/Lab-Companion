@@ -88,9 +88,10 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
+    overflow: 'auto'
   },
     insideContent: {
-        height: '100%'
+        height: '100%',
     },
 });
 
@@ -117,12 +118,23 @@ class MainApp extends React.Component {
   }
   
   _renderSubComp(){
+    var h = "";
+    var d = new Date();
+    h = d.toTimeString();
+    h = h.substring(0,5);
+    d = d.toDateString();
 	switch(this.state.render) {
 		case 'results': return <ResultsList name={this.state.name} id={this.state.id}/>
 		case 'studies': return <StudiesList name={this.state.name} id={this.state.id}/>
 		case 'options': return <OptionComponent/>
 		case 'disconnect': return <DisconnectComponent/>
-		case '': return <Typography variant="display2" noWrap>{'Welcome M. '+this.state.name}</Typography>
+		case '': return (
+		    <div>
+		        <Typography variant="display2" id="welcome" noWrap>{'Welcome M. '+this.state.name}</Typography><br/><br/>
+                <Typography variant="headline" color="primary" noWrap>{d}</Typography><br/><br/>
+                <Typography variant="headline" color="primary" noWrap>{h}</Typography>
+            </div>
+        );
 	}
   }
 
@@ -179,28 +191,28 @@ class MainApp extends React.Component {
           </div>
           <Divider />
           <List>
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'results')}>
+			<ListItem button id="analysis" onClick={this.renderingSwitch.bind(this, 'results')}>
 			  <ListItemIcon>
 				<ResultIcon />
 			  </ListItemIcon>
 			  <ListItemText primary="Your results" />
 			</ListItem>
 			<Divider />
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'studies')}>
+			<ListItem button id="studies" onClick={this.renderingSwitch.bind(this, 'studies')}>
 			  <ListItemIcon>
 				<StudiesIcon />
 			  </ListItemIcon>
 			  <ListItemText primary="Your studies" />
 			</ListItem>
 			<Divider />
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'options')}>
+			<ListItem button id="options" onClick={this.renderingSwitch.bind(this, 'options')}>
 			  <ListItemIcon>
 				<SettingsIcon />
 			  </ListItemIcon>
 			  <ListItemText primary="Options" />
 			</ListItem>
 			<Divider />
-			<ListItem button onClick={this.renderingSwitch.bind(this, 'disconnect')}>
+			<ListItem button id="disconnect" onClick={this.renderingSwitch.bind(this, 'disconnect')}>
 			  <ListItemIcon>
 				<ExitIcon />
 			  </ListItemIcon>
@@ -210,7 +222,7 @@ class MainApp extends React.Component {
 		  </List>
           <List></List>
         </Drawer>
-        <main className={classes.content}>
+        <main className={classes.content} id="content">
           <div className={classes.toolbar} />
 		  <div className={classes.insideContent}>
                 {this._renderSubComp()}

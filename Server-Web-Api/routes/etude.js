@@ -155,7 +155,7 @@ etudeRouter.post('/:code/answer/add/:idq/:ida', function(req, res){
     });
 });
 
-etudeRouter.post('/answer/participate/:status/:idp/:code', function(req, res){
+etudeRouter.post('/answer/participate/:statusp/:idp/:code', function(req, res){
     var values = [req.params.statusp, req.params.idp, req.params.code];
 
     etudeController.updateParticipation(values, function(state){

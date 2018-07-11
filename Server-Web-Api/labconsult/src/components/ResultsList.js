@@ -84,7 +84,7 @@ class ResultsList extends React.Component {
 	      return (
               <div>
                   <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('}<i>{this.props.id}</i>{')'}</Typography><br/>
-                  <Typography variant="subheading" noWrap>{'Liste de vos résultats :'}</Typography>
+                  <Typography variant="subheading" id="listtype" noWrap>{'Liste de vos résultats :'}</Typography>
                   <Paper className={classes.root}>
                       <Table className={classes.table}>
                           <TableHead>
@@ -98,7 +98,7 @@ class ResultsList extends React.Component {
                               {this.state.datas.map(n => {
                                   return (
                                       <TableRow className={classes.row} key={n.id}>
-                                          <CustomTableCell><Button variant="raised" size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_analyse)}>{'Résultat n° '}<i>{n.code_analyse}</i></Button></CustomTableCell>
+                                          <CustomTableCell><Button variant="raised" id={n.code_analyse} size="small" color="secondary" type="submit" className={classes.button} onClick={() => this.handleDisplay(n.code_analyse)}>{'Résultat n° '}<i>{n.code_analyse}</i></Button></CustomTableCell>
                                           <CustomTableCell numeric><i>{n.date_analyse.substring(0,10)}</i></CustomTableCell>
                                       </TableRow>
                                   );
