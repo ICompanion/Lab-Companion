@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoctorAnalysisController">
+   <center>
+      <TableView fx:id="analysisTab" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="patientIdColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Numéro Patient" />
+          <TableColumn fx:id="analysisIdColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Numéro Analyse" />
+          <TableColumn fx:id="dateColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Date" />
+            <TableColumn fx:id="viewAnalysisColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" />
+        </columns>
+      </TableView>
+   </center>
+   <top>
+      <HBox alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <Button fx:id="addAnalysisButton" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#addAnalysisButtonAction" text="Ajouter une analyse" />
+            <Label alignment="TOP_CENTER" text="Liste de vos analyses" />
+            <Button fx:id="welcomeButton" alignment="TOP_RIGHT" mnemonicParsing="false" onAction="#welcomeButtonAction" text="Accueil" />
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

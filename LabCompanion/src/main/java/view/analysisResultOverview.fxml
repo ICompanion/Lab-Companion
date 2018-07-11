@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AnalysisResultOverviewController">
+   <top>
+      <Label fx:id="resultName" text="Hematocytologie" BorderPane.alignment="CENTER" />
+   </top>
+   <center>
+      <TableView fx:id="resultTable" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="elementNameColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Élément" />
+          <TableColumn fx:id="neededQuantityColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Quantité souhaité" />
+            <TableColumn fx:id="currentQuantityColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Quantité actuelle" />
+            <TableColumn fx:id="progressionColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Progression" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>
