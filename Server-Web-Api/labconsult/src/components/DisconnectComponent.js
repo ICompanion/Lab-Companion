@@ -1,9 +1,9 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import WarningIcon from 'material-ui-icons/ReportProblem';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+import WarningIcon from '@material-ui/icons/ReportProblem';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({	
 	  grid: {

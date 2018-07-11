@@ -15,6 +15,7 @@ resultatController.getById = function(id, callback) {
 };
 
 resultatController.getByCategory = function(id, callback) {
+<<<<<<< HEAD
     bddController.executeQuery('select * from resultat where categorie_id = $1', [id], function(data, state){
         callback(data, state);
     });
@@ -27,7 +28,7 @@ resultatController.getCategory = function(id, callback) {
 };
 
 resultatController.new = function(values, callback) {
-  bddController.executeQuery('insert into resultat(nom, unit, valeur_min, valeur_max, categorie_id) values($1, $2, $3, $4, $5);',
+  bddController.executeQuery('insert into resultat(nom, description, valeur_min, valeur_max, categorie_id) values($1, $2, $3, $4, $5);',
                               values, function(data, state){
           callback(state);
       });

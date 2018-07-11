@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BillListController">
+   <top>
+      <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="addBillButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addBillButtonAction" text="Ajouter" />
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Liste des factures" />
+            <Button fx:id="backButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#backButtonAction" text="Retour au Menu" />
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <TableView fx:id="billTableView" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn fx:id="patientIdColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Numéro Patient" />
+          <TableColumn fx:id="analysisIdColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Numéro Analyse" />
+            <TableColumn fx:id="analysisDateColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Date" />
+            <TableColumn fx:id="analysisStatusColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Statut" />
+            <TableColumn fx:id="viewColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" />
+        </columns>
+      </TableView>
+   </center>
+</BorderPane>

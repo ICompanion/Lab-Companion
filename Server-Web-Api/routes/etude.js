@@ -55,7 +55,19 @@ etudeRouter.get('/:code', function(req, res){
 });
 
 etudeRouter.get('/:code/questions', function(req, res){
-    etudeController.getQuestions(req.params.code, function(data, state){
+    etudeController.getQuestions(req.params.code, function(questions, state){
+        if(state === false) {res.status(500).end(); return;}
+        questions = JSON.parse(questions);
+        if(questions.length !== 0){
+            res.json(questions).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
+etudeRouter.get('/:code/reponses', function(req, res){
+    etudeController.getAnswers(req.params.code, function(data, state){
         if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
@@ -66,8 +78,8 @@ etudeRouter.get('/:code/questions', function(req, res){
     });
 });
 
-etudeRouter.get('/:code/reponses', function(req, res){
-    etudeController.getAnswers(req.params.code, function(data, state){
+etudeRouter.get('/:code/qcount', function(req, res){
+    etudeController.countByCode(req.params.code, function(data, state){
         if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
         if(data.length !== 0){
@@ -121,6 +133,32 @@ etudeRouter.post('/:id/participate/:idPatient', function(req, res){
     var values = [req.body.statut, req.params.id, req.params.idPatient];
 
     etudeController.addParticipation(values, function(state){
+        if(state === true)
+        {
+            res.json(state).status(200).end();
+            return;
+        }
+        res.status(500).end();
+    });
+});
+
+etudeRouter.post('/:code/answer/add/:idq/:ida', function(req, res){
+    var values = [req.params.code, req.params.idq, req.params.ida];
+
+    etudeController.addAnswer(values, function(state){
+        if(state === true)
+        {
+            res.json(state).status(200).end();
+            return;
+        }
+        res.status(500).end();
+    });
+});
+
+etudeRouter.post('/answer/participate/:status/:idp/:code', function(req, res){
+    var values = [req.params.statusp, req.params.idp, req.params.code];
+
+    etudeController.updateParticipation(values, function(state){
         if(state === true)
         {
             res.json(state).status(200).end();

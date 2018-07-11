@@ -15,8 +15,7 @@ categorieController.getById = function(id, callback) {
 };
 
 categorieController.new = function(values, callback) {
-  bddController.executeQuery('insert into categorie(nom) values($1);',
-                              values, function(data, state){
+  bddController.executeQuery('insert into categorie(nom) values($1);', values, function(data, state){
           callback(state);
       });
 };
