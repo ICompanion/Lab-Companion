@@ -9,7 +9,7 @@ etudeController.getAll = function(callback) {
 };
 
 etudeController.getByCode = function(code, callback) {
-    bddController.executeQuery('select distinct code_etude, nom_etude, date, description_etude from etudes_reponses where code_etude = $1', [code], function(data, state){
+    bddController.executeQuery('select * from study_detail where code_etude = $1', [code], function(data, state){
         callback(data, state);
     });
 };
@@ -122,3 +122,27 @@ etudeController.removeQuestion = function(values, callback){
 };
 
 module.exports = etudeController;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// MyComponent.test.js
+describe('<MyComponent />', () => {
+    it('should render one div', () => {
+    ...
+    });
+
+    it('should react when clicking', () => {
+    ...
+    });
+});
