@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 public class ConnexionController {
 
@@ -13,7 +14,6 @@ public class ConnexionController {
 
     @FXML
     private TextField idTextField;
-
 
     @FXML
     private TextField passwordField;

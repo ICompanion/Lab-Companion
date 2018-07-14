@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sample.Controller;
 
+import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -32,6 +33,8 @@ public class LabCompanion extends Application {
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
         initConnectionPanel();
@@ -71,8 +74,6 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(loader);
 
     }
-
-
 
 }
 

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoctorPatientCasesController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoctorPatientCasesController">
    <center>
       <TableView fx:id="casesTableView" BorderPane.alignment="CENTER">
         <columns>
@@ -20,9 +20,9 @@
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="addCaseButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addCaseButtonAction" text="Nouveau" />
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Liste des dossiers" />
-            <Button fx:id="welcomeButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#welcomeButtonActon" text="Retour au menu" />
+            <Button fx:id="addCaseButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addCaseButtonAction" styleClass="btn_primary" text="Nouveau" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="23.0" prefWidth="97.0" text="Liste des dossiers" />
+            <Button fx:id="welcomeButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#welcomeButtonActon" styleClass="btn_primary" text="Retour au menu" />
          </children>
       </HBox>
    </top>

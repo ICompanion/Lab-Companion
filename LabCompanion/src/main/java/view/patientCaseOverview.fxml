@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientCaseOverviewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientCaseOverviewController">
    <top>
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="patientIdLabel" text="Patient : " />
             <Label fx:id="patientNameLabel" text="Nom : " />
-            <Button fx:id="backButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#backButtonAction" text="Retour liste dossiers" />
+            <Button fx:id="backButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#backButtonAction" styleClass="btn_primary" text="Retour liste dossiers" />
          </children>
       </HBox>
    </top>
@@ -38,7 +38,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="addRdvButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addRdvButtonAction" text="Nouveau" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button fx:id="addRdvButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addRdvButtonAction" styleClass="btn_primary" text="Nouveau" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Prochains rendez-vous" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <TableView fx:id="rdvTableView" GridPane.columnSpan="4" GridPane.rowIndex="1" GridPane.rowSpan="2">
                     <columns>

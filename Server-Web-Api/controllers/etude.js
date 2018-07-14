@@ -122,27 +122,3 @@ etudeController.removeQuestion = function(values, callback){
 };
 
 module.exports = etudeController;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// MyComponent.test.js
-describe('<MyComponent />', () => {
-    it('should render one div', () => {
-    ...
-    });
-
-    it('should react when clicking', () => {
-    ...
-    });
-});

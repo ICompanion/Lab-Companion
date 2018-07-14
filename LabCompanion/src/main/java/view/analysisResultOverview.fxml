@@ -5,9 +5,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AnalysisResultOverviewController">
+<BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AnalysisResultOverviewController">
    <top>
-      <Label fx:id="resultName" text="Hematocytologie" BorderPane.alignment="CENTER" />
+      <Label fx:id="resultName" text="ID_ANALYSE" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <TableView fx:id="resultTable" BorderPane.alignment="CENTER">

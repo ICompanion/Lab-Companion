@@ -1,0 +1,19 @@
+.root {
+	-fx-font-family: "SansSerif";
+}
+
+.primary_color {
+	-fx-text-fill: #a5d6a7;
+}
+
+.btn_primary {
+	-fx-background-color: #fdd835;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+}
+
+.classic_pane {
+	-fx-background-color: #a5d6a7;
+	-fx-border-width: 2px;
+	-fx-border-color: #8db78f;
+}

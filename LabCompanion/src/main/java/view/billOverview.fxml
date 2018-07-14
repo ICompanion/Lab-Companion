@@ -11,13 +11,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BillOverviewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BillOverviewController">
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="patientIdLabel" alignment="CENTER" contentDisplay="CENTER" text="Patient : " />
             <Label fx:id="analysisIdLabel" alignment="CENTER" contentDisplay="CENTER" text="Analyse : " />
-            <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backButtonAction" text="Retour liste factures" />
+            <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backButtonAction" styleClass="btn_primary" text="Retour liste factures" />
          </children>
       </HBox>
    </top>

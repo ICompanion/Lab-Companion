@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VisitCreationController">
+<BorderPane stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VisitCreationController">
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="patientIdLabel" alignment="CENTER" contentDisplay="CENTER" text="Patient : " />
             <Label fx:id="patientNameLabel" alignment="CENTER" contentDisplay="CENTER" text="Nom : " />
-            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backButtonAction" text="Retour liste dossiers" />
+            <Button fx:id="backButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backButtonAction" styleClass="btn_primary" text="Retour liste dossiers" />
          </children>
       </HBox>
    </top>
@@ -36,7 +36,7 @@
             <ComboBox fx:id="doctorCombo" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
             <Label alignment="CENTER" contentDisplay="CENTER" text="Date : " GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <DatePicker fx:id="visitDate" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-            <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerButtonAction" text="Enregistrer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Button fx:id="registerButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerButtonAction" styleClass="btn_primary" text="Enregistrer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </center>

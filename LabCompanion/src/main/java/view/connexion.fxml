@@ -4,12 +4,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="connecionPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConnexionController">
+<GridPane fx:id="connecionPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-width: 5px;" styleClass="classic_pane" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ConnexionController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -24,14 +26,17 @@
   </rowConstraints>
    <children>
       <TextField fx:id="idTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Label fx:id="connexionTitle" alignment="CENTER" text="Connexion" textFill="#1cbb7e" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Label fx:id="idLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="160.0" text="Identifiant : " textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <font>
-            <Font size="34.0" />
-         </font>
-      </Label>
-      <Label fx:id="idLabel" text="Identifiant : " GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Label fx:id="passwordLabel" text="Mot de passe : " GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="passwordLabel" alignment="CENTER" prefHeight="15.0" prefWidth="159.0" style="-fx-font-weight: bold;" text="Mot de passe : " textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <PasswordField fx:id="passwordField" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <Button fx:id="connectionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#connectionButtonAction" text="Connexion" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button fx:id="connectionButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#connectionButtonAction" styleClass="btn_primary" text="Se connecter" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <ImageView fitHeight="83.0" fitWidth="267.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
    </children>
 </GridPane>

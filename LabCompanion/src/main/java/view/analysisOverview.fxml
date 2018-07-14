@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane minWidth="-Infinity" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AnalysisOverviewController">
+<BorderPane minHeight="800.0" minWidth="600.0" prefWidth="149.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AnalysisOverviewController">
    <center>
       <VBox fx:id="analysisVBox" BorderPane.alignment="CENTER" />
    </center>
@@ -14,8 +14,8 @@
       <HBox BorderPane.alignment="CENTER">
          <children>
             <Label fx:id="patientIdLabel" alignment="TOP_CENTER" text="Patient : " />
-            <Label fx:id="analysisLabel" alignment="TOP_CENTER" text="Analyse : " />
-            <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" text="Retour" />
+            <Label fx:id="analysisLabel" alignment="TOP_CENTER" prefWidth="50.0" text="Analyse : " />
+            <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" styleClass="btn_primary" text="Retour" />
          </children>
       </HBox>
    </top>
