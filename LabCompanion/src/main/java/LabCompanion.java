@@ -69,11 +69,138 @@ public class LabCompanion extends Application {
 
     private void initConnectionPanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/connexion.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initDoctorWelcomePanel() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorWelcome.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
         this.setCurrentEditedPane(loader);
 
     }
 
+    private void initDoctorAnalysisPanel() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/doctorAnalysis.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initDoctorPatientCasePanel() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/docotorPatientCase.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initDoctorStudyPanel() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/doctorStudyOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initAnalysisOvervviewPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/analysisOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initAnalysisResultOvervviewPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/analysisResultOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initBillListPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/billList.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initBillOverviewPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/billOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initPaatientCaseOverviewPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initPaatientCaseOverviewPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initPaatientCaseOverviewPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initQuestionPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/questionPane.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initQuestionAddPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/questionAddPane.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initStudyCreationPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/studyCreationPane.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initStudyOverviewPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/studyOverview.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }
+
+    private void initVisitCreationPane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/visitCreation.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        this.setCurrentEditedPane(loader);
+
+    }s
 }
 
