@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import java.net.MalformedURLException;
+
 public class DoctorWelcomeController {
 
     @FXML
@@ -21,7 +23,11 @@ public class DoctorWelcomeController {
 
     @FXML
     private void analysisButtonAction(ActionEvent event) {
-
+        try {
+            LabCompanion.singleton.initDoctorAnalysisPanel();
+        } catch (MalformedURLException ex) {
+            // can't happen
+        }
     }
 
     @FXML

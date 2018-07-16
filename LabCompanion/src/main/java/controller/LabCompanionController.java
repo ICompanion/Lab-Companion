@@ -1,5 +1,8 @@
 package controller;
 
+import business.Doctor;
+import business.Employee;
+import business.Secretary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,7 +14,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.awt.*;
-
 
 public class LabCompanionController {
 
@@ -48,13 +50,25 @@ public class LabCompanionController {
 
     @FXML
     private void disconnectButtonAction(ActionEvent event) {
-
+        LabCompanion.singleton.disconnect();
     }
 
-    public void setEditedPane(Pane editedPane) {
+    public void setEditedPane(Pane editedPane, Employee connectedEmployee) {
+        this.initValues(connectedEmployee);
         this.editedPane = editedPane;
         this.editedPane.setPrefWidth(this.maxPaneWidth);
         this.editedPane.setPrefHeight(this.maxPaneHeight);
         this.editedContainer.getItems().set(1, this.editedPane);
+    }
+
+    private void initValues(Employee connectedEmployee) {
+        this.usernameInfoLabel.setText(connectedEmployee.getFirstanme()
+                + " " + connectedEmployee.getName());
+        if(connectedEmployee.getType() == Secretary.SECRETARY_TYPE) {
+            //TODO : init Menu
+        }
+        else if (connectedEmployee.getType() == Doctor.DOCTOR_TYPE) {
+            //TODO : init Menu
+        }
     }
 }
