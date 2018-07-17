@@ -17,7 +17,7 @@ public class PluginLoader {
     /**
      * Loaded plugins
      */
-    private ArrayList<Plugin> plugins;
+    private final ArrayList<Plugin> plugins;
 
     /**
      * Creates a new instance of PluginLoader given the files to load.
@@ -39,8 +39,10 @@ public class PluginLoader {
     /**
      * Get loaded plugins.
      * @return loaded plugins.
+     * @throws Exception If there is no files to load.
      */
-    public ArrayList<Plugin> getPlugins() {
+    public ArrayList<Plugin> getPlugins() throws Exception {
+        this.initializeLoader();
         return this.plugins;
     }
 
@@ -80,9 +82,9 @@ public class PluginLoader {
 
                     Class tmpClass = Class.forName(tmp ,true,loader);
 
-                    for(int j = 0 ; j < tmpClass.getInterfaces().length; j ++ ){
+                    for (Class current : tmpClass.getInterfaces()) {
                         //Check if actual file implements plugin
-                        if(tmpClass.getInterfaces()[j].getName().toString().equals("plugins.Plugin") ) {
+                        if (current.getName().equals("plugin.Plugin")) {
                             // newInstance to permit cast
                             this.plugins.add((Plugin) tmpClass.newInstance());
                         }
@@ -91,6 +93,4 @@ public class PluginLoader {
             }
         }
     }
-
-
 }

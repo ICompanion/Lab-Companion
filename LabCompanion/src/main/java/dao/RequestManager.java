@@ -43,11 +43,7 @@ public class RequestManager {
 
             return connectedEmployee;
         }
-
-        EmployeeBuilder employeeBuilder = new EmployeeBuilder();
-        Employee connectedEmployee = employeeBuilder.setUsername("false").createEmployee();
-
-        return connectedEmployee;
+        return null;
     }
 
     //Tested

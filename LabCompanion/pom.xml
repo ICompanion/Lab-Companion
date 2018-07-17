@@ -18,7 +18,13 @@
             <artifactId>json</artifactId>
             <version>20180130</version>
         </dependency>
+        <!--<dependency>
+            <groupId>LabCompanionAnnotationProcessor</groupId>
+            <artifactId>LabCompanionAnnotationProcessor</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
     </dependencies>
+
     <!--<build>
         <plugins>
             <plugin>
@@ -56,9 +62,23 @@
             </plugin>
         </plugins>
     </build>-->
-
-
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>LATEST</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <annotationProcessors>
+                        <annotationProcessor>
+                            src.main.java.annotations.PluginAnnotationProcessor
+                        </annotationProcessor>
+                    </annotationProcessors>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
-
-

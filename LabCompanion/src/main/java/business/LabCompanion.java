@@ -13,9 +13,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.layout.GridPane;
+import plugin.Plugin;
+import plugin.PluginLoader;
 
 public class LabCompanion extends Application {
 
@@ -27,10 +30,15 @@ public class LabCompanion extends Application {
 
     private Employee connectedEmployee;
 
+    private ArrayList<Plugin> loadedPlugins;
+
+    private PluginLoader pluginLoader;
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         singleton = this;
         this.connectedEmployee = null;
+//        this.pluginLoader = new PluginLoader(files);
 
         this.mainStage = primaryStage;
 
@@ -43,8 +51,6 @@ public class LabCompanion extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
-
-//        initConnectionPanel();
 
     }
 
@@ -103,6 +109,26 @@ public class LabCompanion extends Application {
             Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void initPlugin(Plugin toInit) throws MalformedURLException {
+        try {
+            FXMLLoader rootLoader = new FXMLLoader();
+            URL rootUrl = Paths.get("src/main/java/view/labCompanion.fxml").toUri().toURL();
+            rootLoader.setLocation(rootUrl);
+            root = (VBox) rootLoader.load();
+            LabCompanionController labCompanionController =
+                    (LabCompanionController) rootLoader.getController();
+            labCompanionController.setEditedPane(toInit.getPane(),
+                    this.connectedEmployee);
+
+            mainStage.close();
+            Scene scene = new Scene(root);
+            mainStage.setScene(scene);
+            mainStage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public void setConnectedEmployee(Employee connectedEmployee) {
@@ -245,5 +271,6 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(loader);
 
     }
+
 }
 

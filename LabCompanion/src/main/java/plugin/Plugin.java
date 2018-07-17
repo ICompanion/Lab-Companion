@@ -1,15 +1,21 @@
 package plugin;
 
-import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
 public interface Plugin {
 
     /**
-     * Return plugin's name to include in Menu.
+     * Return plugin's name.
      * @return plugin's name
      */
     String getName();
 
+    /**
+     * Returns plugin's name to be displayed in Menu.
+     * @return plusgin's displayable name
+     */
+
+    String getDisplayName();
     /**
      * Returns plugin's description.
      * @return plugin's description.
@@ -17,9 +23,15 @@ public interface Plugin {
     String getDescription();
 
     /**
-     * Return the Node to include in View to be implemented in user's view.
-     * @return node view.
+     * Return the type of employee this plugin is for.
+     * @return plugin's employee type.
      */
-    Node getView();
+    int getEmployeeType();
+
+    /**
+     * Return the Pane to include in user's view.
+     * @return plugin's pane.
+     */
+    Pane getPane();
 
 }

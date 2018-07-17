@@ -9,25 +9,39 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.processing.ProcessingEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
+import javax.lang.model.SourceVersion;
 import org.json.*;
-import sun.misc.IOUtils;
 
+@SupportedAnnotationTypes({"src.main.java.annotations.Plugin"})
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class PluginAnnotationProcessor extends AbstractProcessor {
+
     @Override
-    public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        for( final Element element: roundEnv.getElementsAnnotatedWith( Plugin.class ) ) {
+    public synchronized void init(ProcessingEnvironment processingEnv) {
+        super.init(processingEnv);
+        this.processingEnv = processingEnv;
+    }
+
+
+    @Override
+    public boolean process(Set<? extends TypeElement> annotations,
+                           RoundEnvironment roundEnv) {
+        for(Element element : roundEnv.getElementsAnnotatedWith( Plugin.class ) ) {
             if( element instanceof TypeElement ) {
-                final TypeElement typeElement = ( TypeElement )element;
                 writeFile(element.getClass());
+                System.out.println("ANNOTATIONS");
             }
         }
-
         return true;
     }
 
     private void writeFile(Class theClass) {
         Plugin annot = (Plugin) theClass.getAnnotation(Plugin.class);
-
 
         try {
             //get relative file path
@@ -54,10 +68,10 @@ public class PluginAnnotationProcessor extends AbstractProcessor {
             PrintWriter writer = new PrintWriter(filePath);
             writer.write(jsonObject.toString());
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(PluginAnnotationProcessor.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PluginAnnotationProcessor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

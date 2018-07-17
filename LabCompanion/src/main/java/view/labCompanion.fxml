@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-border-width: 2px; -fx-border-color: #8db78f;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LabCompanionController">
+<VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-border-width: 2px; -fx-border-color: #8db78f;" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LabCompanionController">
    <children>
       <BorderPane fx:id="header" maxHeight="100.0" minHeight="100.0" styleClass="classic_pane">
          <right>
@@ -50,11 +50,7 @@
       </BorderPane>
       <SplitPane fx:id="editedContainer" dividerPositions="0.5">
          <items>
-            <VBox fx:id="menuVbox" alignment="BOTTOM_RIGHT" maxWidth="250.0" minWidth="250.0">
-               <children>
-                  <ListView fx:id="menuListView" />
-               </children>
-            </VBox>
+            <ListView fx:id="menuListView" maxWidth="250.0" minWidth="250.0"/>
             <Pane fx:id="editedPane" prefHeight="835.0" prefWidth="382.0" />
          </items>
       </SplitPane>

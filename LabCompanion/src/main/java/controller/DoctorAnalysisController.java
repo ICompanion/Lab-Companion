@@ -1,12 +1,15 @@
 package controller;
 
 import business.Analysis;
+import business.Doctor;
 import business.LabCompanion;
 import business.Patient;
 import dao.RequestManager;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -21,6 +24,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class DoctorAnalysisController {
@@ -47,50 +52,72 @@ public class DoctorAnalysisController {
     private TableColumn viewAnalysisColumn;
 
 
+    private static ArrayList<Analysis> testListToRemove = new ArrayList<>();
+
     @FXML
     public void initialize() {
-        try {
-//            ArrayList<Analysis> doctorAnalysis = RequestManager.getAnalysis(
+//            ArrayList<Analysis> testListToRemove = RequestManager.getAnalysis(
 //                    (Doctor) LabCompanion.singleton.getConnectedEmployee());
-            this.analysisTab.setEditable(false);
+        this.analysisTab.setEditable(false);
+
+        // TODO remove this debug
+        testListToRemove.add(new Analysis(18, "analysisCode", new Date(2018, 07, 15), "analysisDescription", null, new Patient(15, "", "", null, "", 0, "", "", 0, "", ""), null));
+        testListToRemove.add(new Analysis(20, "analysisCode", new Date(2018, 07, 17), "analysisDescription", null, new Patient(30, "", "", null, "", 0, "", "", 0, "", ""), null));
 
 
-            ArrayList<Analysis> doctorAnalysis = new ArrayList<>();
-            doctorAnalysis.add(new Analysis(0, "analysisCode", new Date(2018, 07, 15), "analysisDescription", null, new Patient(15, "", "", null, "", 0, "", "", 0, "", ""), null));
+        this.patientIdColumn.setStyle( "-fx-alignment: CENTER;");
+        this.patientIdColumn.setPrefWidth(150.0);
+        this.patientIdColumn.setCellValueFactory(
+                new PropertyValueFactory<Record, String>("patientID"));
 
-            ObservableList<Record> dataList = FXCollections.observableArrayList();
-            this.viewAnalysisColumn.setCellValueFactory(
-                    new Callback<TableColumn.CellDataFeatures<Record, Boolean>,
-                            ObservableValue<Boolean>>() {
-                        @Override
-                        public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Record, Boolean> p) {
-                            return new SimpleBooleanProperty(p.getValue() != null);
-                        }
-                    });
+        this.analysisIdColumn.setStyle( "-fx-alignment: CENTER;");
+        this.analysisIdColumn.setPrefWidth(150.0);
+        this.analysisIdColumn.setCellValueFactory(
+                new PropertyValueFactory<Record, String>("analysisID"));
 
-            this.viewAnalysisColumn.setCellFactory(
-                    new Callback<TableColumn<Record, Boolean>, TableCell<Record, Boolean>>() {
-                        @Override
-                        public TableCell<Record, Boolean> call(TableColumn<Record, Boolean> p) {
-                            return new ButtonCell();
-                        }
+        this.dateColumn.setStyle( "-fx-alignment: CENTER;");
+        this.dateColumn.setPrefWidth(150.0);
+        this.dateColumn.setCellValueFactory(
+                new PropertyValueFactory<Record, String>("date"));
 
-                    });
 
-            for (Analysis current : doctorAnalysis) {
 
-                Record toAdd = new Record(
-                        String.valueOf(current.getPatient().getId()),
-                        String.valueOf(current.getId()),
-                        current.getDateAnalyse().toString());
 
-                dataList.add(toAdd);
-            }
-            analysisTab.setItems(dataList);
+        this.viewAnalysisColumn.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<Record, Boolean>,
+                        ObservableValue<Boolean>>() {
+                    @Override
+                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<Record, Boolean> p) {
+                        return new SimpleBooleanProperty(p.getValue() != null);
+                    }
+                });
 
-        } catch (Exception ex) {
-            Logger.getLogger(DoctorAnalysisController.class.getName()).log(Level.SEVERE, null, ex);
+        this.viewAnalysisColumn.setCellFactory(
+                new Callback<TableColumn<Record, Boolean>, TableCell<Record, Boolean>>() {
+                    @Override
+                    public TableCell<Record, Boolean> call(TableColumn<Record, Boolean> p) {
+                        return new ButtonCell();
+                    }
+
+                });
+
+        this.viewAnalysisColumn.setPrefWidth(150.0);
+        this.viewAnalysisColumn.setStyle( "-fx-alignment: CENTER;");
+
+
+        ObservableList<Record> dataList = FXCollections.observableArrayList();
+
+        for (Analysis current : testListToRemove) {
+
+            Record toAdd = new Record(
+                    String.valueOf(current.getPatient().getId()),
+                    String.valueOf(current.getId()),
+                    current.getDateAnalyse().toString());
+
+            dataList.add(toAdd);
         }
+
+        analysisTab.setItems(dataList);
     }
 
     @FXML
@@ -111,7 +138,7 @@ public class DoctorAnalysisController {
 
         final Button cellButton = new Button("Voir");
         public ButtonCell() {
-            cellButton.setStyle("btn_primary");
+            cellButton.getStyleClass().add("btn_primary");
             cellButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
@@ -119,12 +146,15 @@ public class DoctorAnalysisController {
                             .getTableView().getItems()
                             .get(ButtonCell.this.getIndex()).getAnalysisID());
                     try {
-                        Analysis currentAnalysis = (Analysis) RequestManager
-                                .getAnalysisById(currentAnalysisId);
+//                        Analysis currentAnalysis = (Analysis) RequestManager
+//                                .getAnalysisById(currentAnalysisId);
+                        Analysis currentAnalysis = testListToRemove.get(1);
                         LabCompanion.singleton.initAnalysisOverviewPane(currentAnalysis);
                     } catch (MalformedURLException ex) {
+                        System.err.println("Ici " + currentAnalysisId);
                         // TODO
                     } catch (Exception ex) {
+                        System.err.println("Là " + currentAnalysisId);
                         // on peut pas recup l'analyse
                     }
                 }
@@ -142,7 +172,7 @@ public class DoctorAnalysisController {
     }
 
 
-    private class Record {
+    public class Record {
         private final SimpleStringProperty patientID;
         private final SimpleStringProperty analysisID;
         private final SimpleStringProperty date;
