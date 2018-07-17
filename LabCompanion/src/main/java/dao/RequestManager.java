@@ -21,7 +21,7 @@ public class RequestManager {
     //Tested
     public static boolean connect(String username, String password) throws Exception {
 
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/authenticate/" + username + "/" + password);
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/authenticate/employee/" + username + "/" + password);
 
         if(!data.isEmpty()) return true;
 

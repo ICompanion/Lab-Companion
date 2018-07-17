@@ -2,6 +2,7 @@ package controller;
 
 import business.Doctor;
 import business.Employee;
+import business.LabCompanion;
 import business.Secretary;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
