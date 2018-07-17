@@ -22,7 +22,7 @@ authenticateController.signIn = function(values, callback){
 };
 
 authenticateController.employeeConnection = function(values, callback){
-  bddController.executeQuery('select identifiant, nom, prenom, employe_type, date_embauche, adresse, ville, cp, mail from employe where employe.identifiant = $1 and employe.password = $2', values, function(data, state){
+  bddController.executeQuery('select id, identifiant, nom, prenom, employe_type, type_contrat, date_embauche, adresse, ville, cp, mail, num_secu from employe where employe.identifiant = $1 and employe.password = $2', values, function(data, state){
     callback(data,state);
   });
 };

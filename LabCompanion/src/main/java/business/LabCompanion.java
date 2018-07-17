@@ -245,6 +245,5 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(loader);
 
     }
-
 }
 

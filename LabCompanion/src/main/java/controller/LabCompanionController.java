@@ -63,7 +63,7 @@ public class LabCompanionController {
     }
 
     private void initValues(Employee connectedEmployee) {
-        this.usernameInfoLabel.setText(connectedEmployee.getFirstanme()
+        this.usernameInfoLabel.setText(connectedEmployee.getFirstname()
                 + " " + connectedEmployee.getName());
         if(connectedEmployee.getType() == Secretary.SECRETARY_TYPE) {
             //TODO : init Menu

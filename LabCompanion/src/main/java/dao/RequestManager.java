@@ -19,13 +19,35 @@ public class RequestManager {
     }
 
     //Tested
-    public static boolean connect(String username, String password) throws Exception {
+    public static Employee connect(String username, String password) throws Exception {
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/authenticate/employee/" + username + "/" + password);
 
-        if(!data.isEmpty()) return true;
+        if(!data.isEmpty()) {
+            JSONObject employeeData = data.get(0);
+            EmployeeBuilder employeeBuilder = new EmployeeBuilder();
+            Employee connectedEmployee = employeeBuilder
+                    .setType(employeeData.getInt("employe_type"))
+                    .setAdress(employeeData.getString("adresse"))
+                    .setCity(employeeData.getString("ville"))
+                    .setContractType(employeeData.getString("type_contrat"))
+                    .setEmploymentDate(employeeData.getString("date_embauche"))
+                    .setFirstname(employeeData.getString("prenom"))
+                    .setName(employeeData.getString("nom"))
+                    .setId(employeeData.getInt("id"))
+                    .setUsername(employeeData.getString("identifiant"))
+                    .setMail(employeeData.getString("mail"))
+                    .setPostalCode(employeeData.getInt("cp"))
+                    .setSecuNumber(employeeData.getInt("num_secu"))
+                    .createEmployee();
 
-        return false;
+            return connectedEmployee;
+        }
+
+        EmployeeBuilder employeeBuilder = new EmployeeBuilder();
+        Employee connectedEmployee = employeeBuilder.setUsername("false").createEmployee();
+
+        return connectedEmployee;
     }
 
     //Tested
@@ -267,9 +289,8 @@ public class RequestManager {
 
             doctor = new Doctor(obj.getInt("id"), obj.getString("nom"), obj.getString("prenom"),
                                 obj.getInt("employe_type"),obj.getString("mail"),
-                                date.parse(obj.getString("date_embauche")), obj.getString("type_contrat"),
-                                obj.getString("adresse"), obj.getString("ville"), obj.getInt("cp"),
-                                obj.getString("password"), obj.getString("identifiant"),
+                                obj.getString("date_embauche"), obj.getString("type_contrat"),
+                                obj.getString("adresse"), obj.getString("ville"), obj.getInt("cp"), obj.getString("identifiant"),
                                 obj.getInt("num_secu"));
 
             return doctor;

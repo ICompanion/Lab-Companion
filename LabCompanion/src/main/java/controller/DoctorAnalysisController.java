@@ -1,6 +1,7 @@
 package controller;
 
 import business.Analysis;
+import business.LabCompanion;
 import business.Patient;
 import dao.RequestManager;
 import java.net.MalformedURLException;

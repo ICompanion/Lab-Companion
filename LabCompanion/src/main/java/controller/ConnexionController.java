@@ -29,9 +29,9 @@ public class ConnexionController {
     @FXML
     private void connectionButtonAction(ActionEvent event) {
         try {
-            Employee connected = RequestManager.connect(idTextField.getText(),
+            Employee connectedUser = RequestManager.connect(idTextField.getText(),
                     passwordField.getText());
-            LabCompanion.singleton.setConnectedEmployee(connected);
+            LabCompanion.singleton.setConnectedEmployee(connectedUser);
             LabCompanion.singleton.initLabCompanionPanel();
         } catch (Exception e) {
             //@TODO change to view.AlertPane ?

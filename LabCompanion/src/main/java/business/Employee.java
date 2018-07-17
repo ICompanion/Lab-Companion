@@ -1,12 +1,14 @@
 package business;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Employee {
 
     private int id;
     private String name;
-    private String firstanme;
+    private String firstname;
     private int type;
     private String mail;
     private Date employmentDate;
@@ -14,24 +16,22 @@ public class Employee {
     private String adress;
     private String city;
     private int postalCode;
-    private String password;
     private String username;
     private int secuNumber;
 
-    public Employee(int id, String name, String firstanme, int type, String mail, Date employmentDate,
-                            String contractType, String adress, String city, int postalCode, String password,
+    public Employee(int id, String name, String firstname, int type, String mail, String employmentDate,
+                            String contractType, String adress, String city, int postalCode,
                             String username, int secuNumber) {
         this.id = id;
         this.name = name;
-        this.firstanme = firstanme;
+        this.firstname = firstname;
         this.type = type;
         this.mail = mail;
-        this.employmentDate = employmentDate;
+        setEmploymentDate(employmentDate);
         this.contractType = contractType;
         this.adress = adress;
         this.city = city;
         this.postalCode = postalCode;
-        this.password = password;
         this.username = username;
         this.secuNumber = secuNumber;
     }
@@ -60,12 +60,12 @@ public class Employee {
         this.name = name;
     }
 
-    public String getFirstanme() {
-        return firstanme;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFirstanme(String firstanme) {
-        this.firstanme = firstanme;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public int getType() {
@@ -84,14 +84,6 @@ public class Employee {
         this.mail = mail;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getUsername() {
         return username;
     }
@@ -104,13 +96,17 @@ public class Employee {
         return employmentDate;
     }
 
-    public void setEmploymentDate(Date employmentDate) {
-        this.employmentDate = employmentDate;
+    public void setEmploymentDate(String employmentDate) {
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(employmentDate.substring(0,10));
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        this.employmentDate = date;
     }
 
-    public String getContractType() {
-        return contractType;
-    }
+    public String getContractType() { return contractType; }
 
     public void setContractType(String contractType) {
         this.contractType = contractType;
@@ -139,4 +135,6 @@ public class Employee {
     public void setPostalCode(int postalCode) {
         this.postalCode = postalCode;
     }
+
+
 }
