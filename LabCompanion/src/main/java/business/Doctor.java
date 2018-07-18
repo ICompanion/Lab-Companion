@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Doctor extends Employee {
 
-    public static final int DOCTOR_TYPE = 1; // have to check if 1 is good
+    public static final int DOCTOR_TYPE = 1;
 
     public Doctor(int id, String name, String firstname, int type, String mail, String employmentDate, String contractType, String adress,
             String city, int postalCode, String username, int secuNumber) {

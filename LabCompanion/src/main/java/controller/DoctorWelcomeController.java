@@ -20,7 +20,17 @@ public class DoctorWelcomeController {
     private Button parametersButton;
 
     @FXML
+    private Label welcomeLabel;
+
+    @FXML
     private Label employeeLabel;
+
+    @FXML
+    private void initialize() {
+        employeeLabel.setLayoutY(welcomeLabel.getLayoutY() - 10);
+        analysisButton.setPrefHeight(employeeLabel.getPrefHeight() - 100);
+        studyButton.setPrefHeight(analysisButton.getPrefHeight() - 50);
+    }
 
     @FXML
     private void analysisButtonAction(ActionEvent event) {

@@ -28,7 +28,7 @@
          <GridPane.margin>
             <Insets right="10.0" top="5.0" />
          </GridPane.margin></Button>
-      <Label text=" Bienvenue" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Label fx:id="welcomeLabel" layoutY="31.0" text=" Bienvenue" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Label fx:id="employeeLabel" alignment="CENTER" text="EMPLOYEE" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
       <Button fx:id="analysisButton" mnemonicParsing="false" onAction="#analysisButtonAction" styleClass="btn_primary" text="Analyses médicales" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <Button fx:id="studyButton" mnemonicParsing="false" onAction="#studyButtonAction" styleClass="btn_primary" text="Études" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />

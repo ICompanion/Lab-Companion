@@ -51,7 +51,6 @@ public class LabCompanion extends Application {
         primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
-
     }
 
 
@@ -103,7 +102,7 @@ public class LabCompanion extends Application {
                 initDoctorWelcomePanel();
             }
             else if (connectedEmployee.getType() == Secretary.SECRETARY_TYPE) {
-                initSecretaryWelcomePanel();
+                initDoctorWelcomePanel();
             }
         } catch (IOException ex) {
             Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
@@ -271,6 +270,5 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(loader);
 
     }
-
 }
 

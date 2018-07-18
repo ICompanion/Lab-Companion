@@ -10,6 +10,17 @@
 	-fx-background-color: #fdd835;
 	-fx-font-weight: bold;
 	-fx-text-fill: white;
+	-fx-effect: dropshadow( gaussian , #fde268 , 1,1,0,3 );
+}
+
+.btn_primary:hover {
+	-fx-background-color: #fde268;
+	-fx-effect: dropshadow( gaussian , #fdeb9b , 1,1,0,3 );
+}
+
+.btn_primary:pressed {
+	-fx-background-color: #a5d6a7;
+	-fx-effect: dropshadow( gaussian , #b9dfba , 1,1,0,3 );
 }
 
 .classic_pane {
