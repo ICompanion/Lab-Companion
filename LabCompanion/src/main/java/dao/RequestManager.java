@@ -533,7 +533,7 @@ public class RequestManager {
     //Tested
     public static boolean addParticipation(Survey survey, Patient patient) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("statut", true);
+        hashMap.put("statut", false);
 
         boolean result = RequestHelper.postOrPut(url + "/etude/" + survey.getId() + "/participate/" + patient.getId(),
                 hashMap, "POST");
