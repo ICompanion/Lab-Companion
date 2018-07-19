@@ -61,17 +61,17 @@ public class DoctorAnalysisController {
         this.analysisTab.setEditable(false);
 
         this.patientIdColumn.setStyle( "-fx-alignment: CENTER;");
-        this.patientIdColumn.setPrefWidth(150.0);
+        this.patientIdColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.patientIdColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("patientID"));
 
         this.analysisIdColumn.setStyle( "-fx-alignment: CENTER;");
-        this.analysisIdColumn.setPrefWidth(150.0);
+        this.analysisIdColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.analysisIdColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("analysisCode"));
 
         this.dateColumn.setStyle( "-fx-alignment: CENTER;");
-        this.dateColumn.setPrefWidth(150.0);
+        this.dateColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.dateColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("date"));
 
@@ -96,7 +96,7 @@ public class DoctorAnalysisController {
 
                 });
 
-        this.viewAnalysisColumn.setPrefWidth(150.0);
+        this.viewAnalysisColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.viewAnalysisColumn.setStyle( "-fx-alignment: CENTER;");
 
 
@@ -143,7 +143,7 @@ public class DoctorAnalysisController {
                     try {
 //                        Analysis currentAnalysis = (Analysis) RequestManager
 //                                .getAnalysisById(currentAnalysisId);
-                        Analysis currentAnalysis = analysisList.get(1);
+                        Analysis currentAnalysis = analysisList.get(ButtonCell.this.getIndex());
                         LabCompanion.singleton.initAnalysisOverviewPane(currentAnalysis);
                     } catch (MalformedURLException ex) {
                         System.err.println("Ici " + currentAnalysisCode);
