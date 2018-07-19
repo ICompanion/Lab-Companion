@@ -87,6 +87,7 @@ public class LabCompanion extends Application {
 
         } catch (IOException e) {
             System.out.println("Can't load current editedLoader");
+            System.out.println(e);
         }
     }
 

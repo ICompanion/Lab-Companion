@@ -27,6 +27,17 @@ public class ConnexionController {
     private TextField passwordField;
 
     @FXML
+    public void initialize() {
+        //FOR DEVELOPMENT ONLY --> GOOD CREDENTIALS TO LOGIN QUICKLY
+        idTextField.setText("apetit");
+        passwordField.setText("admin1");
+
+        //SECRETARY
+        //idTextField.setText("mdesanges");
+        //passwordField.setText("admin2");
+    }
+
+    @FXML
     private void connectionButtonAction(ActionEvent event) {
         try {
             Employee connectedUser = RequestManager.connect(idTextField.getText(),

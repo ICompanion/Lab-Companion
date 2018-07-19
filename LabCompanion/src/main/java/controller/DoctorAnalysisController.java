@@ -37,7 +37,7 @@ public class DoctorAnalysisController {
     private Button welcomeButton;
 
     @FXML
-    private TableView analysisTab;
+    private TableView<Record> analysisTab;
 
     @FXML
     private TableColumn patientIdColumn;
@@ -52,18 +52,13 @@ public class DoctorAnalysisController {
     private TableColumn viewAnalysisColumn;
 
 
-    private static ArrayList<Analysis> testListToRemove = new ArrayList<>();
+    private static ArrayList<Analysis> analysisList = new ArrayList<>();
+    private static Doctor doctor = new Doctor(LabCompanion.singleton.getConnectedEmployee());
 
     @FXML
-    public void initialize() {
-//            ArrayList<Analysis> testListToRemove = RequestManager.getAnalysis(
-//                    (Doctor) LabCompanion.singleton.getConnectedEmployee());
+    public void initialize() throws Exception {
+        analysisList = RequestManager.getAnalysis(doctor);
         this.analysisTab.setEditable(false);
-
-        // TODO remove this debug
-        testListToRemove.add(new Analysis(18, "analysisCode", new Date(2018, 07, 15), "analysisDescription", null, new Patient(15, "", "", null, "", 0, "", "", 0, "", ""), null));
-        testListToRemove.add(new Analysis(20, "analysisCode", new Date(2018, 07, 17), "analysisDescription", null, new Patient(30, "", "", null, "", 0, "", "", 0, "", ""), null));
-
 
         this.patientIdColumn.setStyle( "-fx-alignment: CENTER;");
         this.patientIdColumn.setPrefWidth(150.0);
@@ -73,7 +68,7 @@ public class DoctorAnalysisController {
         this.analysisIdColumn.setStyle( "-fx-alignment: CENTER;");
         this.analysisIdColumn.setPrefWidth(150.0);
         this.analysisIdColumn.setCellValueFactory(
-                new PropertyValueFactory<Record, String>("analysisID"));
+                new PropertyValueFactory<Record, String>("analysisCode"));
 
         this.dateColumn.setStyle( "-fx-alignment: CENTER;");
         this.dateColumn.setPrefWidth(150.0);
@@ -107,11 +102,11 @@ public class DoctorAnalysisController {
 
         ObservableList<Record> dataList = FXCollections.observableArrayList();
 
-        for (Analysis current : testListToRemove) {
+        for (Analysis current : analysisList) {
 
             Record toAdd = new Record(
-                    String.valueOf(current.getPatient().getId()),
-                    String.valueOf(current.getId()),
+                    String.valueOf(current.getPatient().getUsername()),
+                    String.valueOf(current.getCode()),
                     current.getDateAnalyse().toString());
 
             dataList.add(toAdd);
@@ -142,19 +137,19 @@ public class DoctorAnalysisController {
             cellButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    int currentAnalysisId = Integer.valueOf(ButtonCell.this
+                    String currentAnalysisCode = String.valueOf(ButtonCell.this
                             .getTableView().getItems()
-                            .get(ButtonCell.this.getIndex()).getAnalysisID());
+                            .get(ButtonCell.this.getIndex()).getAnalysisCode());
                     try {
 //                        Analysis currentAnalysis = (Analysis) RequestManager
 //                                .getAnalysisById(currentAnalysisId);
-                        Analysis currentAnalysis = testListToRemove.get(1);
+                        Analysis currentAnalysis = analysisList.get(1);
                         LabCompanion.singleton.initAnalysisOverviewPane(currentAnalysis);
                     } catch (MalformedURLException ex) {
-                        System.err.println("Ici " + currentAnalysisId);
+                        System.err.println("Ici " + currentAnalysisCode);
                         // TODO
                     } catch (Exception ex) {
-                        System.err.println("Là " + currentAnalysisId);
+                        System.err.println("Là " + currentAnalysisCode);
                         // on peut pas recup l'analyse
                     }
                 }
@@ -174,17 +169,17 @@ public class DoctorAnalysisController {
 
     public class Record {
         private final SimpleStringProperty patientID;
-        private final SimpleStringProperty analysisID;
+        private final SimpleStringProperty analysisCode;
         private final SimpleStringProperty date;
 
-        public Record(String patientID, String analysisID, String date) {
+        public Record(String patientID, String analysisCode, String date) {
             this.patientID = new SimpleStringProperty(patientID);
-            this.analysisID = new SimpleStringProperty(analysisID);
+            this.analysisCode = new SimpleStringProperty(analysisCode);
             this.date = new SimpleStringProperty(date);
         }
 
-        public String getAnalysisID() {
-            return analysisID.get();
+        public String getAnalysisCode() {
+            return analysisCode.get();
         }
 
         public String getDate() {
@@ -199,8 +194,8 @@ public class DoctorAnalysisController {
             patientID.set(newValue);
         }
 
-        public void setAnalysisID(String newValue) {
-            analysisID.set(newValue);
+        public void getAnalysisCode(String newValue) {
+            analysisCode.set(newValue);
         }
 
         public void setDate(String newValue) {

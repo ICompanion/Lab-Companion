@@ -49,7 +49,7 @@ public class RequestManager {
     //Tested
     public static ArrayList<Analysis> getAnalysis(Doctor doctor) throws Exception {
 
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/employe/" + doctor.getUsername());
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/employe/" + doctor.getId());
 
         if(data != null)
         {
@@ -59,14 +59,14 @@ public class RequestManager {
             Iterator<JSONObject> it = data.iterator();
             while(it.hasNext()){
 
-                SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+                SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
                 JSONObject obj = it.next();
 
 
-                Patient patient = getPatientById(obj.getInt("patient_id"));
+                Patient patient = getPatientById(obj.getString("patient_id"));
                 Analysis analysis = new Analysis(obj.getInt("id"), obj.getString("code_analyse"),
-                                                date.parse(obj.getString("date_analyse")),
-                                                obj.get("description").toString(), null, patient, doctor);
+                                                date.parse(obj.getString("date_analyse").substring(0,10)),
+                                                null, null, patient, doctor);
 
                 analysisResults = getAnalysisResults(analysis);
 
@@ -228,9 +228,9 @@ public class RequestManager {
     }
 
     //Tested
-    public static Patient getPatientById(int id)throws Exception{
+    public static Patient getPatientById(String identifiant)throws Exception{
 
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/patient/id/" + id);
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/patient/" + identifiant);
 
         if(data != null){
             Patient patient;

@@ -92,10 +92,15 @@ public class LabCompanionController {
 
     private void initSecretaryMenu() {
         Button rdvButton = new Button("Rendez-vous");
+        rdvButton.setOnAction(this::rdvButtonHandler);
         Button billButton = new Button("Factures");
+        billButton.setOnAction(this::billButtonHandler);
         Button folderButton = new Button("Dossiers");
+        folderButton.setOnAction(this::folderButtonHandler);
         Button addFolderButton = new Button("Créer un dossier");
+        addFolderButton.setOnAction(this::addFolderButtonHandler);
         Button optionsButtons = new Button("Paramètres");
+        optionsButtons.setOnAction(this::optionsButtonHandler);
 
         //Styling
         setMenuButtonsBounds(rdvButton);
@@ -116,10 +121,15 @@ public class LabCompanionController {
 
     private void initDoctorMenu() {
         Button analysisListButton = new Button("Liste de vos analyses");
+        analysisListButton.setOnAction(this::analysisListButtonHandler);
         Button analysisButton = new Button("Créer une analyse");
+        analysisButton.setOnAction(this::analysisButtonHandler);
         Button studiesListButton = new Button("Liste de vos études");
+        studiesListButton.setOnAction(this::studiesListButtonHandler);
         Button studiesButton = new Button("Créer une étude");
+        studiesListButton.setOnAction(this::studiesButtonHandler);
         Button optionsButtons = new Button("Paramètres");
+        optionsButtons.setOnAction(this::optionsButtonHandler);
 
         //Styling
         setMenuButtonsBounds(analysisButton);
@@ -177,5 +187,62 @@ public class LabCompanionController {
         });
         return pluginButton;
     }
-    
+
+    //Button handlers
+
+    private void rdvButtonHandler(ActionEvent event) {
+        //TODO view
+    }
+
+    private void billButtonHandler(ActionEvent event) {
+        try {
+            LabCompanion.singleton.initBillOverviewPane();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void folderButtonHandler(ActionEvent event) {
+        try {
+            LabCompanion.singleton.initPatientCaseOverviewPane();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addFolderButtonHandler(ActionEvent event) {
+        //TODO view
+    }
+
+    private void optionsButtonHandler(ActionEvent event) {
+        //TODO view
+    }
+
+    private void analysisButtonHandler(ActionEvent event) {
+        //TODO view
+    }
+
+    private void analysisListButtonHandler(ActionEvent event) {
+        try {
+            LabCompanion.singleton.initDoctorAnalysisPanel();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void studiesButtonHandler(ActionEvent event) {
+        try {
+            LabCompanion.singleton.initDoctorStudyPanel(); //TODO change the init
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void studiesListButtonHandler(ActionEvent event) {
+        try {
+            LabCompanion.singleton.initDoctorStudyPanel();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
 }
