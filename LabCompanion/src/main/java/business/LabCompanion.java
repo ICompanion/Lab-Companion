@@ -1,5 +1,5 @@
 package business;
-
+//TEST
 import controller.LabCompanionController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
