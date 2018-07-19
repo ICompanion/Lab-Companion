@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoctorAnalysisController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoctorAnalysisController">
    <center>
       <TableView fx:id="analysisTab" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="patientIdColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Numéro Patient" />
-          <TableColumn fx:id="analysisIdColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Numéro Analyse" />
-          <TableColumn fx:id="dateColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Date" />
-            <TableColumn fx:id="viewAnalysisColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" />
+            <TableColumn fx:id="patientIdColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;" text="Numéro Patient" />
+            <TableColumn fx:id="analysisIdColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;" text="Numéro Analyse" />
+            <TableColumn fx:id="dateColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;" text="Date" />
+            <TableColumn fx:id="viewAnalysisColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;"/>
         </columns>
       </TableView>
    </center>
