@@ -1,6 +1,7 @@
 package business;
 
 import controller.LabCompanionController;
+import controller.VisitCreationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -68,7 +69,7 @@ public class LabCompanion extends Application {
 
     /**** Common ****/
     
-    private void setCurrentEditedPane(FXMLLoader currentEditedLoader) {
+    private void setCurrentEditedPane(Pane currentEditedPane) {
         try {
             FXMLLoader rootLoader = new FXMLLoader();
             URL rootUrl = Paths.get("src/main/java/view/labCompanion.fxml").toUri().toURL();
@@ -76,8 +77,7 @@ public class LabCompanion extends Application {
             root = (VBox) rootLoader.load();
             LabCompanionController labCompanionController =
                     (LabCompanionController) rootLoader.getController();
-            Pane currentEditedNode = currentEditedLoader.load();
-            labCompanionController.setEditedPane(currentEditedNode,
+            labCompanionController.setEditedPane(currentEditedPane,
                     this.connectedEmployee);
 
             mainStage.close();
@@ -123,7 +123,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/pluginOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
     }
     
     public void initPlugin(Plugin toLoad) throws MalformedURLException {
@@ -213,7 +220,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorWelcome.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -221,7 +235,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorAnalysis.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -229,7 +250,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorStudyOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -237,7 +265,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/analysisOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -245,7 +280,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/analysisResultOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -253,7 +295,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/questionPane.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -261,7 +310,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/questionAddPane.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -269,7 +325,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/studyCreationPane.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -277,7 +340,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/studyOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
     
@@ -287,7 +357,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/docotorPatientCase.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -295,7 +372,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/billList.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -303,7 +387,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/billOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -311,7 +402,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -319,7 +417,14 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/secretaryWelcome.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
 
     }
 
@@ -327,7 +432,16 @@ public class LabCompanion extends Application {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/visitCreation.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
-        this.setCurrentEditedPane(loader);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        VisitCreationController controller = loader.getController();
+        // contrller call function
+        this.setCurrentEditedPane(pane);
 
     }
 }
