@@ -154,7 +154,7 @@ public class LabCompanionController {
     }
     
     private void addEmployeePluginsToMenu(int employeeType) {
-        ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getLoadedPlugins();
+        ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getActivePlugins();
         if(loadedPlugins!= null) {
             for(Plugin current : loadedPlugins) {
                 if(current.getEmployeeType() == employeeType) {

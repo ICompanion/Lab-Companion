@@ -37,14 +37,16 @@ public class LabCompanion extends Application {
     
     private Employee connectedEmployee;
     
-    private ArrayList<Plugin> loadedPlugins;
+    private ArrayList<Plugin> activePlugins;
+    
+    private ArrayList<Plugin> inactivePlugins;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         singleton = this;
         this.connectedEmployee = null;
-        this.loadedPlugins = new ArrayList<Plugin>();
-        reloadPlugins();
+        this.activePlugins = new ArrayList<Plugin>();
+        this.inactivePlugins = new ArrayList<Plugin>();
         
         this.mainStage = primaryStage;
 
@@ -103,6 +105,7 @@ public class LabCompanion extends Application {
     }
     
     public void initLabCompanionPanel() throws MalformedURLException {
+        reloadPlugins();
         try {
             if(connectedEmployee.getType() == Doctor.DOCTOR_TYPE) {
                 initDoctorWelcomePanel();
@@ -143,24 +146,27 @@ public class LabCompanion extends Application {
         }
     }
     
-    public void addPluginList(ArrayList<Plugin> toAdd) {
+    public void addToActivePluginList(ArrayList<Plugin> toAdd) {
         if(!toAdd.isEmpty()) {
             for(Plugin current : toAdd) {
-                for(Plugin loaded : this.loadedPlugins) {
+                for(Plugin loaded : this.getLoadedPlugins()) {
                     if(current.getName().equals(loaded.getName())
                         && current.getDescription().equals(loaded.getDescription())) {
                         toAdd.remove(current);
                     }
                 }
             }
-            this.loadedPlugins.addAll(toAdd);
+            this.activePlugins.addAll(toAdd);
         }
     }
     
     private void reloadPlugins() {
         PluginLoader loader = new PluginLoader(
                 LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER);
-        this.loadedPlugins = loader.getPlugins();
+        this.activePlugins = loader.getPlugins();
+        loader = new PluginLoader(
+                LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER);
+        this.inactivePlugins = loader.getPlugins();
     }
 
     public void disconnect() {
@@ -182,7 +188,22 @@ public class LabCompanion extends Application {
     }
 
     public ArrayList<Plugin> getLoadedPlugins() {
-        return loadedPlugins;
+        ArrayList<Plugin> toReturn = new ArrayList<Plugin>();
+        if(this.activePlugins != null) {
+            toReturn.addAll(this.activePlugins);
+        }
+        if(this.inactivePlugins != null) {
+            toReturn.addAll(this.inactivePlugins);
+        }
+        return toReturn;
+    }
+
+    public ArrayList<Plugin> getActivePlugins() {
+        return this.activePlugins;
+    }
+
+    public ArrayList<Plugin> getInactivePlugins() {
+        return this.inactivePlugins;
     }
     
     /**** Doctor ****/

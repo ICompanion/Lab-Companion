@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,6 +57,30 @@ public class PluginOverviewController {
     @FXML
     public void initialize() {
         this.pluginTableView.setEditable(false);
+        this.activatePluginButton.setDisable(true);
+        this.desactivatePluginButton.setDisable(true);
+        
+        this.pluginTableView.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue,
+                    Object oldValue, Object newValue) {
+                if(PluginOverviewController.this.pluginTableView
+                        .getSelectionModel().getSelectedItem() != null) 
+                {    
+                    Record seletedItem = (Record) PluginOverviewController
+                            .this.pluginTableView
+                            .getSelectionModel().getSelectedItem();
+                    if(seletedItem.getPluginActiveState().equals("Non")) {
+                        PluginOverviewController.this.activatePluginButton.setDisable(false);
+                        PluginOverviewController.this.desactivatePluginButton.setDisable(true);
+                    } else {
+                        PluginOverviewController.this.activatePluginButton.setDisable(true);
+                        PluginOverviewController.this.desactivatePluginButton.setDisable(false);
+                    }
+                 }
+                 }
+            });
         
         this.nameColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("pluginName"));
@@ -74,15 +100,11 @@ public class PluginOverviewController {
                         current.getName(),
                         current.getDescription(),
                         current.getAuthor(),
-                        isPluginActive(current));
+                        LabCompanion.singleton.getActivePlugins().contains(current) ? "Oui" : "Non");
                 dataList.add(toAdd);
             }
         }
         pluginTableView.setItems(dataList);
-    }
-
-    private static String isPluginActive(Plugin current) {
-        return current.getClass().getName();
     }
     
     @FXML
@@ -94,7 +116,7 @@ public class PluginOverviewController {
             Logger.getLogger(PluginOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(toAdd!=null) {
-            LabCompanion.singleton.addPluginList(toAdd);
+            LabCompanion.singleton.addToActivePluginList(toAdd);
         }
     }
     

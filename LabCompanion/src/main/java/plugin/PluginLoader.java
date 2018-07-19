@@ -37,15 +37,18 @@ public class PluginLoader {
     public PluginLoader(String folderPath) {
         Path folder = Paths.get(folderPath);
         this.plugins = new ArrayList<>();
-        ArrayList<String> folderFilesPath = new ArrayList<>();
-        if(Files.isDirectory(folder)) {
-            try {
-                Files.list(folder).forEach(filePath -> folderFilesPath.add(folderPath));
-            } catch (IOException ex) {
-                Logger.getLogger(PluginLoader.class.getName()).log(Level.SEVERE, null, ex);
+        if(Files.exists(folder)){
+            ArrayList<String> folderFilesPath = new ArrayList<>();
+            if(Files.isDirectory(folder)) {
+                try {
+                    Files.list(folder).forEach(filePath ->
+                            folderFilesPath.add(filePath.toString()));
+                } catch (IOException ex) {
+                    Logger.getLogger(PluginLoader.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            setFiles(folderFilesPath.toArray(new String[0]));
         }
-        setFiles(folderFilesPath.toArray(new String[0]));
     }
 
     /**
