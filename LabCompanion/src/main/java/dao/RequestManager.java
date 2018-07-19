@@ -294,6 +294,29 @@ public class RequestManager {
         return null;
     }
 
+    public static ArrayList<Doctor> getAllDoctor() throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/employe/doctors/");
+
+        if(data != null){
+
+            SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+            Iterator<JSONObject> it = data.iterator();
+            ArrayList<Doctor> doctorList = new ArrayList<>();
+
+            JSONObject obj = it.next();
+
+            while(it.hasNext()) {
+                doctorList.add(new Doctor(obj.getInt("id"), obj.getString("nom"), obj.getString("prenom"),
+                        obj.getInt("employe_type"), obj.getString("mail"),
+                        obj.getString("date_embauche"), obj.getString("type_contrat"),
+                        obj.getString("adresse"), obj.getString("ville"), obj.getInt("cp"), obj.getString("identifiant"),
+                        obj.getInt("num_secu")));
+            }
+            return doctorList;
+        }
+        return null;
+    }
+
     //Tested
     public static ArrayList<Category> getCategories() throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/categorie/all");
