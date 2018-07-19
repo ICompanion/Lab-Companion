@@ -15,9 +15,13 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 
 import java.awt.*;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import plugin.Plugin;
 
 public class LabCompanionController {
 
@@ -106,6 +110,8 @@ public class LabCompanionController {
         menuButtons.add(folderButton);
         menuButtons.add(addFolderButton);
         menuButtons.add(optionsButtons);
+        
+        addEmployeePluginsToMenu(Secretary.SECRETARY_TYPE);
     }
 
     private void initDoctorMenu() {
@@ -128,5 +134,48 @@ public class LabCompanionController {
         menuButtons.add(studiesListButton);
         menuButtons.add(studiesButton);
         menuButtons.add(optionsButtons);
+        menuButtons.add(createPluginManagerButton());
+        
+        addEmployeePluginsToMenu(Doctor.DOCTOR_TYPE);
     }
+    
+    private Button createPluginManagerButton() {
+        Button pluginManagerButton = new Button("Gestionnaire de plugin");
+        setMenuButtonsBounds(pluginManagerButton);
+        pluginManagerButton.setOnAction((ActionEvent e) -> {
+            try {
+                LabCompanion.singleton.initPluginManagerOverview();
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(LabCompanionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        return pluginManagerButton;
+        
+    }
+    
+    private void addEmployeePluginsToMenu(int employeeType) {
+        ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getLoadedPlugins();
+        if(loadedPlugins!= null) {
+            for(Plugin current : loadedPlugins) {
+                if(current.getEmployeeType() == employeeType) {
+                    Button currentPluginButton = createPluginButton(current);
+                    menuButtons.add(currentPluginButton);
+                }
+            }
+        }
+    }
+    
+    private Button createPluginButton(Plugin toCreate) {
+        Button pluginButton = new Button(toCreate.getDisplayName());
+        setMenuButtonsBounds(pluginButton);
+        pluginButton.setOnAction((ActionEvent e) -> {
+            try {
+                LabCompanion.singleton.initPlugin(toCreate);
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(LabCompanionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        return pluginButton;
+    }
+    
 }

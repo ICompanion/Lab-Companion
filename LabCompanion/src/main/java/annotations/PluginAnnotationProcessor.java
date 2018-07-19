@@ -26,11 +26,11 @@ public class PluginAnnotationProcessor extends AbstractProcessor {
         super.init(processingEnv);
         this.processingEnv = processingEnv;
     }
-
-
+    
+    
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
-                           RoundEnvironment roundEnv) {
+            RoundEnvironment roundEnv) {
         for(Element element : roundEnv.getElementsAnnotatedWith( Plugin.class ) ) {
             if( element instanceof TypeElement ) {
                 writeFile(element.getClass());
