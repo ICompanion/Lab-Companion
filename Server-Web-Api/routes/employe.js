@@ -18,6 +18,18 @@ employeRouter.get('/all', function(req, res){
   });
 });
 
+employeRouter.get('/doctors', function(req, res){
+    employeController.getDoctors(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 employeRouter.get('/:identifiant', function(req, res){
   employeController.getByIdentifiant(req.params.identifiant,function(data, state){
     if(state === false) {res.status(500).end(); return;}

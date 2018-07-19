@@ -8,6 +8,12 @@ employeController.getAll = function(callback) {
   });
 };
 
+employeController.getDoctors = function(callback) {
+    bddController.executeQuery('select * from employe where employe_type = 1', '', function(data, state){
+        callback(data, state);
+    });
+};
+
 employeController.getByIdentifiant = function(identifiant, callback) {
   bddController.executeQuery('select * from employe where identifiant = $1', [identifiant], function(data, state){
       callback(data, state);
