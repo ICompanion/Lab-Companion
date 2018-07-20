@@ -123,7 +123,7 @@ public class LabCompanionController {
         Button studiesListButton = new Button("Liste de vos études");
         studiesListButton.setOnAction(this::studiesListButtonHandler);
         Button studiesButton = new Button("Créer une étude");
-        studiesListButton.setOnAction(this::studiesButtonHandler);
+        studiesButton.setOnAction(this::studiesButtonHandler);
         Button optionsButtons = new Button("Paramètres");
         optionsButtons.setOnAction(this::optionsButtonHandler);
 
@@ -232,7 +232,7 @@ public class LabCompanionController {
 
     private void studiesButtonHandler(ActionEvent event) {
         try {
-            LabCompanion.singleton.initDoctorStudyPanel(); //TODO change the init
+            LabCompanion.singleton.initStudyCreationPane(); //TODO change the init
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

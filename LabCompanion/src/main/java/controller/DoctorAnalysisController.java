@@ -107,7 +107,7 @@ public class DoctorAnalysisController {
             Record toAdd = new Record(
                     String.valueOf(current.getPatient().getUsername()),
                     String.valueOf(current.getCode()),
-                    current.getDateAnalyse().toString());
+                    current.getDateAnalyse().toString().substring(0,10));
 
             dataList.add(toAdd);
         }

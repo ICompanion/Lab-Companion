@@ -96,7 +96,7 @@ public class DoctorStudyOverviewController {
             SurveyRecord toAdd = new SurveyRecord(
                     String.valueOf(current.getCode()),
                     String.valueOf(current.getName()),
-                    current.getDate().toString());
+                    current.getDate().toString().substring(0,10));
 
             dataList.add(toAdd);
         }
@@ -111,7 +111,11 @@ public class DoctorStudyOverviewController {
 
     @FXML
     private void welcomeButtonAction(ActionEvent event) {
-
+        try {
+            LabCompanion.singleton.initDoctorWelcomePanel();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private static class ButtonCell extends TableCell<SurveyRecord, Boolean> {

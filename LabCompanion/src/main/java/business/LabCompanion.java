@@ -327,7 +327,7 @@ public class LabCompanion extends Application {
 
     public void initStudyCreationPane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/studyCreationPane.fxml").toUri().toURL();
+        URL rootUrl = Paths.get("src/main/java/view/studyCreation.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
         Pane pane = null;
         try {

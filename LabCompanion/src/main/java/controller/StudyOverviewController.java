@@ -72,27 +72,30 @@ public class StudyOverviewController {
     }
 
     public void displayStats() throws Exception {
-        for (Question question : survey.getQuestions()) {
-            Label currentQLabel = new Label(question.getTitle() + " : ");
-            if(precQLabel != null) {
-                currentQLabel.setLayoutY(precQLabel.getLayoutY()+35);
+        try {
+            for (Question question : survey.getQuestions()) {
+                Label currentQLabel = new Label(question.getTitle() + " : ");
+                if(precQLabel != null) {
+                    currentQLabel.setLayoutY(precQLabel.getLayoutY()+35);
+                }
+
+                precPLabel = currentQLabel;
+
+                for (Proposal proposal : question.getProposals()) {
+                    currentQLabel.setText(currentQLabel.getText()+"   "+proposal.getTitle()+" : "+String.valueOf(RequestManager.statsByReponse(survey.getId(),question.getId(),proposal.getId())));
+                }
+
+                currentQLabel.getStyleClass().add("stats_label");
+
+                statsPane.getChildren().add(currentQLabel);
+
+                precQLabel = currentQLabel;
             }
-
-            precPLabel = currentQLabel;
-
-            for (Proposal proposal : question.getProposals()) {
-                currentQLabel.setText(currentQLabel.getText()+"   "+proposal.getTitle()+" : "+String.valueOf(RequestManager.statsByReponse(survey.getId(),question.getId(),proposal.getId())));
-            }
-
-            currentQLabel.getStyleClass().add("stats_label");
-
-            statsPane.getChildren().add(currentQLabel);
-
-            precQLabel = currentQLabel;
+        } catch (NullPointerException e) {
+            Label noParticipations = new Label("No participations yet.");
+            noParticipations.getStyleClass().add("stats_label");
+            statsPane.getChildren().add(noParticipations);
         }
-    }
 
-    public void displayQuestion(Question question) {
-        //TODO
     }
 }
