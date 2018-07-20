@@ -82,15 +82,18 @@ public class DoctorPatientCasesController {
 
         ObservableList<PatientRecord> dataList = FXCollections.observableArrayList();
 
-        for (Patient current : patientListe) {
-            PatientRecord toAdd = new PatientRecord(
-                    String.valueOf(current.getUsername()),
-                    String.valueOf(current.getName() + " " +current.getFirstname()));
+        if(patientListe != null){
+            for (Patient current : patientListe) {
+                PatientRecord toAdd = new PatientRecord(
+                        String.valueOf(current.getUsername()),
+                        String.valueOf(current.getName() + " " +current.getFirstname()));
 
-            dataList.add(toAdd);
+                dataList.add(toAdd);
+            }
+
+            casesTableView.setItems(dataList);
         }
 
-        casesTableView.setItems(dataList);
     }
 
     @FXML
