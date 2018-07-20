@@ -355,7 +355,11 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(pane);
 
         StudyOverviewController controller = loader.getController();
-        controller.setSurvey(survey);
+        try {
+            controller.setSurvey(survey);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.setCurrentEditedPane(pane);
 
     }

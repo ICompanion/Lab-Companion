@@ -706,7 +706,7 @@ public class RequestManager {
 
             Iterator<JSONObject> it = data.iterator();
 
-            int value = it.next().getInt("nbReponses");
+            int value = it.next().getInt("nbreponses");
             return value;
         }
 
@@ -720,7 +720,7 @@ public class RequestManager {
 
             Iterator<JSONObject> it = data.iterator();
 
-            int value = it.next().getInt("nbParticipations");
+            int value = it.next().getInt("nbparticipations");
             return value;
         }
 

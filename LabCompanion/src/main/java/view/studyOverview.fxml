@@ -3,10 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -46,6 +49,21 @@
                   <Label fx:id="studyPatientsLabel" alignment="CENTER" contentDisplay="CENTER" text="PATIENTS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
+            <ScrollPane fx:id="scrollPane" prefHeight="170.0" prefWidth="563.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="585.0">
+                     <children>
+                        <Pane fx:id="statsPane" prefHeight="200.0" prefWidth="586.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="25.0" right="25.0" />
+               </padding>
+            </ScrollPane>
          </children>
          <padding>
             <Insets bottom="20.0" top="20.0" />
