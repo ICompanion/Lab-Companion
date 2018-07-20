@@ -78,6 +78,30 @@ etudeRouter.get('/:code/reponses', function(req, res){
     });
 });
 
+etudeRouter.get('/nbReponses/:etudeCode/:questionId/:reponseId', function(req, res){
+    etudeController.getNbAnswers(req.params.etudeCode, req.params.questionId, req.params.reponseId,  function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
+etudeRouter.get('/nbParticipations/:etudeCode', function(req, res){
+    etudeController.getNbParticipations(req.params.etudeCode, function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 etudeRouter.get('/:code/qcount', function(req, res){
     etudeController.countByCode(req.params.code, function(data, state){
         if(state === false) {res.status(500).end(); return;}
