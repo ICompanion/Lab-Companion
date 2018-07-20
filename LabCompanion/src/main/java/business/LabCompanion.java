@@ -16,29 +16,31 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import plugin.Plugin;
 import plugin.PluginLoader;
 
 public class LabCompanion extends Application {
-    
+
     public static final String USER_LAB_COMPANION_FOLDER =
             System.getProperty("user.home")+"\\LabCompanion";
-    public static final String USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER = 
+    public static final String USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER =
             System.getProperty("user.home")+"\\LabCompanion\\active";
-    public static final String USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER = 
+    public static final String USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER =
             System.getProperty("user.home")+"\\LabCompanion\\inactive";
 
     public static LabCompanion singleton;
-    
+
     private Parent root;
 
     private Stage mainStage;
-    
+
     private Employee connectedEmployee;
-    
+
     private ArrayList<Plugin> activePlugins;
-    
+
     private ArrayList<Plugin> inactivePlugins;
 
     @Override
@@ -47,7 +49,7 @@ public class LabCompanion extends Application {
         this.connectedEmployee = null;
         this.activePlugins = new ArrayList<Plugin>();
         this.inactivePlugins = new ArrayList<Plugin>();
-        
+
         this.mainStage = primaryStage;
 
         URL loaded = Paths.get("src/main/java/view/connexion.fxml").toUri().toURL();
@@ -67,7 +69,7 @@ public class LabCompanion extends Application {
     }
 
     /**** Common ****/
-    
+
     private void setCurrentEditedPane(Pane currentEditedPane) {
         try {
             FXMLLoader rootLoader = new FXMLLoader();
@@ -103,7 +105,7 @@ public class LabCompanion extends Application {
         }
 
     }
-    
+
     public void initLabCompanionPanel() throws MalformedURLException {
         reloadPlugins();
         try {
@@ -117,7 +119,7 @@ public class LabCompanion extends Application {
             Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void initPluginManagerOverview() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/pluginOverview.fxml").toUri().toURL();
@@ -131,7 +133,7 @@ public class LabCompanion extends Application {
         }
         this.setCurrentEditedPane(pane);
     }
-    
+
     public void initPlugin(Plugin toLoad) throws MalformedURLException {
         try {
             FXMLLoader rootLoader = new FXMLLoader();
@@ -152,7 +154,7 @@ public class LabCompanion extends Application {
             Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void addToActivePluginList(ArrayList<Plugin> toAdd) {
         if(!toAdd.isEmpty()) {
             for(Plugin current : toAdd) {
@@ -166,7 +168,7 @@ public class LabCompanion extends Application {
             this.activePlugins.addAll(toAdd);
         }
     }
-    
+
     private void reloadPlugins() {
         PluginLoader loader = new PluginLoader(
                 LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER);
@@ -185,7 +187,7 @@ public class LabCompanion extends Application {
             Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void setConnectedEmployee(Employee connectedEmployee) {
         this.connectedEmployee = connectedEmployee;
     }
@@ -212,9 +214,9 @@ public class LabCompanion extends Application {
     public ArrayList<Plugin> getInactivePlugins() {
         return this.inactivePlugins;
     }
-    
+
     /**** Doctor ****/
-    
+
     public void initDoctorWelcomePanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorWelcome.fxml").toUri().toURL();
@@ -360,9 +362,9 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(pane);
 
     }
-    
+
     /**** Secretary ****/
-    
+
     public void initSecretaryPatientCasePanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/docotorPatientCase.fxml").toUri().toURL();
@@ -471,6 +473,24 @@ public class LabCompanion extends Application {
         controller.setPatientId(patientId);
         this.setCurrentEditedPane(pane);
 
+    }
+
+    public void initAlertPane(String title, String description, String message) {
+        
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(title);
+            alert.setHeaderText(description);
+            alert.setContentText(message);
+            DialogPane dialogPane = alert.getDialogPane();
+            URL cssURL = getClass().getResource("main/java/style/alertPane.css");
+            
+            if(cssURL != null) {
+                dialogPane.getStylesheets().add(cssURL.toExternalForm());
+    //            dialogPane.getStylesheets().add(Paths.get("src/main/java/style/alertPane.css").toUri().toURL().toExternalForm());
+                dialogPane.getStyleClass().add("alert-pane");
+            }
+            
+            alert.showAndWait();
     }
 }
 

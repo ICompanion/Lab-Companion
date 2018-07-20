@@ -45,16 +45,9 @@ public class ConnexionController {
             LabCompanion.singleton.setConnectedEmployee(connectedUser);
             LabCompanion.singleton.initLabCompanionPanel();
         } catch (Exception e) {
-            //@TODO change to view.AlertPane ?
-            Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-
-            VBox vbox = new VBox(new Text("Connection Failed"), new Button("Ok"));
-            vbox.setAlignment(Pos.CENTER);
-            vbox.setPadding(new Insets(15));
-
-            dialogStage.setScene(new Scene(vbox));
-            dialogStage.show();
+            LabCompanion.singleton.initAlertPane("Erreur de connexion", 
+                    "La connexion à échouée", 
+                    "Veuillez vérifier l'identifiant et le mot de passe renseignés.");
         }
     }
 
