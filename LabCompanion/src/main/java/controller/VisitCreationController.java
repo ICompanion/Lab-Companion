@@ -60,14 +60,16 @@ public class VisitCreationController {
 
         patientIdLabel.setText(patientId);
         patientNameLabel.setText(patient.getName());
+        if(doctorList != null) {
 
-        Iterator<Doctor> it = doctorList.iterator();
-        Doctor current;
 
-        while(it.hasNext())
-        {
-            current = it.next();
-            this.doctorCombo.getItems().addAll(current.getFirstname());
+            Iterator<Doctor> it = doctorList.iterator();
+            Doctor current;
+
+            while (it.hasNext()) {
+                current = it.next();
+                this.doctorCombo.getItems().addAll(current.getFirstname());
+            }
         }
 
         visitDate.focusedProperty().addListener((arg0, oldValue, newValue) -> {
