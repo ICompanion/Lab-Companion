@@ -141,8 +141,6 @@ public class DoctorAnalysisController {
                             .getTableView().getItems()
                             .get(ButtonCell.this.getIndex()).getAnalysisCode());
                     try {
-//                        Analysis currentAnalysis = (Analysis) RequestManager
-//                                .getAnalysisById(currentAnalysisId);
                         Analysis currentAnalysis = analysisList.get(ButtonCell.this.getIndex());
                         LabCompanion.singleton.initAnalysisOverviewPane(currentAnalysis);
                     } catch (MalformedURLException ex) {

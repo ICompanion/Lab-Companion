@@ -2,6 +2,7 @@ package business;
 
 import controller.AnalysisOverviewController;
 import controller.LabCompanionController;
+import controller.StudyOverviewController;
 import controller.VisitCreationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -340,7 +341,7 @@ public class LabCompanion extends Application {
 
     }
 
-    public void initStudyOverviewPane() throws MalformedURLException {
+    public void initStudyOverviewPane(Survey survey) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/studyOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
@@ -351,6 +352,10 @@ public class LabCompanion extends Application {
             // TODO
             e.printStackTrace();
         }
+        this.setCurrentEditedPane(pane);
+
+        StudyOverviewController controller = loader.getController();
+        controller.setSurvey(survey);
         this.setCurrentEditedPane(pane);
 
     }
