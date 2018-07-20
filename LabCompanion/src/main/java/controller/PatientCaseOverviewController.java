@@ -1,11 +1,14 @@
 package controller;
 
+import business.LabCompanion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+
+import java.net.MalformedURLException;
 
 public class PatientCaseOverviewController {
 
@@ -42,12 +45,20 @@ public class PatientCaseOverviewController {
 
     @FXML
     private void backButtonAction(ActionEvent event) {
-
+        try {
+            LabCompanion.singleton.initLabCompanionPanel();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void addRdvButtonAction(ActionEvent event) {
-
+        try {
+            LabCompanion.singleton.initVisitCreationPane(patientIdLabel.getText());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

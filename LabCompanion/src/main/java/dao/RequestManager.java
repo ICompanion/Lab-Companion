@@ -3,8 +3,6 @@ package dao;
 import Utils.JSONParser;
 import business.*;
 import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -197,7 +195,6 @@ public class RequestManager {
 
             JSONObject obj = it.next();
 
-
             category = new Category(obj.getInt("id"), obj.getString("nom"));
 
             return category;
@@ -223,7 +220,6 @@ public class RequestManager {
                 Survey survey = new Survey(obj.getInt("id"), obj.getString("code_etude"),
                                             obj.get("nom").toString(),date.parse(obj.getString("date")),
                                             obj.get("description").toString(), doctor, null);
-                survey.setQuestions(RequestManager.getQuestions(survey));
 
                 surveyList.add(survey);
             }
@@ -231,52 +227,6 @@ public class RequestManager {
             return surveyList;
         }
         return null;
-    }
-
-    public static ArrayList<Question> getQuestions(Survey survey) throws Exception {
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/"+survey.getCode()+"/questions");
-        Question precQuestion = new Question(0, null, null);
-        if(data != null){
-            Iterator<JSONObject> it = data.iterator();
-            ArrayList<Question> questionsList = new ArrayList<Question>();
-            while(it.hasNext())
-            {
-                JSONObject obj = it.next();
-
-                Question  question= new Question(obj.getInt("id_question"), obj.getString("intitule"),null);
-                question.setProposals(RequestManager.getAnswers(question));
-
-                if (precQuestion.getId() != question.getId()) {
-                    questionsList.add(question);
-                }
-
-                precQuestion = question;
-            }
-
-            return questionsList;
-        } else {
-            return null;
-        }
-    }
-
-    public static ArrayList<Proposal> getAnswers(Question question) throws Exception {
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/"+question.getId()+"/reponses");
-        if(data != null){
-            Iterator<JSONObject> it = data.iterator();
-            ArrayList<Proposal> proposalList = new ArrayList<Proposal>();
-            while(it.hasNext())
-            {
-                JSONObject obj = it.next();
-
-                Proposal  proposal= new Proposal(obj.getInt("id_reponse"), obj.getString("intitule"));
-
-                proposalList.add(proposal);
-            }
-
-            return proposalList;
-        } else {
-            return null;
-        }
     }
 
     //Tested
@@ -706,7 +656,7 @@ public class RequestManager {
 
             Iterator<JSONObject> it = data.iterator();
 
-            int value = it.next().getInt("nbreponses");
+            int value = it.next().getInt("nbReponses");
             return value;
         }
 
@@ -720,7 +670,7 @@ public class RequestManager {
 
             Iterator<JSONObject> it = data.iterator();
 
-            int value = it.next().getInt("nbparticipations");
+            int value = it.next().getInt("nbParticipations");
             return value;
         }
 
