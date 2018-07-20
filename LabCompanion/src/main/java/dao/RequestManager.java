@@ -391,7 +391,7 @@ public class RequestManager {
 
                 String dateStr = obj.getString("date").substring(0, 19);
                 Appointment appointment = new Appointment( date.parse(dateStr),
-                                                             obj.getString("status"), patient, doctor);
+                        obj.getString("status"), patient, doctor);
                 appointment.setId(obj.getInt("id"));
 
                 appointmentList.add(appointment);
