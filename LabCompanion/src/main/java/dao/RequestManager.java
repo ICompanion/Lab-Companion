@@ -229,6 +229,33 @@ public class RequestManager {
         return null;
     }
 
+    public static ArrayList<Survey> getAllSurveys() throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/allSurveyx");
+
+        if(data != null)
+        {
+            ArrayList<Survey> surveyList = new ArrayList<Survey>();
+            SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+
+            Iterator<JSONObject> it = data.iterator();
+
+            while(it.hasNext())
+            {
+                JSONObject obj = it.next();
+                Doctor doctor = getDoctorById(obj.getInt("employe_id"));
+
+                Survey survey = new Survey(obj.getInt("id"), obj.getString("code_etude"),
+                        obj.get("nom").toString(),date.parse(obj.getString("date")),
+                        obj.get("description").toString(), doctor, null);
+
+                surveyList.add(survey);
+            }
+
+            return surveyList;
+        }
+        return null;
+    }
+
     //Tested
     public static ArrayList<Patient> getPatients() throws Exception {
 

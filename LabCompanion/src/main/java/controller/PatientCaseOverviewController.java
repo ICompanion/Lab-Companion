@@ -1,18 +1,13 @@
 package controller;
 
-import business.Appointment;
-import business.LabCompanion;
-import business.Patient;
+import business.*;
 import dao.RequestManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.MalformedURLException;
@@ -50,8 +45,15 @@ public class PatientCaseOverviewController {
     @FXML
     private TableColumn doctorColumn;
 
+    @FXML
+    private ComboBox participationComboBox;
+
+    @FXML
+    private Button addParticipationButton;
+
     private static Patient patient;
     private static ArrayList<Appointment> appointmentsList;
+    private static ArrayList<Survey> surveyList;
 
     @FXML
     private void backButtonAction(ActionEvent event) {
@@ -66,6 +68,34 @@ public class PatientCaseOverviewController {
     private void addRdvButtonAction(ActionEvent event) {
         try {
             LabCompanion.singleton.initVisitCreationPane(patientIdLabel.getText());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void addParticipationButtonAction(ActionEvent event) {
+        String surveyCode = this.participationComboBox.getValue().toString();
+
+        if(this.participationComboBox.getValue().toString().equals("")){
+            return;
+        }
+         Survey survey = null;
+
+        for(Survey surveyP : surveyList){
+            if(surveyP.getCode().equals(surveyCode)){
+                survey = surveyP;
+            }
+        }
+
+        try {
+            RequestManager.addParticipation(survey, this.patient);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            LabCompanion.singleton.initDoctorPatientCasePane();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -93,23 +123,36 @@ public class PatientCaseOverviewController {
 
         try {
             appointmentsList = RequestManager.getPatientAppointments(patient);
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        try {
+            surveyList = RequestManager.getAllSurveys();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(surveyList != null){
+            for(Survey survey : surveyList){
+                this.participationComboBox.getItems().addAll(survey.getCode());
+            }
+        }
 
         ObservableList<AppointMentRecord> dataList = FXCollections.observableArrayList();
 
-        for (Appointment current : appointmentsList) {
-            AppointMentRecord toAdd = new AppointMentRecord(
-                    String.valueOf(current.getDate().toString()),
-                    String.valueOf(current.getDoctor().getName() + " " +current.getDoctor().getFirstname()));
+        if(appointmentsList != null){
+            for (Appointment current : appointmentsList) {
+                AppointMentRecord toAdd = new AppointMentRecord(
+                        String.valueOf(current.getDate().toString()),
+                        String.valueOf(current.getDoctor().getName() + " " +current.getDoctor().getFirstname()));
 
-            dataList.add(toAdd);
+                dataList.add(toAdd);
+            }
+
+            rdvTableView.setItems(dataList);
         }
 
-        rdvTableView.setItems(dataList);
     }
 
     public class AppointMentRecord {

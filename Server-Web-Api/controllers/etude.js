@@ -8,6 +8,12 @@ etudeController.getAll = function(callback) {
     });
 };
 
+etudeController.getAllStudies = function(callback) {
+    bddController.executeQuery('select distinct code_etude, id, nom, date, description, employe_id from etude', '', function(data, state){
+        callback(data, state);
+    });
+};
+
 etudeController.getByCode = function(code, callback) {
     bddController.executeQuery('select * from study_detail where code_etude = $1', [code], function(data, state){
         callback(data, state);

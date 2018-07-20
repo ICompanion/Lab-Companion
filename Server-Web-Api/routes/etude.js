@@ -18,6 +18,18 @@ etudeRouter.get('/all', function(req, res){
     });
 });
 
+etudeRouter.get('/allSurveyx', function(req, res){
+    etudeController.getAllStudies(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 etudeRouter.get('/patient/liste/:id', function(req, res){
     etudeController.getParticipatingPatient(req.params.id, function(data, state){
         if(state === false) {res.status(500).end(); return;}
