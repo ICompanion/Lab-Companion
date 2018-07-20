@@ -15,6 +15,7 @@
           <TableColumn fx:id="patientIdColumn" maxWidth="100.0" minWidth="150.0" prefWidth="100.0" text="Numéro Patient" />
           <TableColumn fx:id="patientNameColumn" maxWidth="162.0" minWidth="99.0" prefWidth="150.0" text="Nom" />
             <TableColumn fx:id="viewCaseColumn" maxWidth="151.0" minWidth="88.0" prefWidth="100.0" />
+            <TableColumn fx:id="viewCaseColumn2" maxWidth="151.0" minWidth="88.0" prefWidth="100.0" />
         </columns>
          <BorderPane.margin>
             <Insets bottom="5.0" />

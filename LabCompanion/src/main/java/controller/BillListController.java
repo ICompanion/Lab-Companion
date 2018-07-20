@@ -47,6 +47,12 @@ public class BillListController {
     @FXML
     private TableColumn viewColumn;
 
+    @FXML
+    private TableColumn adresseColumn;
+
+    @FXML
+    private TableColumn amountColumn;
+
     private static ArrayList<Bill> billListe = new ArrayList<>();
 
     @FXML
@@ -79,6 +85,16 @@ public class BillListController {
         this.analysisDateColumn.setCellValueFactory(
                 new PropertyValueFactory<billRecord, String>("date"));
 
+        this.amountColumn.setStyle( "-fx-alignment: CENTER;");
+        this.amountColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.amountColumn.setCellValueFactory(
+                new PropertyValueFactory<billRecord, String>("amount"));
+
+        this.adresseColumn.setStyle( "-fx-alignment: CENTER;");
+        this.adresseColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.adresseColumn.setCellValueFactory(
+                new PropertyValueFactory<billRecord, String>("adresse"));
+
         this.viewColumn.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures<billRecord, Boolean>,
                         ObservableValue<Boolean>>() {
@@ -108,7 +124,9 @@ public class BillListController {
                         current.getPatient().getUsername(),
                         current.getAnalyse().getCode(),
                         current.getCreationDate().toString(),
-                        (current.isPayed() ? "Payé" : "Impayée"));
+                        (current.isPayed() ? "Payé" : "Impayée"),
+                        current.getBillingAdress(),
+                        String.valueOf(current.getAmount()));
 
                 dataList.add(toAdd);
                 }
@@ -164,21 +182,26 @@ public class BillListController {
         if(!empty){
             setGraphic(cellButton);
         }
+        }
     }
-}
 
     public class billRecord {
         private final SimpleStringProperty numPatient;
         private final SimpleStringProperty numAnalyse;
         private final SimpleStringProperty date;
         private final SimpleStringProperty statut;
+        private final SimpleStringProperty amount;
+        private final SimpleStringProperty adresse;
 
-
-        public billRecord(String numPatient, String numAnalyse, String date, String statut) {
+        public billRecord(String numPatient, String numAnalyse, String date, String statut, String amount,
+                          String adresse) {
             this.numPatient = new SimpleStringProperty(numPatient);
             this.numAnalyse = new SimpleStringProperty(numAnalyse);
             this.date = new SimpleStringProperty(date);
             this.statut = new SimpleStringProperty(statut);
+            this.amount = new SimpleStringProperty(amount);
+            this.adresse = new SimpleStringProperty(adresse);
+
         }
 
         public String getNumPatient() {
@@ -211,6 +234,22 @@ public class BillListController {
 
         public SimpleStringProperty statutProperty() {
             return statut;
+        }
+
+        public String getAmount() {
+            return amount.get();
+        }
+
+        public SimpleStringProperty amountProperty() {
+            return amount;
+        }
+
+        public String getAdresse() {
+            return adresse.get();
+        }
+
+        public SimpleStringProperty adresseProperty() {
+            return adresse;
         }
     }
 }

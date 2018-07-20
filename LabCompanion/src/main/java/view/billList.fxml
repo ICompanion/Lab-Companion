@@ -24,6 +24,8 @@
           <TableColumn fx:id="analysisIdColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Numéro Analyse" />
             <TableColumn fx:id="analysisDateColumn" maxWidth="-1.0" minWidth="200.0" prefWidth="-1.0" text="Date" />
             <TableColumn fx:id="analysisStatusColumn" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" text="Statut" />
+            <TableColumn fx:id="adresseColumn" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="Montant" />
+            <TableColumn fx:id="amountColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Adresse" />
             <TableColumn fx:id="viewColumn" maxWidth="-1.0" minWidth="70.0" prefWidth="-1.0" />
         </columns>
       </TableView>

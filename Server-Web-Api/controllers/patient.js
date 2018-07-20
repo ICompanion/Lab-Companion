@@ -55,7 +55,6 @@ patientController.update = function(columns, values, id, callback) {
     i++;
   }
   text = text.slice(0,-2) + ' where id = ' + id;
-
   bddController.executeQuery(text, values, function(data, state){
     callback(state);
   });

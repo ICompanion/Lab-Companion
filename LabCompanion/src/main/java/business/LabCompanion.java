@@ -441,6 +441,23 @@ public class LabCompanion extends Application {
 
     }
 
+    public void initCreatePatientUpdateCasePane(Patient patient) throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/patientCreation.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        PatientCreationController controller = loader.getController();
+        controller.setPatient(patient);
+        this.setCurrentEditedPane(pane);
+
+    }
+
     public void initPatientCaseOverviewPane(Patient patient) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();

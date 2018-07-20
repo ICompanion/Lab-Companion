@@ -42,6 +42,9 @@ public class DoctorPatientCasesController {
     @FXML
     private TableColumn viewCaseColumn;
 
+    @FXML
+    private TableColumn viewCaseColumn2;
+
     private static ArrayList<Patient> patientListe = new ArrayList<>();
 
     @FXML
@@ -79,6 +82,27 @@ public class DoctorPatientCasesController {
 
         this.viewCaseColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.viewCaseColumn.setStyle( "-fx-alignment: CENTER;");
+
+        this.viewCaseColumn2.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<PatientRecord, Boolean>,
+                        ObservableValue<Boolean>>() {
+                    @Override
+                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<PatientRecord, Boolean> p) {
+                        return new SimpleBooleanProperty(p.getValue() != null);
+                    }
+                });
+
+        this.viewCaseColumn2.setCellFactory(
+                new Callback<TableColumn<PatientRecord, Boolean>, TableCell<PatientRecord, Boolean>>() {
+                    @Override
+                    public TableCell<PatientRecord, Boolean> call(TableColumn<PatientRecord, Boolean> p) {
+                        return new ButtonCell2();
+                    }
+
+                });
+
+        this.viewCaseColumn2.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.viewCaseColumn2.setStyle( "-fx-alignment: CENTER;");
 
         ObservableList<PatientRecord> dataList = FXCollections.observableArrayList();
 
@@ -121,16 +145,51 @@ public class DoctorPatientCasesController {
         final Button cellButton = new Button("Voir");
 
         public ButtonCell() {
+                cellButton.getStyleClass().add("btn_primary");
+                cellButton.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent t) {
+                        String code = String.valueOf(ButtonCell.this
+                                .getTableView().getItems()
+                                .get(ButtonCell.this.getIndex()).getCode());
+                        try {
+                            Patient currentPatient = patientListe.get(ButtonCell.this.getIndex());
+                            LabCompanion.singleton.initPatientCaseOverviewPane(currentPatient);
+                        } catch (MalformedURLException ex) {
+                            System.err.println("Ici " + code);
+                            // TODO
+                        } catch (Exception ex) {
+                            System.err.println("Là " + code);
+                            // on peut pas recup l'analyse
+                        }
+                    }
+                });
+        }
+        //Display button if the row is not empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if(!empty){
+                setGraphic(cellButton);
+            }
+        }
+    }
+
+    private static class ButtonCell2 extends TableCell<PatientRecord, Boolean> {
+
+        final Button cellButton = new Button("Modifier");
+
+        public ButtonCell2() {
             cellButton.getStyleClass().add("btn_primary");
             cellButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent t) {
-                    String code = String.valueOf(ButtonCell.this
+                    String code = String.valueOf(ButtonCell2.this
                             .getTableView().getItems()
-                            .get(ButtonCell.this.getIndex()).getCode());
+                            .get(ButtonCell2.this.getIndex()).getCode());
                     try {
-                        Patient currentPatient = patientListe.get(ButtonCell.this.getIndex());
-                        LabCompanion.singleton.initPatientCaseOverviewPane(currentPatient);
+                        Patient currentPatient = patientListe.get(ButtonCell2.this.getIndex());
+                        LabCompanion.singleton.initCreatePatientUpdateCasePane(currentPatient);
                     } catch (MalformedURLException ex) {
                         System.err.println("Ici " + code);
                         // TODO
@@ -141,7 +200,6 @@ public class DoctorPatientCasesController {
                 }
             });
         }
-
         //Display button if the row is not empty
         @Override
         protected void updateItem(Boolean t, boolean empty) {
