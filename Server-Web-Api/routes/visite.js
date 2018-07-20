@@ -81,7 +81,7 @@ visiteRouter.get('/date/:date', function(req, res){
 });
 
 visiteRouter.post('/new', function(req, res){
-  var values = [req.body.date, req.body.heure, req.body.status, req.body.patient_id,
+  var values = [req.body.date, req.body.status, req.body.patient_id,
                 req.body.employe_id];
 
   visiteController.new(values, function(state){

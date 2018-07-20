@@ -33,7 +33,7 @@ visiteController.getByStatus = function(status, callback) {
 };
 
 visiteController.new = function(values, callback) {
-  bddController.executeQuery('insert into visite(date, heure, status, patient_id, employe_id) values($1, $2, $3, $4, $5)',
+  bddController.executeQuery('insert into visite(date, status, patient_id, employe_id) values($1, $2, $3, $4)',
                               values, function(data, state){
           callback(state);
       });
