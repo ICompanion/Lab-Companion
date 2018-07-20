@@ -441,7 +441,7 @@ public class LabCompanion extends Application {
 
     }
 
-    public void initVisitCreationPane() throws MalformedURLException {
+    public void initVisitCreationPane(String patientId) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/visitCreation.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
@@ -453,7 +453,7 @@ public class LabCompanion extends Application {
             e.printStackTrace();
         }
         VisitCreationController controller = loader.getController();
-        // contrller call function
+        controller.setPatientId(patientId);
         this.setCurrentEditedPane(pane);
 
     }

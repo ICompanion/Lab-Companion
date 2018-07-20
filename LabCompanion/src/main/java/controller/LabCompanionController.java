@@ -191,7 +191,11 @@ public class LabCompanionController {
     //Button handlers
 
     private void rdvButtonHandler(ActionEvent event) {
-        //TODO view
+        try {
+            LabCompanion.singleton.initVisitCreationPane("1");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void billButtonHandler(ActionEvent event) {
