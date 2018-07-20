@@ -11,8 +11,7 @@ public class Appointment {
     private Patient patient;
     private Doctor doctor;
 
-    public Appointment(int id, Date date, String status, Patient patient, Doctor doctor) {
-        this.id = id;
+    public Appointment(Date date, String status, Patient patient, Doctor doctor) {
         this.date = date;
         this.status = status;
         this.patient = patient;
