@@ -258,9 +258,9 @@ public class RequestManager {
     }
 
     //Tested
-    public static Patient getPatientById(String identifiant)throws Exception{
+    public static Patient getPatientById(int id)throws Exception{
 
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/patient/" + identifiant);
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/patient/id/" + id);
 
         if(data != null){
             Patient patient;
@@ -333,9 +333,9 @@ public class RequestManager {
             Iterator<JSONObject> it = data.iterator();
             ArrayList<Doctor> doctorList = new ArrayList<>();
 
-            JSONObject obj = it.next();
-
             while(it.hasNext()) {
+                JSONObject obj = it.next();
+
                 doctorList.add(new Doctor(obj.getInt("id"), obj.getString("nom"), obj.getString("prenom"),
                         obj.getInt("employe_type"), obj.getString("mail"),
                         obj.getString("date_embauche"), obj.getString("type_contrat"),
@@ -391,9 +391,9 @@ public class RequestManager {
 
                 String dateStr = obj.getString("date").substring(0, 9);
 
-                Appointment appointment = new Appointment(obj.getInt("id"),
-                        date.parse(dateStr +" "+ obj.getString("heure")),
-                        obj.getString("status"), patient, doctor);
+                Appointment appointment = new Appointment( date.parse(dateStr +" "+ obj.getString("heure")),
+                                                             obj.getString("status"), patient, doctor);
+                appointment.setId(obj.getInt("id"));
 
                 appointmentList.add(appointment);
             }
@@ -647,5 +647,33 @@ public class RequestManager {
         boolean result = RequestHelper.delete(url + "/etude/" + survey.getId() + "/question/" + question.getId());
 
         return result;
+    }
+
+    public static int statsByReponse(int idSurvey, int idQuestion, int idReponse) throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/nbReponses/" + idSurvey + "/" + idQuestion + "/" + idReponse);
+
+        if (data != null) {
+
+            Iterator<JSONObject> it = data.iterator();
+
+            int value = it.next().getInt("nbReponses");
+            return value;
+        }
+
+        return -1;
+    }
+
+    public static int statsByParticipation(int idSurvey) throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/nbParticipations/" + idSurvey);
+
+        if (data != null) {
+
+            Iterator<JSONObject> it = data.iterator();
+
+            int value = it.next().getInt("nbParticipations");
+            return value;
+        }
+
+        return -1;
     }
 }

@@ -78,7 +78,7 @@ etudeRouter.get('/:code/reponses', function(req, res){
     });
 });
 
-etudeRouter.get('/nbReponses/:etudeCode/:questionId/:reponseId', function(req, res){
+etudeRouter.get('/nbReponses/:etudeCode/:questionId/:reponseId', function(req, res ){
     etudeController.getNbAnswers(req.params.etudeCode, req.params.questionId, req.params.reponseId,  function(data, state){
         if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);
@@ -90,7 +90,7 @@ etudeRouter.get('/nbReponses/:etudeCode/:questionId/:reponseId', function(req, r
     });
 });
 
-etudeRouter.get('/nbParticipations/:etudeCode', function(req, res){
+etudeRouter.get('/nbParticipations/:etudeCode', function(req, res ){
     etudeController.getNbParticipations(req.params.etudeCode, function(data, state){
         if(state === false) {res.status(500).end(); return;}
         data = JSON.parse(data);

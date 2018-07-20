@@ -26,13 +26,13 @@ etudeController.getParticipatingPatient = function(code, callback) {
     });
 };
 
-etudeController.getNbAnswers = function(codeEtude, questionId, reponseId, callback) {
+etudeController.getNbAnswers = function(codeEtude, questionId, reponseId, callback ) {
     bddController.executeQuery('select count(*) as nbReponses from reponses where etude_id = $1 and question_id = $2 and proposition_id = $3', [codeEtude, questionId, reponseId], function(data, state){
         callback(data, state);
     });
 };
 
-etudeController.getNbParticipations = function(codeEtude, callback) {
+etudeController.getNbParticipations = function(codeEtude, callback ) {
     bddController.executeQuery('select count(*) as nbParticipations from participation where etude_id = $1 and participation_statut = true;', [codeEtude], function(data, state){
         callback(data, state);
     });
