@@ -63,7 +63,7 @@ public class RequestManager {
                 JSONObject obj = it.next();
 
 
-                Patient patient = getPatientById(obj.getString("patient_id"));
+                Patient patient = getPatientByCode(obj.getString("patient_id"));
                 Analysis analysis = new Analysis(obj.getInt("id"), obj.getString("code_analyse"),
                                                 date.parse(obj.getString("date_analyse").substring(0,10)),
                                                 null, null, patient, doctor);
@@ -110,6 +110,36 @@ public class RequestManager {
         return null;
     }
 
+    public static Analysis getAnalysisByCode(String code) throws Exception {
+
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/" + code);
+
+        if(data != null)
+        {
+            ArrayList<AnalysisResult> analysisResults;
+
+            Iterator<JSONObject> it = data.iterator();
+
+            SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+            JSONObject obj = it.next();
+
+            Doctor doctor = getDoctorById(obj.getInt("employe_id"));
+            Patient patient = getPatientByCode(obj.getString("patient_id"));
+
+            Analysis analysis = new Analysis(obj.getInt("id"), obj.getString("code_analyse"),
+                    date.parse(obj.getString("date_analyse")),
+                    obj.get("description").toString(), null, patient, doctor);
+
+            analysisResults = getAnalysisResults(analysis);
+
+            analysis.setResults(analysisResults);
+
+            return analysis;
+        }
+        return null;
+    }
+
+
     //Tested
     public static ArrayList<AnalysisResult> getAnalysisResults(Analysis analysis)throws Exception{
 
@@ -123,7 +153,7 @@ public class RequestManager {
             while(it.hasNext()){
                 JSONObject obj = it.next();
 
-                Result result = getResult(obj.getInt("id"));
+                Result result = getResult(obj.getInt("resultat_id"));
 
                 AnalysisResult analysisResult = new AnalysisResult(obj.getInt("id"), obj.getFloat("valeur"),
                         result, analysis);

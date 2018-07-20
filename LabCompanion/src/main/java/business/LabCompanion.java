@@ -1,5 +1,6 @@
 package business;
 
+import controller.AnalysisOverviewController;
 import controller.LabCompanionController;
 import controller.VisitCreationController;
 import javafx.application.Application;
@@ -272,6 +273,9 @@ public class LabCompanion extends Application {
             // TODO
             e.printStackTrace();
         }
+
+        AnalysisOverviewController controller = loader.getController();
+        controller.setAnalysis(analysis);
         this.setCurrentEditedPane(pane);
 
     }

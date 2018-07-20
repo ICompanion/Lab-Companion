@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
-public class PluginChooser {
+public class PluginManager {
 
     public static ArrayList<Plugin> showPluginChooser() throws IOException {
         FileChooser chooser = new FileChooser();
@@ -48,4 +48,44 @@ public class PluginChooser {
         
         return loader.getPlugins();
     }
+
+    public static void activatePlugin(String toActivate){
+        Path pluginPath = Paths.get(
+                LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER
+                + "\\" + toActivate + ".jar");
+        Path pluginDestination = Paths.get(
+                LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER
+                        + "\\" + toActivate + ".jar");
+
+        CopyOption[] options = new CopyOption[] {
+                StandardCopyOption.REPLACE_EXISTING
+        };
+
+        try {
+            Files.move(pluginPath, pluginDestination, options); // not working
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void desactivatePlugin(String pluginNameToDesactivate){
+        Path pluginPath = Paths.get(
+                LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER
+                        + "\\" + pluginNameToDesactivate + ".jar");
+        Path pluginDestination = Paths.get(
+                LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER
+                        + "\\" + pluginNameToDesactivate + ".jar");
+
+        CopyOption[] options = new CopyOption[] {
+                StandardCopyOption.REPLACE_EXISTING
+        };
+
+        try {
+            Files.move(pluginPath, pluginDestination, options); // not working
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

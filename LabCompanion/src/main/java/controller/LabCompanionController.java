@@ -25,7 +25,7 @@ import plugin.Plugin;
 
 public class LabCompanionController {
 
-    private double maxPaneHeight, maxPaneWidth;
+    public static double maxPaneHeight, maxPaneWidth;
 
     @FXML
     private BorderPane header;

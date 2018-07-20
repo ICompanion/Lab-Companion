@@ -5,10 +5,11 @@
  */
 package controller;
 
-import plugin.PluginChooser;
+import plugin.PluginManager;
 import business.LabCompanion;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
@@ -106,12 +107,12 @@ public class PluginOverviewController {
         }
         pluginTableView.setItems(dataList);
     }
-    
+
     @FXML
     private void addPluginButtonAction(ActionEvent event) {
         ArrayList<Plugin> toAdd = null;
         try {
-            toAdd = PluginChooser.showPluginChooser();
+            toAdd = PluginManager.showPluginChooser();
         } catch (IOException ex) {
             Logger.getLogger(PluginOverviewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -122,12 +123,18 @@ public class PluginOverviewController {
     
     @FXML
     private void activatePluginButtonAction(ActionEvent event) {
-        
+        Record seletedItem = (Record) this.pluginTableView
+            .getSelectionModel().getSelectedItem();
+        PluginManager.activatePlugin(seletedItem.getPluginName());
+        seletedItem.setPluginActiveState("Oui");
     }
     
     @FXML
     private void desactivatePluginButtonAction(ActionEvent event) {
-        
+        Record seletedItem = (Record) this.pluginTableView
+                .getSelectionModel().getSelectedItem();
+        PluginManager.desactivatePlugin(seletedItem.getPluginName());
+        seletedItem.setPluginActiveState("Non");
     }
     
     
