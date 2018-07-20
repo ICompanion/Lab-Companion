@@ -9,14 +9,35 @@ public class Bill {
     private Date creationDate;
     private boolean payed;
     private String billingAdress;
+    private Patient patient;
+    private Appointment appointment;
+    private Analysis analyse;
+
+
 
     public Bill(int id, float amount, Date creationDate, boolean payed,
-                String billingAdress) {
+                String billingAdress, Appointment appointment, Patient patient, Analysis analyse) {
         this.id = id;
         this.amount = amount;
         this.creationDate = creationDate;
         this.payed = payed;
         this.billingAdress = billingAdress;
+        this.patient = patient;
+        this.appointment = appointment;
+        this.analyse = analyse;
+
+    }
+
+    public Bill(float amount, Date creationDate, boolean payed,
+                String billingAdress, Appointment appointment, Patient patient, Analysis analyse) {
+
+        this.amount = amount;
+        this.creationDate = creationDate;
+        this.payed = payed;
+        this.billingAdress = billingAdress;
+        this.patient = patient;
+        this.appointment = appointment;
+        this.analyse = analyse;
     }
 
     public int getId() {
@@ -57,5 +78,29 @@ public class Bill {
 
     public void setBillingAdress(String billingAdress) {
         this.billingAdress = billingAdress;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
+    public Analysis getAnalyse() {
+        return analyse;
+    }
+
+    public void setAnalyse(Analysis analyse) {
+        this.analyse = analyse;
     }
 }

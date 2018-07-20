@@ -196,7 +196,7 @@ public class LabCompanionController {
 
     private void billButtonHandler(ActionEvent event) {
         try {
-            LabCompanion.singleton.initBillOverviewPane();
+            LabCompanion.singleton.initSecretaryBillListPane();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -211,7 +211,11 @@ public class LabCompanionController {
     }
 
     private void addFolderButtonHandler(ActionEvent event) {
-        //TODO view
+        try {
+            LabCompanion.singleton.initCreatePatientCasePane();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void optionsButtonHandler(ActionEvent event) {

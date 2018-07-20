@@ -1,11 +1,25 @@
 package controller;
 
+import business.Bill;
+import business.LabCompanion;
+import dao.RequestManager;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 
-import javax.swing.text.TableView;
 
 public class BillListController {
 
@@ -33,6 +47,75 @@ public class BillListController {
     @FXML
     private TableColumn viewColumn;
 
+    private static ArrayList<Bill> billListe = new ArrayList<>();
+
+    @FXML
+    private void initialize(){
+        try {
+            billListe = RequestManager.getBills();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.billTableView.setEditable(false);
+
+        this.patientIdColumn.setStyle( "-fx-alignment: CENTER;");
+        this.patientIdColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.patientIdColumn.setCellValueFactory(
+                new PropertyValueFactory<billRecord, String>("numPatient"));
+
+        this.analysisIdColumn.setStyle( "-fx-alignment: CENTER;");
+        this.analysisIdColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.analysisIdColumn.setCellValueFactory(
+                new PropertyValueFactory<billRecord, String>("numAnalyse"));
+
+        this.analysisStatusColumn.setStyle( "-fx-alignment: CENTER;");
+        this.analysisStatusColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.analysisStatusColumn.setCellValueFactory(
+                new PropertyValueFactory<billRecord, String>("statut"));
+
+        this.analysisDateColumn.setStyle( "-fx-alignment: CENTER;");
+        this.analysisDateColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.analysisDateColumn.setCellValueFactory(
+                new PropertyValueFactory<billRecord, String>("date"));
+
+        this.viewColumn.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<billRecord, Boolean>,
+                        ObservableValue<Boolean>>() {
+                    @Override
+                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<billRecord, Boolean> p) {
+                        return new SimpleBooleanProperty(p.getValue() != null);
+                    }
+                });
+
+        this.viewColumn.setCellFactory(
+                new Callback<TableColumn<billRecord, Boolean>, TableCell<billRecord, Boolean>>() {
+                    @Override
+                    public TableCell<billRecord, Boolean> call(TableColumn<billRecord, Boolean> p) {
+                        return new ButtonCell();
+                    }
+
+                });
+
+        this.viewColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.viewColumn.setStyle( "-fx-alignment: CENTER;");
+
+        ObservableList<billRecord> dataList = FXCollections.observableArrayList();
+
+        if(billListe != null){
+            for (Bill current : billListe) {
+                billRecord toAdd = new billRecord(
+                        current.getPatient().getUsername(),
+                        current.getAnalyse().getCode(),
+                        current.getCreationDate().toString(),
+                        (current.isPayed() ? "Payé" : "Impayée"));
+
+                dataList.add(toAdd);
+                }
+            }
+        billTableView.setItems(dataList);
+    }
+
     @FXML
     private void addBillButtonAction(ActionEvent event) {
 
@@ -40,7 +123,95 @@ public class BillListController {
 
     @FXML
     private void backButtonAction(ActionEvent event) {
-
+        try{
+            LabCompanion.singleton.initLabCompanionPanel();
+        }
+        catch(MalformedURLException e){
+            e.printStackTrace();
+        }
     }
 
+    private static class ButtonCell extends TableCell<billRecord, Boolean> {
+
+    final Button cellButton = new Button("Voir");
+
+    public ButtonCell() {
+        cellButton.getStyleClass().add("btn_primary");
+        cellButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent t) {
+                String numPatient = String.valueOf(ButtonCell.this
+                        .getTableView().getItems()
+                        .get(ButtonCell.this.getIndex()).getNumPatient());
+                try {
+                    Bill currentBill = billListe.get(ButtonCell.this.getIndex());
+                    LabCompanion.singleton.initBillOverviewPane(currentBill);
+                } catch (MalformedURLException ex) {
+                    System.err.println("Ici " + numPatient);
+                    // TODO
+                } catch (Exception ex) {
+                    System.err.println("Là " + numPatient);
+                    // on peut pas recup l'analyse
+                }
+            }
+        });
+    }
+
+    //Display button if the row is not empty
+    @Override
+    protected void updateItem(Boolean t, boolean empty) {
+        super.updateItem(t, empty);
+        if(!empty){
+            setGraphic(cellButton);
+        }
+    }
 }
+
+    public class billRecord {
+        private final SimpleStringProperty numPatient;
+        private final SimpleStringProperty numAnalyse;
+        private final SimpleStringProperty date;
+        private final SimpleStringProperty statut;
+
+
+        public billRecord(String numPatient, String numAnalyse, String date, String statut) {
+            this.numPatient = new SimpleStringProperty(numPatient);
+            this.numAnalyse = new SimpleStringProperty(numAnalyse);
+            this.date = new SimpleStringProperty(date);
+            this.statut = new SimpleStringProperty(statut);
+        }
+
+        public String getNumPatient() {
+            return numPatient.get();
+        }
+
+        public SimpleStringProperty numPatientProperty() {
+            return numPatient;
+        }
+
+        public String getNumAnalyse() {
+            return numAnalyse.get();
+        }
+
+        public SimpleStringProperty numAnalyseProperty() {
+            return numAnalyse;
+        }
+
+        public String getDate() {
+            return date.get();
+        }
+
+        public SimpleStringProperty dateProperty() {
+            return date;
+        }
+
+        public String getStatut() {
+            return statut.get();
+        }
+
+        public SimpleStringProperty statutProperty() {
+            return statut;
+        }
+    }
+}
+

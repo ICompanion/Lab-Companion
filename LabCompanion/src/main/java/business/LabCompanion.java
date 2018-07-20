@@ -395,7 +395,7 @@ public class LabCompanion extends Application {
 
     }
 
-    public void initBillOverviewPane() throws MalformedURLException {
+    public void initBillOverviewPane(Bill bill) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/billOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
@@ -406,8 +406,9 @@ public class LabCompanion extends Application {
             // TODO
             e.printStackTrace();
         }
+        BillOverviewController controller = loader.getController();
+        //controller.setPatient(patient);
         this.setCurrentEditedPane(pane);
-
     }
 
     public void initDoctorPatientCasePane() throws MalformedURLException {

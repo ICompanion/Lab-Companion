@@ -428,6 +428,58 @@ public class RequestManager {
         return null;
     }
 
+    public static Appointment getAppointmentById(int id) throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/visite/" + id);
+
+        if(data != null) {
+
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+
+        Iterator<JSONObject> it = data.iterator();
+
+        JSONObject obj = it.next();
+
+        Doctor doctor = getDoctorById(obj.getInt("employe_id"));
+        Patient patient  = getPatientById(obj.getInt("patient_id"));
+
+        String dateStr = obj.getString("date").substring(0, 19);
+
+        Appointment appointment = new Appointment( date.parse(dateStr),  obj.getString("status"), patient, doctor);
+        appointment.setId(obj.getInt("id"));
+        return appointment;
+        }
+        return null;
+    }
+
+    public static ArrayList<Bill> getBills() throws Exception {
+
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/facture/all");
+
+        if(data != null) {
+
+            SimpleDateFormat date = new SimpleDateFormat("yy-MM-dd");
+            Iterator<JSONObject> it = data.iterator();
+            ArrayList<Bill> billList = new ArrayList<>();
+
+            while (it.hasNext())
+            {
+                JSONObject obj = it.next();
+
+                Patient patient = getPatientById(obj.getInt("patient_id"));
+                Analysis analyse = getAnalysisById(obj.getInt("analyse_id"));
+                Appointment appointment = getAppointmentById(obj.getInt("visite_id"));
+
+                Bill bill = new Bill(obj.getInt("id"), obj.getFloat("montant"),
+                        date.parse(obj.get("date_creation").toString()), obj.getBoolean("acquitte"),
+                        obj.getString("adresse_facturation"), appointment, patient, analyse);
+
+                billList.add(bill);
+            }
+            return billList;
+        }
+        return null;
+    }
+
     //Tested
     public static boolean addPatient(Patient patient) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
