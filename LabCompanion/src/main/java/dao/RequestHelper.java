@@ -45,7 +45,6 @@ public class RequestHelper {
             if (state) {
                 String data = getResponse();
                 ArrayList<JSONObject> arrayList = JSONParser.makeObjectList(data);
-                System.out.println(data);
                 return arrayList;
             }
         }

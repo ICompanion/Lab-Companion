@@ -1,9 +1,6 @@
 package business;
 
-import controller.AnalysisOverviewController;
-import controller.LabCompanionController;
-import controller.StudyOverviewController;
-import controller.VisitCreationController;
+import controller.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -411,7 +408,22 @@ public class LabCompanion extends Application {
 
     }
 
-    public void initPatientCaseOverviewPane() throws MalformedURLException {
+    public void initDoctorPatientCasePane() throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/doctorPatientCases.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        this.setCurrentEditedPane(pane);
+
+    }
+
+    public void initPatientCaseOverviewPane(Patient patient) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
@@ -422,6 +434,9 @@ public class LabCompanion extends Application {
             // TODO
             e.printStackTrace();
         }
+
+        PatientCaseOverviewController controller = loader.getController();
+        controller.setPatient(patient);
         this.setCurrentEditedPane(pane);
 
     }

@@ -378,7 +378,7 @@ public class RequestManager {
 
         if(data != null) {
 
-            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd H:mm:ss");
+            SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
             Iterator<JSONObject> it = data.iterator();
             ArrayList<Appointment> appointmentList = new ArrayList<Appointment>();
@@ -389,9 +389,8 @@ public class RequestManager {
 
                 Doctor doctor = getDoctorById(obj.getInt("employe_id"));
 
-                String dateStr = obj.getString("date").substring(0, 9);
-
-                Appointment appointment = new Appointment( date.parse(dateStr +" "+ obj.getString("heure")),
+                String dateStr = obj.getString("date").substring(0, 19);
+                Appointment appointment = new Appointment( date.parse(dateStr),
                                                              obj.getString("status"), patient, doctor);
                 appointment.setId(obj.getInt("id"));
 

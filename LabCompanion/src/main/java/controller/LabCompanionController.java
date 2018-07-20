@@ -208,7 +208,7 @@ public class LabCompanionController {
 
     private void folderButtonHandler(ActionEvent event) {
         try {
-            LabCompanion.singleton.initPatientCaseOverviewPane();
+            LabCompanion.singleton.initDoctorPatientCasePane();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

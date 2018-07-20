@@ -144,7 +144,7 @@ public class VisitCreationController {
             e.printStackTrace();
         }
         try{
-            LabCompanion.singleton.initPatientCaseOverviewPane();
+            LabCompanion.singleton.initPatientCaseOverviewPane(patient);
         }catch (MalformedURLException e){
             e.printStackTrace();
         }
