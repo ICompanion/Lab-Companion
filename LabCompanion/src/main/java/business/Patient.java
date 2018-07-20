@@ -34,6 +34,22 @@ public class Patient {
         this.passwowrd = passwowrd;
     }
 
+    public Patient(String name, String firstname, Date birthdate,
+                   String mail, int secuNumber, String adress, String city,
+                   int postalCode, String username, String passwowrd) {
+
+        this.name = name;
+        this.firstname = firstname;
+        this.birthdate = birthdate;
+        this.mail = mail;
+        this.secuNumber = secuNumber;
+        this.adress = adress;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.username = username;
+        this.passwowrd = passwowrd;
+    }
+
     public int getId() {
         return id;
     }

@@ -95,7 +95,12 @@ public class DoctorPatientCasesController {
 
     @FXML
     private void addCaseButtonAction(ActionEvent event) {
-
+        try{
+            LabCompanion.singleton.initCreatePatientCasePane();
+        }
+        catch(MalformedURLException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML

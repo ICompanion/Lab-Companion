@@ -91,8 +91,6 @@ public class LabCompanionController {
     }
 
     private void initSecretaryMenu() {
-        Button rdvButton = new Button("Rendez-vous");
-        rdvButton.setOnAction(this::rdvButtonHandler);
         Button billButton = new Button("Factures");
         billButton.setOnAction(this::billButtonHandler);
         Button folderButton = new Button("Dossiers");
@@ -103,14 +101,12 @@ public class LabCompanionController {
         optionsButtons.setOnAction(this::optionsButtonHandler);
 
         //Styling
-        setMenuButtonsBounds(rdvButton);
         setMenuButtonsBounds(billButton);
         setMenuButtonsBounds(folderButton);
         setMenuButtonsBounds(addFolderButton);
         setMenuButtonsBounds(optionsButtons);
 
         //Adding to the menu
-        menuButtons.add(rdvButton);
         menuButtons.add(billButton);
         menuButtons.add(folderButton);
         menuButtons.add(addFolderButton);
