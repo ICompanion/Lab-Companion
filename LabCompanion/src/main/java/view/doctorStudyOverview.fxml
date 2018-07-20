@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoctorStudyOverviewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DoctorStudyOverviewController">
    <top>
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -20,10 +20,10 @@
    <center>
       <TableView fx:id="studyTableView" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="studyIdColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Numéro" />
-          <TableColumn fx:id="studyStatusColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Statut" />
-            <TableColumn fx:id="studyDateColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" text="Date de création" />
-            <TableColumn fx:id="studyViewColumn" maxWidth="-1.0" minWidth="-1.0" prefWidth="-1.0" />
+          <TableColumn fx:id="studyCodeColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;" text="Code" />
+          <TableColumn fx:id="studyNameColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;" text="Nom" />
+            <TableColumn fx:id="studyDateColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;" text="Date de création" />
+            <TableColumn fx:id="studyViewColumn" maxWidth="2000" minWidth="150" prefWidth="150" style="-fx-alignment: CENTER;" />
         </columns>
       </TableView>
    </center>

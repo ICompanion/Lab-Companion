@@ -3,10 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -14,14 +17,12 @@
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="studyLabel" text="Etude : " />
-            <Label fx:id="studyStatusLabel" text="Statut : " />
             <Button fx:id="studyListButton" mnemonicParsing="false" styleClass="btn_primary" text="Retour liste études" />
          </children>
       </HBox>
    </top>
    <center>
-      <VBox fx:id="studyVBox" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="studyVBox" prefHeight="256.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <GridPane>
               <columnConstraints>
@@ -40,14 +41,29 @@
                   <Label text="Informations" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Intitulé" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Date de création" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" text="Statut" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" text="Description" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <Label alignment="CENTER" contentDisplay="CENTER" text="Nombre de patients" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Label fx:id="studyNameLabel" alignment="CENTER" contentDisplay="CENTER" text="NAME" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Label fx:id="studyDateLabel" alignment="CENTER" contentDisplay="CENTER" text="DATE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                  <Label fx:id="studyInfoStatusLabel" alignment="CENTER" contentDisplay="CENTER" text="STATUT" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Label fx:id="studyInfoDescLabel" alignment="CENTER" contentDisplay="CENTER" text="DESCRIPTION" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <Label fx:id="studyPatientsLabel" alignment="CENTER" contentDisplay="CENTER" text="PATIENTS" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
+            <ScrollPane fx:id="scrollPane" prefHeight="170.0" prefWidth="563.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="585.0">
+                     <children>
+                        <Pane fx:id="statsPane" prefHeight="200.0" prefWidth="586.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="25.0" right="25.0" />
+               </padding>
+            </ScrollPane>
          </children>
          <padding>
             <Insets bottom="20.0" top="20.0" />

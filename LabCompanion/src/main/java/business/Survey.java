@@ -14,13 +14,14 @@ public class Survey {
     private ArrayList<Question> questions;
 
     public Survey(int id, String code, String name, Date date,
-                  String description, Doctor doctor) {
+                  String description, Doctor doctor, ArrayList<Question> questions) {
         this.id = id;
         this.code = code;
         this.name = name;
         this.date = date;
         this.description = description;
         this.doctor = doctor;
+        this.questions = questions;
     }
 
     public int getId() {
