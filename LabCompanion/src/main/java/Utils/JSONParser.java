@@ -12,6 +12,12 @@ public class JSONParser{
     private static HashMap<String, Object> parsedResult = new HashMap<String, Object>();
     private static JSONObject jsonResult;
 
+    /**
+     *
+     * @param object
+     * @return a HashMap
+     * @throws JSONException
+     */
     public static HashMap<String, Object> parseResults(JSONObject object)throws JSONException{
 
         Iterator<String> keysItr = object.keys();
@@ -28,12 +34,22 @@ public class JSONParser{
         return parsedResult;
     }
 
+    /**
+     *
+     * @param values
+     * @return a Json Object
+     */
     public static JSONObject makeObject(HashMap<String, Object> values){
 
         jsonResult = new JSONObject(values);
         return jsonResult;
     }
 
+    /**
+     *
+     * @param stringArray
+     * @return a List of Json Object
+     */
     public static ArrayList<JSONObject> makeObjectList(String stringArray){
         ArrayList<JSONObject> jsonArray = new ArrayList<JSONObject>();
 
