@@ -9,6 +9,12 @@ public class Question {
     private String title;
     private ArrayList<Proposal> proposals;
 
+    /**
+     *
+     * @param id
+     * @param title
+     * @param proposals
+     */
     public Question(int id, String title, ArrayList<Proposal> proposals) {
         this.id = id;
         this.title = title;

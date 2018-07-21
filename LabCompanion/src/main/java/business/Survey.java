@@ -13,6 +13,16 @@ public class Survey {
     private Doctor doctor;
     private ArrayList<Question> questions;
 
+    /**
+     *
+     * @param id
+     * @param code
+     * @param name
+     * @param date
+     * @param description
+     * @param doctor
+     * @param questions
+     */
     public Survey(int id, String code, String name, Date date,
                   String description, Doctor doctor, ArrayList<Question> questions) {
         this.id = id;

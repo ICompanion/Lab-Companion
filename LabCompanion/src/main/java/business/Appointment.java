@@ -11,6 +11,13 @@ public class Appointment {
     private Patient patient;
     private Doctor doctor;
 
+    /**
+     *
+     * @param date
+     * @param status
+     * @param patient
+     * @param doctor
+     */
     public Appointment(Date date, String status, Patient patient, Doctor doctor) {
         this.date = date;
         this.status = status;

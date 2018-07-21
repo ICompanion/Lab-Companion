@@ -4,6 +4,11 @@ public class Proposal {
     private int id;
     private String title;
 
+    /**
+     *
+     * @param id
+     * @param title
+     */
     public Proposal(int id, String title) {
         this.id = id;
         this.title = title;

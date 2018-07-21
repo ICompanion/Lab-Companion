@@ -18,6 +18,20 @@ public class Patient {
     private String passwowrd;
     private ArrayList<Bill> bills;
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @param firstname
+     * @param birthdate
+     * @param mail
+     * @param secuNumber
+     * @param adress
+     * @param city
+     * @param postalCode
+     * @param username
+     * @param passwowrd
+     */
     public Patient(int id, String name, String firstname, Date birthdate,
                    String mail, int secuNumber, String adress, String city,
                    int postalCode, String username, String passwowrd) {
@@ -34,6 +48,19 @@ public class Patient {
         this.passwowrd = passwowrd;
     }
 
+    /**
+     *
+     * @param name
+     * @param firstname
+     * @param birthdate
+     * @param mail
+     * @param secuNumber
+     * @param adress
+     * @param city
+     * @param postalCode
+     * @param username
+     * @param passwowrd
+     */
     public Patient(String name, String firstname, Date birthdate,
                    String mail, int secuNumber, String adress, String city,
                    int postalCode, String username, String passwowrd) {

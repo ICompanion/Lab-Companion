@@ -14,7 +14,17 @@ public class Bill {
     private Analysis analyse;
 
 
-
+    /**
+     *
+     * @param id
+     * @param amount
+     * @param creationDate
+     * @param payed
+     * @param billingAdress
+     * @param appointment
+     * @param patient
+     * @param analyse
+     */
     public Bill(int id, float amount, Date creationDate, boolean payed,
                 String billingAdress, Appointment appointment, Patient patient, Analysis analyse) {
         this.id = id;
@@ -28,6 +38,16 @@ public class Bill {
 
     }
 
+    /**
+     *
+     * @param amount
+     * @param creationDate
+     * @param payed
+     * @param billingAdress
+     * @param appointment
+     * @param patient
+     * @param analyse
+     */
     public Bill(float amount, Date creationDate, boolean payed,
                 String billingAdress, Appointment appointment, Patient patient, Analysis analyse) {
 

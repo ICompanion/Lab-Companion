@@ -9,6 +9,15 @@ public class Result {
     private float value_min;
     private Category category;
 
+    /**
+     *
+     * @param id
+     * @param title
+     * @param unit
+     * @param value_max
+     * @param value_min
+     * @param category
+     */
     public Result(int id, String title, String unit, float value_max, float value_min,
                   Category category) {
         this.id = id;

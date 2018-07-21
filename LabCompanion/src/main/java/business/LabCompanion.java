@@ -43,6 +43,11 @@ public class LabCompanion extends Application {
 
     private ArrayList<Plugin> inactivePlugins;
 
+    /**
+     *
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         singleton = this;
@@ -70,6 +75,10 @@ public class LabCompanion extends Application {
 
     /**** Common ****/
 
+    /**
+     *
+     * @param currentEditedPane
+     */
     private void setCurrentEditedPane(Pane currentEditedPane) {
         try {
             FXMLLoader rootLoader = new FXMLLoader();
@@ -92,6 +101,10 @@ public class LabCompanion extends Application {
         }
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initConnectionPanel() throws MalformedURLException {
         try {
             URL loaded = Paths.get("src/main/java/view/connexion.fxml").toUri().toURL();
@@ -106,6 +119,10 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initLabCompanionPanel() throws MalformedURLException {
         reloadPlugins();
         try {
@@ -120,6 +137,10 @@ public class LabCompanion extends Application {
         }
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initPluginManagerOverview() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/pluginOverview.fxml").toUri().toURL();
@@ -134,6 +155,11 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(pane);
     }
 
+    /**
+     *
+     * @param toLoad
+     * @throws MalformedURLException
+     */
     public void initPlugin(Plugin toLoad) throws MalformedURLException {
         try {
             FXMLLoader rootLoader = new FXMLLoader();
@@ -155,6 +181,10 @@ public class LabCompanion extends Application {
         }
     }
 
+    /**
+     *
+     * @param toAdd
+     */
     public void addToActivePluginList(ArrayList<Plugin> toAdd) {
         if(!toAdd.isEmpty()) {
             for(Plugin current : toAdd) {
@@ -178,6 +208,7 @@ public class LabCompanion extends Application {
         this.inactivePlugins = loader.getPlugins();
     }
 
+
     public void disconnect() {
         this.setConnectedEmployee(null);
         try {
@@ -188,14 +219,26 @@ public class LabCompanion extends Application {
         }
     }
 
+    /**
+     *
+     * @param connectedEmployee
+     */
     public void setConnectedEmployee(Employee connectedEmployee) {
         this.connectedEmployee = connectedEmployee;
     }
 
+    /**
+     *
+     * @return connectedEmployee
+     */
     public Employee getConnectedEmployee() {
         return this.connectedEmployee;
     }
 
+    /**
+     *
+     * @return List of plugins
+     */
     public ArrayList<Plugin> getLoadedPlugins() {
         ArrayList<Plugin> toReturn = new ArrayList<Plugin>();
         if(this.activePlugins != null) {
@@ -217,6 +260,10 @@ public class LabCompanion extends Application {
 
     /**** Doctor ****/
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initWelcomePanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/welcome.fxml").toUri().toURL();
@@ -232,6 +279,10 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initDoctorAnalysisPanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorAnalysis.fxml").toUri().toURL();
@@ -247,6 +298,10 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initDoctorStudyPanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorStudyOverview.fxml").toUri().toURL();
@@ -262,6 +317,11 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @param analysis
+     * @throws MalformedURLException
+     */
     public void initAnalysisOverviewPane(Analysis analysis) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/analysisOverview.fxml").toUri().toURL();
@@ -280,6 +340,10 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initAnalysisCreationPane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/analysisCreation.fxml").toUri().toURL();
@@ -295,6 +359,10 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initStudyCreationPane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/studyCreation.fxml").toUri().toURL();
@@ -310,6 +378,11 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @param survey
+     * @throws MalformedURLException
+     */
     public void initStudyOverviewPane(Survey survey) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/studyOverview.fxml").toUri().toURL();
@@ -335,6 +408,10 @@ public class LabCompanion extends Application {
 
     /**** Secretary ****/
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initSecretaryPatientCasePanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/docotorPatientCase.fxml").toUri().toURL();
@@ -350,6 +427,10 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initSecretaryBillListPane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/billList.fxml").toUri().toURL();
@@ -365,6 +446,11 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @param bill
+     * @throws MalformedURLException
+     */
     public void initBillOverviewPane(Bill bill) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/billOverview.fxml").toUri().toURL();
@@ -381,6 +467,11 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(pane);
     }
 
+    /**
+     *
+     * @param appointment
+     * @throws MalformedURLException
+     */
     public void initBillCreationCasePane(Appointment appointment) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/billCreation.fxml").toUri().toURL();
@@ -397,6 +488,11 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(pane);
     }
 
+    /**
+     *
+     * @param bill
+     * @throws MalformedURLException
+     */
     public void initBillCreationUpdateCasePane(Bill bill) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/billCreation.fxml").toUri().toURL();
@@ -413,6 +509,10 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(pane);
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initDoctorPatientCasePane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorPatientCases.fxml").toUri().toURL();
@@ -428,6 +528,10 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @throws MalformedURLException
+     */
     public void initCreatePatientCasePane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/patientCreation.fxml").toUri().toURL();
@@ -443,6 +547,11 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @param patient
+     * @throws MalformedURLException
+     */
     public void initCreatePatientUpdateCasePane(Patient patient) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/patientCreation.fxml").toUri().toURL();
@@ -460,6 +569,11 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @param patient
+     * @throws MalformedURLException
+     */
     public void initPatientCaseOverviewPane(Patient patient) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();
@@ -478,6 +592,11 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @param patientId
+     * @throws MalformedURLException
+     */
     public void initVisitCreationPane(String patientId) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/visitCreation.fxml").toUri().toURL();
@@ -495,6 +614,12 @@ public class LabCompanion extends Application {
 
     }
 
+    /**
+     *
+     * @param title
+     * @param description
+     * @param message
+     */
     public void initAlertPane(String title, String description, String message) {
         
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -513,6 +638,11 @@ public class LabCompanion extends Application {
             alert.showAndWait();
     }
 
+    /**
+     *
+     * @param employee
+     * @throws MalformedURLException
+     */
     public void initParametersPane(Employee employee) throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/parameters.fxml").toUri().toURL();

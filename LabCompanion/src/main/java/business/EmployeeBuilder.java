@@ -76,6 +76,10 @@ public class EmployeeBuilder {
         return this;
     }
 
+    /**
+     *
+     * @return Employe
+     */
     public Employee createEmployee() {
         return new Employee(id, name, firstname, type, mail, employmentDate, contractType, adress, city, postalCode, username,
                 secuNumber);

@@ -7,6 +7,13 @@ public class AnalysisResult {
     Result result;
     Analysis analysis;
 
+    /**
+     *
+     * @param id
+     * @param value
+     * @param result
+     * @param analysis
+     */
     public AnalysisResult(int id, float value, Result result, Analysis analysis) {
         this.id = id;
         this.value = value;

@@ -19,6 +19,21 @@ public class Employee {
     private String username;
     private int secuNumber;
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @param firstname
+     * @param type
+     * @param mail
+     * @param employmentDate
+     * @param contractType
+     * @param adress
+     * @param city
+     * @param postalCode
+     * @param username
+     * @param secuNumber
+     */
     public Employee(int id, String name, String firstname, int type, String mail, String employmentDate,
                             String contractType, String adress, String city, int postalCode,
                             String username, int secuNumber) {
@@ -36,6 +51,21 @@ public class Employee {
         this.secuNumber = secuNumber;
     }
 
+    /**
+     *
+     * @param id
+     * @param name
+     * @param firstname
+     * @param type
+     * @param mail
+     * @param employmentDate
+     * @param contractType
+     * @param adress
+     * @param city
+     * @param postalCode
+     * @param username
+     * @param secuNumber
+     */
     public Employee(int id, String name, String firstname, int type, String mail, Date employmentDate,
                     String contractType, String adress, String city, int postalCode,
                     String username, int secuNumber) {

@@ -12,6 +12,16 @@ public class Analysis {
     private Patient patient;
     private Doctor doctor;
 
+    /**
+     *
+     * @param id
+     * @param code
+     * @param dateAnalyse
+     * @param description
+     * @param results
+     * @param patient
+     * @param doctor
+     */
     public Analysis(int id, String code, Date dateAnalyse, String description, ArrayList<AnalysisResult> results, Patient patient, Doctor doctor) {
         this.id = id;
         this.code = code;
@@ -21,6 +31,7 @@ public class Analysis {
         this.patient = patient;
         this.doctor = doctor;
     }
+
 
     public int getId() {
         return id;
