@@ -55,6 +55,9 @@ public class PatientCreationController {
     @FXML
     private Button registerButton;
 
+    @FXML
+    private Button updateButtonAction;
+
     Patient patient;
 
     @FXML
@@ -163,7 +166,7 @@ public class PatientCreationController {
     public void setPatient(Patient patient){
 
         this.registerButton.setVisible(false);
-
+        this.updateButtonAction.setVisible(true);
         this.patient = patient;
 
         this.nameTextField.setText(patient.getName());

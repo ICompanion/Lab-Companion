@@ -4,6 +4,7 @@ import business.Bill;
 import business.LabCompanion;
 import dao.RequestManager;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -120,13 +121,15 @@ public class BillListController {
 
         if(billListe != null){
             for (Bill current : billListe) {
+                System.out.println(current.getId());
                 billRecord toAdd = new billRecord(
                         current.getPatient().getUsername(),
                         current.getAnalyse().getCode(),
                         current.getCreationDate().toString(),
                         (current.isPayed() ? "Payé" : "Impayée"),
                         current.getBillingAdress(),
-                        String.valueOf(current.getAmount()));
+                        String.valueOf(current.getAmount()),
+                        current.getId());
 
                 dataList.add(toAdd);
                 }
@@ -151,24 +154,25 @@ public class BillListController {
 
     private static class ButtonCell extends TableCell<billRecord, Boolean> {
 
-    final Button cellButton = new Button("Voir");
+    final Button cellButton = new Button("Modifier");
 
     public ButtonCell() {
         cellButton.getStyleClass().add("btn_primary");
         cellButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
-                String numPatient = String.valueOf(ButtonCell.this
+                String id = String.valueOf(ButtonCell.this
                         .getTableView().getItems()
-                        .get(ButtonCell.this.getIndex()).getNumPatient());
+                        .get(ButtonCell.this.getIndex()).getId());
                 try {
+
                     Bill currentBill = billListe.get(ButtonCell.this.getIndex());
-                    LabCompanion.singleton.initBillOverviewPane(currentBill);
+                    LabCompanion.singleton.initBillCreationUpdateCasePane(currentBill);
                 } catch (MalformedURLException ex) {
-                    System.err.println("Ici " + numPatient);
+                    System.err.println("Ici " + id);
                     // TODO
                 } catch (Exception ex) {
-                    System.err.println("Là " + numPatient);
+                    System.err.println("Là " + id);
                     // on peut pas recup l'analyse
                 }
             }
@@ -192,15 +196,17 @@ public class BillListController {
         private final SimpleStringProperty statut;
         private final SimpleStringProperty amount;
         private final SimpleStringProperty adresse;
+        private final SimpleIntegerProperty id;
 
         public billRecord(String numPatient, String numAnalyse, String date, String statut, String amount,
-                          String adresse) {
+                          String adresse, int id) {
             this.numPatient = new SimpleStringProperty(numPatient);
             this.numAnalyse = new SimpleStringProperty(numAnalyse);
             this.date = new SimpleStringProperty(date);
             this.statut = new SimpleStringProperty(statut);
             this.amount = new SimpleStringProperty(amount);
             this.adresse = new SimpleStringProperty(adresse);
+            this.id = new SimpleIntegerProperty(id);
 
         }
 
@@ -250,6 +256,14 @@ public class BillListController {
 
         public SimpleStringProperty adresseProperty() {
             return adresse;
+        }
+
+        public int getId() {
+            return id.get();
+        }
+
+        public SimpleIntegerProperty idProperty() {
+            return id;
         }
     }
 }

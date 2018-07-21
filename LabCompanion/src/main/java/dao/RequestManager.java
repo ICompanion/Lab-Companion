@@ -750,6 +750,43 @@ public class RequestManager {
         return result;
     }
 
+    public static boolean addBill(Bill bill) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("montant", bill.getAmount());
+        hashMap.put("date_creation", bill.getCreationDate());
+        hashMap.put("acquitte", bill.isPayed());
+        hashMap.put("adresse_facturation", bill.getBillingAdress());
+        hashMap.put("visite_id", bill.getAppointment().getId());
+        hashMap.put("patient_id", bill.getPatient().getId());
+        hashMap.put("analyse_id", 50);
+
+        boolean result = RequestHelper.postOrPut(url + "/facture/new",
+                hashMap, "POST");
+
+        return result;
+    }
+
+    public static boolean updateBill(Bill bill) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        System.out.println(bill.getId());
+
+        hashMap.put("id", bill.getId());
+        hashMap.put("montant", bill.getAmount());
+        hashMap.put("date_creation", bill.getCreationDate());
+        hashMap.put("acquitte", bill.isPayed());
+        hashMap.put("adresse_facturation", bill.getBillingAdress());
+        hashMap.put("visite_id", bill.getAppointment().getId());
+        hashMap.put("patient_id", bill.getPatient().getId());
+        hashMap.put("analyse_id", bill.getAnalyse().getId());
+
+        boolean result = RequestHelper.postOrPut(url + "/facture/" + bill.getId(),
+                hashMap, "PUT");
+
+        return result;
+    }
+
     //Tested
     public static boolean updatePatient(Patient patient) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();

@@ -2,13 +2,17 @@ package controller;
 
 import business.*;
 import dao.RequestManager;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -46,6 +50,9 @@ public class PatientCaseOverviewController {
     private TableColumn doctorColumn;
 
     @FXML
+    private TableColumn viewCaseColumn;
+
+    @FXML
     private ComboBox participationComboBox;
 
     @FXML
@@ -58,7 +65,7 @@ public class PatientCaseOverviewController {
     @FXML
     private void backButtonAction(ActionEvent event) {
         try {
-            LabCompanion.singleton.initLabCompanionPanel();
+            LabCompanion.singleton.initDoctorPatientCasePane();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -121,6 +128,28 @@ public class PatientCaseOverviewController {
         this.doctorColumn.setCellValueFactory(
                 new PropertyValueFactory<AppointMentRecord, String>("doctorName"));
 
+
+        this.viewCaseColumn.setCellValueFactory(
+                new Callback<TableColumn.CellDataFeatures<AppointMentRecord, Boolean>,
+                        ObservableValue<Boolean>>() {
+                    @Override
+                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<AppointMentRecord, Boolean> p) {
+                        return new SimpleBooleanProperty(p.getValue() != null);
+                    }
+                });
+
+        this.viewCaseColumn.setCellFactory(
+                new Callback<TableColumn<AppointMentRecord, Boolean>, TableCell<AppointMentRecord, Boolean>>() {
+                    @Override
+                    public TableCell<AppointMentRecord, Boolean> call(TableColumn<AppointMentRecord, Boolean> p) {
+                        return new ButtonCell();
+                    }
+
+                });
+
+        this.viewCaseColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
+        this.viewCaseColumn.setStyle( "-fx-alignment: CENTER;");
+
         try {
             appointmentsList = RequestManager.getPatientAppointments(patient);
         } catch (Exception e) {
@@ -154,6 +183,43 @@ public class PatientCaseOverviewController {
         }
 
     }
+
+
+    private static class ButtonCell extends TableCell<AppointMentRecord, Boolean> {
+
+        final Button cellButton = new Button("Créer une facture");
+
+        public ButtonCell() {
+            cellButton.getStyleClass().add("btn_primary");
+            cellButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent t) {
+                    String date = String.valueOf(ButtonCell.this
+                            .getTableView().getItems()
+                            .get(ButtonCell.this.getIndex()).getDate());
+                    try {
+                        Appointment currentAppointment = appointmentsList.get(ButtonCell.this.getIndex());
+                        LabCompanion.singleton.initBillCreationCasePane(currentAppointment);
+                    } catch (MalformedURLException ex) {
+                        System.err.println("Ici " + date);
+                        // TODO
+                    } catch (Exception ex) {
+                        System.err.println("Là " + date);
+                        // on peut pas recup l'analyse
+                    }
+                }
+            });
+        }
+        //Display button if the row is not empty
+        @Override
+        protected void updateItem(Boolean t, boolean empty) {
+            super.updateItem(t, empty);
+            if(!empty){
+                setGraphic(cellButton);
+            }
+        }
+    }
+
 
     public class AppointMentRecord {
         private final SimpleStringProperty date;

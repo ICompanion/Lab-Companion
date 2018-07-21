@@ -381,6 +381,38 @@ public class LabCompanion extends Application {
         this.setCurrentEditedPane(pane);
     }
 
+    public void initBillCreationCasePane(Appointment appointment) throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/billCreation.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        BillCreationController controller = loader.getController();
+        controller.setAppointment(appointment);
+        this.setCurrentEditedPane(pane);
+    }
+
+    public void initBillCreationUpdateCasePane(Bill bill) throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/billCreation.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+        BillCreationController controller = loader.getController();
+        controller.setPatient(bill);
+        this.setCurrentEditedPane(pane);
+    }
+
     public void initDoctorPatientCasePane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
         URL rootUrl = Paths.get("src/main/java/view/doctorPatientCases.fxml").toUri().toURL();

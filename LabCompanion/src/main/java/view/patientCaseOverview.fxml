@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientCaseOverviewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientCaseOverviewController">
    <top>
       <HBox alignment="CENTER">
          <children>
@@ -48,6 +48,7 @@
                     <columns>
                       <TableColumn fx:id="dateColumn" maxWidth="200.0" minWidth="200.0" prefWidth="-1.0" text="Date" />
                       <TableColumn fx:id="doctorColumn" maxWidth="200.0" minWidth="107.0" prefWidth="107.0" text="Docteur" />
+                        <TableColumn fx:id="viewCaseColumn" maxWidth="200.0" minWidth="107.0" prefWidth="107.0" />
                     </columns>
                   </TableView>
                </children>
