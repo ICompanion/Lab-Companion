@@ -13,12 +13,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientCaseOverviewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PatientCaseOverviewController">
    <top>
       <HBox alignment="CENTER">
          <children>
-            <Label fx:id="patientIdLabel" text="Patient : " />
-            <Label fx:id="patientNameLabel" text="Nom : " />
+            <Label fx:id="patientIdLabel" styleClass="title_label" text="Patient : " />
+            <Label fx:id="patientNameLabel" styleClass="title_label" text="Nom : " />
             <Button fx:id="backButton" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#backButtonAction" styleClass="btn_primary" text="Retour liste dossiers" />
          </children>
          <BorderPane.margin>
@@ -75,7 +75,7 @@
                   <Label fx:id="patientNumberLabel" alignment="CENTER" contentDisplay="CENTER" text="NUMBER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                   <Label fx:id="patientBirthdateLabel" alignment="CENTER" contentDisplay="CENTER" text="BIRTHDATE (AGE)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                   <ComboBox fx:id="participationComboBox" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                  <Button fx:id="addParticipationButton" mnemonicParsing="false" styleClass="btn_primary" text="Ajouter" GridPane.columnIndex="1" onAction="#addParticipationButtonAction" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                  <Button fx:id="addParticipationButton" mnemonicParsing="false" onAction="#addParticipationButtonAction" styleClass="btn_primary" text="Ajouter" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                   <Label text="Participation à une étude :" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                </children>
                <opaqueInsets>

@@ -8,22 +8,10 @@ import javafx.scene.control.Label;
 
 import java.net.MalformedURLException;
 
-public class DoctorWelcomeController {
-
-    @FXML
-    private Button analysisButton;
-
-    @FXML
-    private Button studyButton;
-
-    @FXML
-    private Button parametersButton;
+public class WelcomeController {
 
     @FXML
     private Label welcomeLabel;
-
-    @FXML
-    private Label employeeLabel;
 
     @FXML
     private void analysisButtonAction(ActionEvent event) {

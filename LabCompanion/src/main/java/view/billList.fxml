@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BillListController">
+<BorderPane stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.BillListController">
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="addBillButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#addBillButtonAction" styleClass="btn_primary" text="Ajouter" />
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="91.0" text="Factures" textAlignment="CENTER" />
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="25.0" prefWidth="91.0" styleClass="title_label" text="Factures" textAlignment="CENTER" />
             <Button fx:id="backButton" alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#backButtonAction" styleClass="btn_primary" text="Retour au Menu" />
          </children>
       </HBox>

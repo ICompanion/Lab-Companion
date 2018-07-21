@@ -30,21 +30,21 @@
    <top>
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="patientIdLabel" text="Patient:">
+            <Label fx:id="patientIdLabel" styleClass="title_label" text="Patient:">
                <padding>
                   <Insets right="5.0" />
                </padding>
             </Label>
-            <Label fx:id="codePatient" text="CODE_PATIENT">
+            <Label fx:id="codePatient" styleClass="title_value" text="CODE_PATIENT">
                <padding>
                   <Insets right="10.0" />
                </padding>
             </Label>
-            <Label fx:id="analysisLabel" alignment="TOP_CENTER" text="Analyse:">
+            <Label fx:id="analysisLabel" alignment="TOP_CENTER" styleClass="title_label" text="Analyse:">
                <padding>
                   <Insets right="5.0" />
                </padding></Label>
-            <Label fx:id="codeAnalysis" alignment="TOP_CENTER" prefHeight="15.0" prefWidth="123.0" text="CODE_ANALYSE">
+            <Label fx:id="codeAnalysis" alignment="TOP_CENTER" prefHeight="15.0" prefWidth="123.0" styleClass="title_value" text="CODE_ANALYSE">
                <padding>
                   <Insets right="10.0" />
                </padding></Label>

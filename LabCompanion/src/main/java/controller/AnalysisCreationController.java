@@ -17,6 +17,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -150,6 +151,15 @@ public class AnalysisCreationController {
     private void deleteButtonAction(ActionEvent event) {
         AnalysisRow selectedItem = (AnalysisRow) this.formAnalysis.getSelectionModel().getSelectedItem();
         this.formAnalysis.getItems().remove(selectedItem);
+    }
+
+    @FXML
+    private void backButtonAction(ActionEvent event) {
+        try {
+            LabCompanion.singleton.initDoctorAnalysisPanel();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

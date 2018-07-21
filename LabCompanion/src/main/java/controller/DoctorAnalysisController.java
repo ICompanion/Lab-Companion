@@ -117,7 +117,11 @@ public class DoctorAnalysisController {
 
     @FXML
     private void addAnalysisButtonAction(ActionEvent event) {
-
+        try {
+            LabCompanion.singleton.initAnalysisCreationPane();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

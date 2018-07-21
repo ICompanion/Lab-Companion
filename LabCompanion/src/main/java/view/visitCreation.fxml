@@ -12,15 +12,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VisitCreationController">
+<BorderPane maxWidth="600.0" stylesheets="@../style/style.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VisitCreationController">
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="patientIdLabel" text="Patient : ">
+            <Label fx:id="patientIdLabel" styleClass="title_label" text="Patient : ">
                <HBox.margin>
                   <Insets bottom="10.0" top="10.0" />
                </HBox.margin></Label>
-            <Label fx:id="patientNameLabel" alignment="CENTER" contentDisplay="CENTER" text="Nom ">
+            <Label fx:id="patientNameLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="title_value" text="Nom ">
                <HBox.margin>
                   <Insets top="10.0" />
                </HBox.margin></Label>

@@ -19,7 +19,7 @@
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Nouvelle étude">
+            <Label alignment="CENTER" contentDisplay="CENTER" styleClass="title_label" text="Nouvelle étude">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin></Label>
@@ -66,7 +66,7 @@
             <HBox>
                <children>
                   <Button fx:id="addButton" mnemonicParsing="false" onAction="#addButtonAction" styleClass="btn_primary" text="Ajouter" />
-                  <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteButtonAction" styleClass="btn_primary" text="Supprimer" />
+                  <Button fx:id="deleteBtn" mnemonicParsing="false" onAction="#deleteButtonAction" styleClass="btn_critical" text="Supprimer" />
                </children>
             </HBox>
             <TilePane fx:id="tilePane" alignment="CENTER" prefHeight="25.0" prefWidth="320.0">

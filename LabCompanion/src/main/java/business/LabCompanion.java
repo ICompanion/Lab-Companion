@@ -110,10 +110,10 @@ public class LabCompanion extends Application {
         reloadPlugins();
         try {
             if(connectedEmployee.getType() == Doctor.DOCTOR_TYPE) {
-                initDoctorWelcomePanel();
+                initWelcomePanel();
             }
             else if (connectedEmployee.getType() == Secretary.SECRETARY_TYPE) {
-                initDoctorWelcomePanel();
+                initWelcomePanel();
             }
         } catch (IOException ex) {
             Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
@@ -217,9 +217,9 @@ public class LabCompanion extends Application {
 
     /**** Doctor ****/
 
-    public void initDoctorWelcomePanel() throws MalformedURLException {
+    public void initWelcomePanel() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/doctorWelcome.fxml").toUri().toURL();
+        URL rootUrl = Paths.get("src/main/java/view/welcome.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
         Pane pane = null;
         try {
@@ -479,6 +479,24 @@ public class LabCompanion extends Application {
             }
             
             alert.showAndWait();
+    }
+
+    public void initParametersPane(Employee employee) throws MalformedURLException {
+        FXMLLoader loader = new FXMLLoader();
+        URL rootUrl = Paths.get("src/main/java/view/parameters.fxml").toUri().toURL();
+        loader.setLocation(rootUrl);
+        Pane pane = null;
+        try {
+            pane = (Pane) loader.load();
+        } catch (IOException e) {
+            // TODO
+            e.printStackTrace();
+        }
+
+        ParametersController controller = loader.getController();
+        controller.setEmployee(employee);
+        this.setCurrentEditedPane(pane);
+
     }
 }
 

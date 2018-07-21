@@ -15,8 +15,8 @@
    <top>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="patientIdLabel" alignment="CENTER" contentDisplay="CENTER" text="Patient : " />
-            <Label fx:id="analysisIdLabel" alignment="CENTER" contentDisplay="CENTER" text="Analyse : " />
+            <Label fx:id="patientIdLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="title_label" text="Patient : " />
+            <Label fx:id="analysisIdLabel" alignment="CENTER" contentDisplay="CENTER" styleClass="title_label" text="Analyse : " />
             <Button fx:id="backButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#backButtonAction" styleClass="btn_primary" text="Retour liste factures" />
          </children>
       </HBox>

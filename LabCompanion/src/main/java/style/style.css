@@ -23,6 +23,24 @@
 	-fx-effect: dropshadow( gaussian , #b9dfba , 1,1,0,3 );
 }
 
+.btn_critical {
+	-fx-background-color: #ff3333;
+	-fx-font-weight: bold;
+	-fx-text-fill: white;
+	-fx-effect: dropshadow( gaussian , #ff6666 , 1,1,0,3 );
+}
+
+.btn_critical:hover {
+	-fx-background-color: #ff6666;
+	-fx-effect: dropshadow( gaussian , #ff9999 , 1,1,0,3 );
+}
+
+.btn_critical:pressed {
+	-fx-background-color: #990000;
+	-fx-effect: dropshadow( gaussian , #cc0000 , 1,1,0,3 );
+}
+	
+	
 .classic_pane {
 	-fx-background-color: #a5d6a7;
 	-fx-border-width: 2px;
@@ -32,4 +50,23 @@
 .stats_label {
 	-fx-font-weight: bold;
 	-fx-font-size: 15px;
+}
+
+.welcome_label {
+	-fx-font-size: 35px;
+	-fx-font-weight:bold;
+	-fx-text-fill: #a5d6a7;
+	-fx-effect: dropshadow( gaussian , #b9dfba , 1,1,0,3 );
+}
+
+.title_label {
+	-fx-font-weight:bold;
+	-fx-text-fill: white;
+	-fx-effect: dropshadow( gaussian , #b9dfba , 1,1,0,1 );
+}
+
+.title_value {
+	-fx-font-weight:bold;
+	-fx-text-fill: #489d4b;
+	-fx-effect: dropshadow( gaussian , #b9dfba , 1,1,0,1 );
 }

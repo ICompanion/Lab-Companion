@@ -106,13 +106,17 @@ public class DoctorStudyOverviewController {
 
     @FXML
     private void addStudyButtonAction(ActionEvent event) {
-
+        try {
+            LabCompanion.singleton.initStudyCreationPane();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void welcomeButtonAction(ActionEvent event) {
         try {
-            LabCompanion.singleton.initDoctorWelcomePanel();
+            LabCompanion.singleton.initWelcomePanel();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

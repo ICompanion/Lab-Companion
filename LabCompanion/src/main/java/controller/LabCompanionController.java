@@ -219,7 +219,11 @@ public class LabCompanionController {
     }
 
     private void optionsButtonHandler(ActionEvent event) {
-        //TODO view
+        try {
+            LabCompanion.singleton.initParametersPane(LabCompanion.singleton.getConnectedEmployee());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void analysisButtonHandler(ActionEvent event) {
