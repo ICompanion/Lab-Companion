@@ -54,7 +54,9 @@ public class PluginOverviewController {
     
     @FXML
     private TableColumn isActiveColumn;
-    
+
+    ObservableList<Record> dataList = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
         this.pluginTableView.setEditable(false);
@@ -92,8 +94,6 @@ public class PluginOverviewController {
         this.isActiveColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("pluginActiveState"));
         
-        ObservableList<Record> dataList = FXCollections.observableArrayList();
-        
         ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getLoadedPlugins();
         if(loadedPlugins!=null) {
             for (Plugin current : loadedPlugins) {
@@ -119,6 +119,12 @@ public class PluginOverviewController {
         if(toAdd!=null) {
             LabCompanion.singleton.addToActivePluginList(toAdd);
         }
+        Plugin added = toAdd.get(0);
+        dataList.add(new Record(added.getName(),
+                added.getDescription(),
+                added.getAuthor(),
+                "Oui"));
+        this.pluginTableView.refresh();
     }
     
     @FXML

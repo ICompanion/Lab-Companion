@@ -114,7 +114,6 @@ public class PluginLoader {
                         if (current.getName().equals("plugin.Plugin")) {
                             // newInstance to permit cast
                             this.plugins.add((Plugin) tmpClass.newInstance());
-                            return;
                         }
                     }
                 }
