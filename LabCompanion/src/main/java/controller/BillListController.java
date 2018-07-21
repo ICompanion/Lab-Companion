@@ -60,7 +60,7 @@ public class BillListController {
     @FXML
     private TableColumn amountColumn;
 
-    private static ArrayList<Bill> billListe = new ArrayList<>();
+    private static ArrayList<Bill> billList = new ArrayList<>();
 
     /**
      * This function initialise the view and make treatments before rendering (tableView initialisation).
@@ -70,7 +70,7 @@ public class BillListController {
     @FXML
     private void initialize(){
         try {
-            billListe = RequestManager.getBills();
+            billList = RequestManager.getBills();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,8 +130,8 @@ public class BillListController {
 
         ObservableList<billRecord> dataList = FXCollections.observableArrayList();
 
-        if(billListe != null){
-            for (Bill current : billListe) {
+        if(billList != null){
+            for (Bill current : billList) {
                 System.out.println(current.getId());
                 billRecord toAdd = new billRecord(
                         current.getPatient().getUsername(),
@@ -183,7 +183,7 @@ public class BillListController {
                         .get(ButtonCell.this.getIndex()).getId());
                 try {
 
-                    Bill currentBill = billListe.get(ButtonCell.this.getIndex());
+                    Bill currentBill = billList.get(ButtonCell.this.getIndex());
                     LabCompanion.singleton.initBillCreationUpdateCasePane(currentBill);
                 } catch (MalformedURLException ex) {
                     System.err.println("Ici " + id);

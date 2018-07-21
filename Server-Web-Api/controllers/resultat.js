@@ -34,7 +34,7 @@ resultatController.new = function(values, callback) {
 };
 
 resultatController.update = function(columns, values, id, callback) {
-  var text ='update resultat set ';
+  var text ='update resultat_analyse set ';
   var i = 1;
 
   for(var column of columns)

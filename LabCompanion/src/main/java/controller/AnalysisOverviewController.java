@@ -7,12 +7,14 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import java.net.MalformedURLException;
 
@@ -70,6 +72,9 @@ public class AnalysisOverviewController {
      */
     @FXML
     private void initialize() {
+
+        this.analysisTable.setEditable(true);
+
         this.nameColumn.setStyle( "-fx-alignment: CENTER;");
         this.nameColumn.setPrefWidth(LabCompanionController.maxPaneWidth/5);
         this.nameColumn.setCellValueFactory(
@@ -89,6 +94,31 @@ public class AnalysisOverviewController {
         this.valueColumn.setPrefWidth(LabCompanionController.maxPaneWidth/5);
         this.valueColumn.setCellValueFactory(
                 new PropertyValueFactory<AnalysisRecord, String>("value"));
+        this.valueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        this.valueColumn.setEditable(true);
+        this.valueColumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<AnalysisRecord, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<AnalysisRecord, String> item) {
+                        try {
+                            ((AnalysisRecord) item.getTableView().getItems().get(item.getTablePosition().getRow())).setValue(item.getNewValue());
+                            Float parsed = Float.parseFloat(item.getNewValue());
+                            ArrayList<AnalysisResult> temporaryArray = RequestManager.getAnalysisResults(analysis);
+                            for (AnalysisResult currentResult: temporaryArray) {
+                                if (currentResult.getId() == item.getTableView().getItems().get(item.getTablePosition().getRow()).getId()) {
+                                    RequestManager.updateAnalysisResult(currentResult,parsed);
+                                }
+                            }
+                        } catch (NumberFormatException e){
+                            LabCompanion.singleton.initAlertPane("Donnée incorrecte","La donnée doit être un nombre/chiffre","Rappel: Les nombres/chiffres à virgule sont autorisés");
+                            ((AnalysisRecord) item.getTableView().getItems().get(item.getTablePosition().getRow())).setValue(item.getOldValue());
+                            analysisTable.refresh();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
 
         this.unitColumn.setStyle( "-fx-alignment: CENTER;");
         this.unitColumn.setPrefWidth(LabCompanionController.maxPaneWidth/5);
@@ -136,6 +166,7 @@ public class AnalysisOverviewController {
         for (AnalysisResult current : analysis.getResults()) {
 
             AnalysisRecord toAdd = new AnalysisRecord(
+                    current.getId(),
                     String.valueOf(current.getResult().getTitle()),
                     String.valueOf(current.getResult().getValue_min()),
                     String.valueOf(current.getResult().getValue_max()),
@@ -152,18 +183,36 @@ public class AnalysisOverviewController {
      * Class that represent the tableView row.
      */
     public class AnalysisRecord {
+        private int id;
         private final SimpleStringProperty name;
         private final SimpleStringProperty minValue;
         private final SimpleStringProperty maxValue;
-        private final SimpleStringProperty value;
+        private String value;
         private final SimpleStringProperty unit;
 
-        public AnalysisRecord(String name, String minValue, String maxValue, String value, String unit) {
+        public AnalysisRecord(int id, String name, String minValue, String maxValue, String value, String unit) {
+            this.id = id;
             this.name = new SimpleStringProperty(name);
             this.minValue = new SimpleStringProperty(minValue);
             this.maxValue = new SimpleStringProperty(maxValue);
-            this.value = new SimpleStringProperty(value);
+            this.value = value;
             this.unit = new SimpleStringProperty(unit);
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
         }
 
         public String getName() {
@@ -188,14 +237,6 @@ public class AnalysisOverviewController {
 
         public SimpleStringProperty maxValueProperty() {
             return maxValue;
-        }
-
-        public String getValue() {
-            return value.get();
-        }
-
-        public SimpleStringProperty valueProperty() {
-            return value;
         }
 
         public String getUnit() {

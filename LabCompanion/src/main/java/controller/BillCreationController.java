@@ -200,10 +200,8 @@ public class BillCreationController {
 
         String amount = this.priceTextField.getText();
         String adresse = this.adressTextField.getText();
-        String analysisNum = this.analysisNumTextField.getText();
         Date date = bill.getCreationDate();
         String statut;
-        String dateStr;
         boolean statutBool = false;
 
         try{

@@ -1016,6 +1016,60 @@ public class RequestManager {
     /**
      *This function make the URL and associated data to send to update an employee.
      *
+     * @param question
+     * @param title
+     * @return bool
+     * @throws Exception
+     */
+    public static boolean updateQuestion(Question question, String title) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("intitule", title);
+
+        boolean result = RequestHelper.postOrPut(url + "/question/" + question.getId(),
+                hashMap, "PUT");
+
+        return result;
+    }
+
+    /**
+     *
+     * @param proposal
+     * @param title
+     * @return bool
+     * @throws Exception
+     */
+    public static boolean updateAnswer(Proposal proposal, String title) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("intitule", title);
+
+        boolean result = RequestHelper.postOrPut(url + "/proposition/" + proposal.getId(),
+                hashMap, "PUT");
+
+        return result;
+    }
+
+    /**
+     *
+     * @param analysisResult
+     * @param value
+     * @return bool
+     * @throws Exception
+     */
+    public static boolean updateAnalysisResult(AnalysisResult analysisResult, float value) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        hashMap.put("valeur", value);
+
+        boolean result = RequestHelper.postOrPut(url + "/resultat/" + analysisResult.getId(),
+                hashMap, "PUT");
+
+        return result;
+    }
+
+    /**
+     *
      * @param employee
      * @return bool
      * @throws Exception

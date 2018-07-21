@@ -50,7 +50,7 @@ public class DoctorPatientCasesController {
     @FXML
     private TableColumn viewCaseColumn2;
 
-    private static ArrayList<Patient> patientListe = new ArrayList<>();
+    private static ArrayList<Patient> patientList = new ArrayList<>();
 
     /**
      * This function initialise the view and make treatments before rendering (tableView initialisation).
@@ -60,7 +60,7 @@ public class DoctorPatientCasesController {
     @FXML
     public void initialize() throws Exception {
 
-        patientListe = RequestManager.getPatients();
+        patientList = RequestManager.getPatients();
         this.casesTableView.setEditable(false);
 
         this.patientIdColumn.setStyle( "-fx-alignment: CENTER;");
@@ -116,8 +116,8 @@ public class DoctorPatientCasesController {
 
         ObservableList<PatientRecord> dataList = FXCollections.observableArrayList();
 
-        if(patientListe != null){
-            for (Patient current : patientListe) {
+        if(patientList != null){
+            for (Patient current : patientList) {
                 PatientRecord toAdd = new PatientRecord(
                         String.valueOf(current.getUsername()),
                         String.valueOf(current.getName() + " " +current.getFirstname()));
@@ -179,7 +179,7 @@ public class DoctorPatientCasesController {
                                 .getTableView().getItems()
                                 .get(ButtonCell.this.getIndex()).getCode());
                         try {
-                            Patient currentPatient = patientListe.get(ButtonCell.this.getIndex());
+                            Patient currentPatient = patientList.get(ButtonCell.this.getIndex());
                             LabCompanion.singleton.initPatientCaseOverviewPane(currentPatient);
                         } catch (MalformedURLException ex) {
                             System.err.println("Ici " + code);
@@ -225,7 +225,7 @@ public class DoctorPatientCasesController {
                             .getTableView().getItems()
                             .get(ButtonCell2.this.getIndex()).getCode());
                     try {
-                        Patient currentPatient = patientListe.get(ButtonCell2.this.getIndex());
+                        Patient currentPatient = patientList.get(ButtonCell2.this.getIndex());
                         LabCompanion.singleton.initCreatePatientUpdateCasePane(currentPatient);
                     } catch (MalformedURLException ex) {
                         System.err.println("Ici " + code);

@@ -466,28 +466,6 @@ public class LabCompanion extends Application {
     }
 
     /**
-     *This function init the bill view.
-     *
-     * @param bill
-     * @throws MalformedURLException
-     */
-    public void initBillOverviewPane(Bill bill) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/billOverview.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
-        Pane pane = null;
-        try {
-            pane = (Pane) loader.load();
-        } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
-        }
-        BillOverviewController controller = loader.getController();
-        //controller.setPatient(patient);
-        this.setCurrentEditedPane(pane);
-    }
-
-    /**
      *This function init the bill creation view.
      *
      * @param appointment
