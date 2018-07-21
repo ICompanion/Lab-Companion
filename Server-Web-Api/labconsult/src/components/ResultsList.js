@@ -38,8 +38,11 @@ const styles = theme => ({
 });
 
 let data = []
-let display = "";
 
+/**
+ * Component which displays the available patient analysis.
+ * @constructor
+ */
 class ResultsList extends React.Component {
   constructor(props) {
       super(props);
@@ -57,10 +60,18 @@ class ResultsList extends React.Component {
       }
   }
 
+    /**
+     * Display either the list or an analysis.
+     * @param id - ID of the analysis.
+     */
     handleDisplay = (id) => {
       this.setState({display: id})
     }
 
+    /**
+     * Get the datas of the patient analysis
+     * @param props - Props given by precedent components.
+     */
     displayResults = async (props) => {
         data = [];
         var url = '/analyse/patient/liste/'+props.id
@@ -74,7 +85,9 @@ class ResultsList extends React.Component {
         return datas;
     }
 
-  
+    /**
+     * Render a ResultsList component.
+     */
   render() {
 	  
 	  const { classes } = this.props;

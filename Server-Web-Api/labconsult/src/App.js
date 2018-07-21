@@ -26,6 +26,10 @@ const theme = createMuiTheme({
     }
 });
 
+/**
+ * React App
+ * @param constructor
+ */
 class App extends Component {
     constructor(props) {
         super(props);
@@ -43,6 +47,9 @@ class App extends Component {
         return prevState.token !== this.state.token;
     }
 
+    /**
+     * Check the presence of the JWT token.
+     */
     authentificationCheck = async () => {
         const response = await fetch('/authenticate/check',{
             method: 'GET',

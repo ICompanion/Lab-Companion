@@ -95,6 +95,10 @@ const styles = theme => ({
     },
 });
 
+/**
+ * Main Application Container rendering.
+ * @constructor
+ */
 class MainApp extends React.Component {
 
     constructor(props) {
@@ -112,11 +116,18 @@ class MainApp extends React.Component {
             .catch(err => console.log(err));
     }
 
-
+    /**
+     * Rendering Switch.
+     * @param compName - Component Name.
+     * @param e - Event.
+     */
   renderingSwitch(compName, e) {
 	this.setState({render:compName});
   }
-  
+
+    /**
+     * Handle which Component to Render.
+     */
   _renderSubComp(){
     var h = "";
     var d = new Date();
@@ -130,7 +141,7 @@ class MainApp extends React.Component {
 		case 'disconnect': return <DisconnectComponent/>
 		case '': return (
 		    <div>
-		        <Typography variant="display2" id="welcome" noWrap>{'Welcome M. '+this.state.name}</Typography><br/><br/>
+		        <Typography variant="display2" id="welcome" noWrap>{'Bienvenue M. '+this.state.name}</Typography><br/><br/>
                 <Typography variant="headline" color="primary" noWrap>{d}</Typography><br/><br/>
                 <Typography variant="headline" color="primary" noWrap>{h}</Typography>
             </div>
@@ -138,6 +149,9 @@ class MainApp extends React.Component {
 	}
   }
 
+    /**
+     * Get the name of the connected patient.
+     */
   getName = async () => {
       const response = await fetch('/authenticate/infos',{
           method: 'GET',
@@ -157,6 +171,9 @@ class MainApp extends React.Component {
     this.setState({ open: false });
   };
 
+    /**
+     * Render the Main App
+     */
   render() {
     const { classes, theme } = this.props;
     return (
@@ -195,14 +212,14 @@ class MainApp extends React.Component {
 			  <ListItemIcon>
 				<ResultIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Your results" />
+			  <ListItemText primary="Vos résultats" />
 			</ListItem>
 			<Divider />
 			<ListItem button id="studies" onClick={this.renderingSwitch.bind(this, 'studies')}>
 			  <ListItemIcon>
 				<StudiesIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Your studies" />
+			  <ListItemText primary="Vos études" />
 			</ListItem>
 			<Divider />
 			<ListItem button id="options" onClick={this.renderingSwitch.bind(this, 'options')}>
@@ -216,7 +233,7 @@ class MainApp extends React.Component {
 			  <ListItemIcon>
 				<ExitIcon />
 			  </ListItemIcon>
-			  <ListItemText primary="Disconnect" />
+			  <ListItemText primary="Déconnexion" />
 			</ListItem>
 			<Divider />
 		  </List>

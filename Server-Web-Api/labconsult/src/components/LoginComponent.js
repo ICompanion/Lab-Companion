@@ -38,6 +38,10 @@ import FormControl from '@material-ui/core/FormControl';
 	  }
 	});
 
+	/**
+	 * Login Component.
+	 * @constructor
+	 */
 	class LoginComponent extends React.Component {
 
 		constructor(props) {
@@ -48,6 +52,12 @@ import FormControl from '@material-ui/core/FormControl';
           };
   	    }
 
+        /**
+         * Login function.
+         * @constructor
+         * @param this.state.login - Login input text.
+         * @param this.state.pwd - Login input password.
+         */
 		handleSubmit = async () => {
 				let url = '/authenticate/'+this.state.login+'/'+this.state.pwd+'';
 				const response = await fetch(url,{
@@ -93,7 +103,7 @@ import FormControl from '@material-ui/core/FormControl';
 								<Grid container spacing={16} justify="center" alignItems="center">
 								  <div className={classes.container}>
 									<FormControl className={classes.formControl}>
-									  <InputLabel htmlFor="name-simple">ID</InputLabel>
+									  <InputLabel htmlFor="name-simple">Identifiant</InputLabel>
 									  <Input
 										id="login"
 										onChange={this.handleLogin('login').bind(this)}
@@ -101,7 +111,7 @@ import FormControl from '@material-ui/core/FormControl';
 									  />
 									</FormControl>
 									<FormControl className={classes.formControl}>
-									  <InputLabel htmlFor="name-simple">Password</InputLabel>
+									  <InputLabel htmlFor="name-simple">Mot de passe</InputLabel>
 									  <Input className={classes.formLabel}
 										id="pwd"
 										type="password"
@@ -113,7 +123,7 @@ import FormControl from '@material-ui/core/FormControl';
 								</Grid>
 								<br/>
 								<Grid container spacing={16} justify="center" alignItems="center">
-									<Button className={classes.loginBtn} id="loginsubmit" variant="raised" color="primary" type="submit" onClick={this.handleSubmit.bind(this)} className={classes.button}>Login</Button>
+									<Button className={classes.loginBtn} id="loginsubmit" variant="raised" color="primary" type="submit" onClick={this.handleSubmit.bind(this)} className={classes.button}>Connexion</Button>
 								</Grid>
 							</Paper>
 							<div id="serveranswer"></div>

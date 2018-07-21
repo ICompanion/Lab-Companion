@@ -29,6 +29,11 @@ var previousq = '';
 var questionName = '';
 var radioGroupId = '';
 
+
+/**
+ * Component which displays and generates a survey form
+ * @constructor
+ */
 class Study extends React.Component {
     constructor(props) {
         super(props);
@@ -76,6 +81,10 @@ class Study extends React.Component {
 
     }
 
+    /**
+     * Gets the global informations of the study
+     *
+     */
     studyDetails = async (props) => {
         const url = '/etude/'+props.etudeID
         const response = await fetch(url,{
@@ -88,6 +97,10 @@ class Study extends React.Component {
         return datas;
     }
 
+    /**
+     * Fill the survey data in the component state
+     * @param props - Props given by precedent components.
+     */
     displayQuestions = async (props) => {
         const url = '/etude/'+props.etudeID+'/questions/'
         const response = await fetch(url,{
@@ -100,6 +113,10 @@ class Study extends React.Component {
         return datas;
     }
 
+    /**
+     * Count the number of questions in the survey
+     * @param props - Props given by precedent components.
+     */
     countQuestions = async (props) => {
         var url =  '/etude/'+props.etudeID+'/qcount/'
         const response = await fetch(url,{
@@ -112,11 +129,19 @@ class Study extends React.Component {
         return datas;
     }
 
+    /**
+     * Handle a state change
+     * @param event - Event from the onChange
+     */
     handleChange = event => {
         console.log(event.target.name);
         this.setState({ [event.target.name]: parseInt(event.target.value) });
     };
 
+    /**
+     * Handle a checkbox change
+     * @param event - Event from the onChange
+     */
     handleCheckbox = name => event => {
         this.setState({ [name]: event.target.checked });
     };
@@ -140,6 +165,12 @@ class Study extends React.Component {
         );
     }
 
+    /**
+     * Submit an answer to the database
+     * @param etudeID - ID of the survey
+     * @param answerID - ID of the answer
+     * @param questionID - ID of the question
+     */
     submitAnswer = async (etudeID, answerID, questionID) => {
         var url =  '/etude/'+etudeID+'/answer/add/'+answerID+'/'+questionID
         fetch(url,{
@@ -148,6 +179,10 @@ class Study extends React.Component {
         });
     }
 
+    /**
+     * Submit the questions from the form
+     * @param props - Props given by precedent components.
+     */
     submitQuestions = (props) => {
         var index = '';
         var completeq = true;
@@ -186,6 +221,9 @@ class Study extends React.Component {
         }
     }
 
+    /**
+     * Render a Study Component
+     */
     render() {
 
         const { classes } = this.props;

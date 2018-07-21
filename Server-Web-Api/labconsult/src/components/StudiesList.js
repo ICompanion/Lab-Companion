@@ -38,8 +38,11 @@ const styles = theme => ({
 });
 
 let data = []
-let display = "";
 
+/**
+ * Component qui affiche la liste des études disponibles du patient.
+ * @constructor
+ */
 class StudiesList extends React.Component {
     constructor(props) {
         super(props);
@@ -60,11 +63,21 @@ class StudiesList extends React.Component {
         }
     }
 
+    /**
+     * Fonction donnée en paramètre de chaque bouton d'études, afin de changer l'état Liste/Formulaire.
+     * @param id - Id de l'étude.
+     * @param id_patient - Id du patient.
+     */
     handleDisplay = (id,id_patient) => {
         this.setState({patientid: id_patient})
         this.setState({display: id})
     }
 
+
+    /**
+     * Fonction qui remplit la dernière cellule afin de savoir si le formulaire est rempli ou non.
+     * @param status - Booléen (True si étude remplie/False si étude non remplie).
+     */
     evaluateStudy = (status) => {
         if (status == true) {
             return <Typography color="primary" variant="body2">Completed</Typography>
@@ -73,6 +86,10 @@ class StudiesList extends React.Component {
         }
     }
 
+    /**
+     * Fonction qui active/désactive le bouton d'accès au formulaire en fonction de la participation
+     * @param status - Booléen (True si étude remplie/False si étude non remplie).
+     */
     evaluateButton = (status) => {
         if (status == true) {
             return "disabled"
@@ -81,6 +98,11 @@ class StudiesList extends React.Component {
         }
     }
 
+
+    /**
+     * Get the list of studies of the patient
+     * @param props - Props given from precedent components.
+     */
     displayResults = async (props) => {
         data = [];
         var url =  '/etude/patient/liste/'+props.id
@@ -95,6 +117,9 @@ class StudiesList extends React.Component {
     }
 
 
+    /**
+     * Render a StudiesList component
+     */
     render() {
 
         const { classes } = this.props;

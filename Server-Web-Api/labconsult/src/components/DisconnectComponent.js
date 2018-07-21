@@ -28,6 +28,11 @@ const styles = theme => ({
 
 class DisconnectComponent extends React.Component {
 
+    /**
+     * Disconnect from client.
+     * @constructor
+     * @param answer - Yes or No.
+     */
     disconnect = (answer) => {
         if(answer == 'yes') {
             fetch('/authenticate/disconnect',{
@@ -37,16 +42,20 @@ class DisconnectComponent extends React.Component {
 		}
         window.location.reload();
     };
-	
+
+    /**
+     * Render Disconnect Component.
+     * @constructor
+     */
 	render() {
 		const { classes } = this.props;
 		
 		return (
 			<div>
-				<WarningIcon color="error"/><Typography variant="display1" id="confirmmsg" noWrap>{'Are you sure?'}</Typography>
+				<WarningIcon color="error"/><Typography variant="display1" id="confirmmsg" noWrap>{'Êtes-vous sûr?'}</Typography>
 				<br/><br/><br/>
-				<Button id="yes" variant="raised" color="secondary" type="submit" className={classes.button} onClick={this.disconnect.bind(this, 'yes')}>Yes</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<Button id="no" variant="raised" color="primary" type="submit" className={classes.button} onClick={this.disconnect.bind(this, 'no')}>No</Button>
+				<Button id="yes" variant="raised" color="secondary" type="submit" className={classes.button} onClick={this.disconnect.bind(this, 'yes')}>Oui</Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<Button id="no" variant="raised" color="primary" type="submit" className={classes.button} onClick={this.disconnect.bind(this, 'no')}>Non</Button>
 			</div>
 		)
 	}
