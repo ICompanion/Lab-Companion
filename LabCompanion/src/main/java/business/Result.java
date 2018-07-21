@@ -6,9 +6,6 @@ public class Result {
     private String title;
     private String unit;
     private float value_max;
-
-
-
     private float value_min;
     private Category category;
 

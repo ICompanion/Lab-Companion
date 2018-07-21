@@ -3,6 +3,7 @@ package controller;
 import business.*;
 import dao.RequestManager;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -38,6 +39,9 @@ public class StudyCreationController {
     private Button addButton;
 
     @FXML
+    private Button deleteBtn;
+
+    @FXML
     private Button sendStudyBtn;
 
     @FXML
@@ -62,12 +66,9 @@ public class StudyCreationController {
     private TableColumn answer3Column;
 
     @FXML
-    private TableColumn deleteColumn;
-
-    @FXML
     private TilePane tilePane;
 
-    private static ObservableList<QuestionRow> rows = FXCollections.observableArrayList();;
+    private static ObservableList<QuestionRow> rows = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
@@ -76,7 +77,7 @@ public class StudyCreationController {
         sendStudyBtn.setPrefWidth(LabCompanionController.maxPaneWidth/2.2);
 
         this.titleColumn.setStyle( "-fx-alignment: CENTER;");
-        this.titleColumn.setPrefWidth(LabCompanionController.maxPaneWidth/5);
+        this.titleColumn.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.titleColumn.setCellValueFactory(
                 new PropertyValueFactory<QuestionRow, String>("title"));
         this.titleColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -90,7 +91,7 @@ public class StudyCreationController {
         );
 
         this.answer1Column.setStyle( "-fx-alignment: CENTER;");
-        this.answer1Column.setPrefWidth(LabCompanionController.maxPaneWidth/5);
+        this.answer1Column.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.answer1Column.setCellValueFactory(
                 new PropertyValueFactory<QuestionRow, String>("answer1"));
         this.answer1Column.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -104,7 +105,7 @@ public class StudyCreationController {
         );
 
         this.answer2Column.setStyle( "-fx-alignment: CENTER;");
-        this.answer2Column.setPrefWidth(LabCompanionController.maxPaneWidth/5);
+        this.answer2Column.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.answer2Column.setCellValueFactory(
                 new PropertyValueFactory<QuestionRow, String>("answer2"));
         this.answer2Column.setEditable(true);
@@ -120,7 +121,7 @@ public class StudyCreationController {
 
 
         this.answer3Column.setStyle( "-fx-alignment: CENTER;");
-        this.answer3Column.setPrefWidth(LabCompanionController.maxPaneWidth/5);
+        this.answer3Column.setPrefWidth(LabCompanionController.maxPaneWidth/4);
         this.answer3Column.setCellValueFactory(
                 new PropertyValueFactory<QuestionRow, String>("answer3"));
         this.answer3Column.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -133,29 +134,28 @@ public class StudyCreationController {
                 }
         );
 
-        this.deleteColumn.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<QuestionRow, Boolean>,
-                        ObservableValue<Boolean>>() {
-                    @Override
-                    public ObservableValue<Boolean> call(TableColumn.CellDataFeatures<QuestionRow, Boolean> p) {
-                        return new SimpleBooleanProperty(p.getValue() != null);
-                    }
-                });
-
-        this.deleteColumn.setCellFactory(
-                new Callback<TableColumn<QuestionRow, Boolean>, TableCell<QuestionRow, Boolean>>() {
-                    @Override
-                    public TableCell<QuestionRow, Boolean> call(TableColumn<QuestionRow, Boolean> p) {
-                        return new ButtonCell();
-                    }
-
-                });
-
-        this.deleteColumn.setPrefWidth(LabCompanionController.maxPaneWidth/5);
-        this.deleteColumn.setStyle( "-fx-alignment: CENTER;");
-
+        deleteBtn.setDisable(true);
         formStudy.setEditable(true);
         formStudy.setItems(rows);
+        this.formStudy.getSelectionModel().selectedItemProperty()
+                .addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ObservableValue observableValue,
+                                        Object oldValue, Object newValue) {
+                        if(StudyCreationController.this.formStudy
+                                .getSelectionModel().getSelectedItem() != null)
+                        {
+                            QuestionRow selectedItem = (QuestionRow) StudyCreationController
+                                    .this.formStudy
+                                    .getSelectionModel().getSelectedItem();
+                            StudyCreationController.this.deleteBtn.setDisable(false);
+
+
+                        } else {
+                            StudyCreationController.this.deleteBtn.setDisable(true);
+                        }
+                    }
+                });
     }
 
 
@@ -166,29 +166,10 @@ public class StudyCreationController {
         rows.add(newRow);
     }
 
-    private static class ButtonCell extends TableCell<QuestionRow, Boolean> {
-
-        final Button cellButton = new Button("Supprimer");
-
-        public ButtonCell() {
-            cellButton.getStyleClass().add("btn_primary");
-            cellButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent t) {
-                    int currentIndex = ButtonCell.this.getIndex();
-                    rows.remove(currentIndex);
-                }
-            });
-        }
-
-        //Display button if the row is not empty
-        @Override
-        protected void updateItem(Boolean t, boolean empty) {
-            super.updateItem(t, empty);
-            if(!empty){
-                setGraphic(cellButton);
-            }
-        }
+    @FXML
+    private void deleteButtonAction(ActionEvent event) {
+        QuestionRow selectedItem = (QuestionRow) this.formStudy.getSelectionModel().getSelectedItem();
+        this.formStudy.getItems().remove(selectedItem);
     }
 
     @FXML
@@ -199,7 +180,6 @@ public class StudyCreationController {
     @FXML
     private void sendStudyAction(ActionEvent event) throws Exception {
         if (!rows.isEmpty()){
-            int i = 0;
             ArrayList<Question> questionsList = new ArrayList<>();
             for (QuestionRow currentRow : rows) {
                 if (!currentRow.getTitle().equals("// A remplir") && currentRow.getTitle() != null && currentRow.getAnswer1() != null && currentRow.getAnswer2() != null) {
@@ -217,7 +197,7 @@ public class StudyCreationController {
                 }
             }
 
-            if (!questionsList.isEmpty() && codeInput.getText() != null && titleInput.getText() != null && descInput.getText() != null) {
+            if (!questionsList.isEmpty() && !codeInput.getText().equals("") && !titleInput.getText().equals("") && !descInput.getText().equals("")) {
                 Doctor doctor = new Doctor(LabCompanion.singleton.getConnectedEmployee());
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate currentDate = LocalDate.now();
@@ -227,12 +207,14 @@ public class StudyCreationController {
                 RequestManager.addSurvey(survey);
                 LabCompanion.singleton.initDoctorStudyPanel();
             } else {
-                Label errorLabel = new Label("Formulaire trop peu rempli. Rappel: 1 question minimum, 2 réponses par question minimum");
-                tilePane.getChildren().add(errorLabel);
+                LabCompanion.singleton.initAlertPane("Formulaire non valide",
+                        "Certains champs ne sont pas remplis",
+                        "Rappel: 1 question minimum, 2 réponses minimum par question.");
             }
         } else {
-            Label errorLabel = new Label("Formulaire trop peu rempli. Rappel: 1 question minimum, 2 réponses par question minimum");
-            tilePane.getChildren().add(errorLabel);
+            LabCompanion.singleton.initAlertPane("Formulaire non valide",
+                    "Le formulaire ne dispose pas de suffisamment de questions",
+                    "Rappel: 1 question minimum, 2 réponses minimum par question.");
         }
 
     }

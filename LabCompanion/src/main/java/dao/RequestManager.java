@@ -3,6 +3,8 @@ package dao;
 import Utils.JSONParser;
 import business.*;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -182,6 +184,30 @@ public class RequestManager {
                                         obj.getFloat("valeur_max"), obj.getFloat("valeur_min"), category);
 
             return result;
+        }
+        return null;
+    }
+
+    public static ArrayList<Result> getAllResult() throws Exception{
+
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/resultat/all/");
+        ArrayList<Result> results = new ArrayList<>();
+
+        if(data != null) {
+
+            Iterator<JSONObject> it = data.iterator();
+            while(it.hasNext()){
+                JSONObject obj = it.next();
+
+                Category category = getResultCategory(obj.getInt("categorie_id"));
+
+                Result result = new Result(obj.getInt("id"), obj.getString("nom"), obj.getString("unit"),
+                        obj.getFloat("valeur_max"), obj.getFloat("valeur_min"), category);
+
+                results.add(result);
+            }
+
+            return results;
         }
         return null;
     }
@@ -511,7 +537,7 @@ public class RequestManager {
         Doctor doctor = analysis.getDoctor();
 
         hashMap.put("code_analyse", analysis.getCode());
-        hashMap.put("date-analyse", analysis.getDateAnalyse());
+        hashMap.put("date_analyse", analysis.getDateAnalyse().toString());
         hashMap.put("description", analysis.getDescription());
         hashMap.put("patient_id", patient.getUsername());
         hashMap.put("employe_id", doctor.getId());
@@ -519,6 +545,10 @@ public class RequestManager {
         JSONParser.makeObject(hashMap);
 
         boolean result = RequestHelper.postOrPut(url + "/analyse/new", hashMap, "POST");
+
+        for (AnalysisResult resultToPush : analysis.getResults()) {
+            addAnalysisResult(resultToPush);
+        }
 
         return result;
     }

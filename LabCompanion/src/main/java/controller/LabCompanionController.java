@@ -223,7 +223,11 @@ public class LabCompanionController {
     }
 
     private void analysisButtonHandler(ActionEvent event) {
-        //TODO view
+        try {
+            LabCompanion.singleton.initAnalysisCreationPane();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void analysisListButtonHandler(ActionEvent event) {

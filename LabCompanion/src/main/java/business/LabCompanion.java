@@ -280,39 +280,9 @@ public class LabCompanion extends Application {
 
     }
 
-    public void initAnalysisResultOverviewPane() throws MalformedURLException {
+    public void initAnalysisCreationPane() throws MalformedURLException {
         FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/analysisResultOverview.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
-        Pane pane = null;
-        try {
-            pane = (Pane) loader.load();
-        } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
-        }
-        this.setCurrentEditedPane(pane);
-
-    }
-
-    public void initQuestionPane() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/questionPane.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
-        Pane pane = null;
-        try {
-            pane = (Pane) loader.load();
-        } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
-        }
-        this.setCurrentEditedPane(pane);
-
-    }
-
-    public void initQuestionAddPane() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/questionAddPane.fxml").toUri().toURL();
+        URL rootUrl = Paths.get("src/main/java/view/analysisCreation.fxml").toUri().toURL();
         loader.setLocation(rootUrl);
         Pane pane = null;
         try {
@@ -472,21 +442,6 @@ public class LabCompanion extends Application {
 
         PatientCaseOverviewController controller = loader.getController();
         controller.setPatient(patient);
-        this.setCurrentEditedPane(pane);
-
-    }
-
-    public void initSecretaryWelcomePanel() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/secretaryWelcome.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
-        Pane pane = null;
-        try {
-            pane = (Pane) loader.load();
-        } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
-        }
         this.setCurrentEditedPane(pane);
 
     }

@@ -113,11 +113,4 @@
         </children>
     </GridPane>
 </center>
-   <effect>
-      <InnerShadow blurType="TWO_PASS_BOX">
-         <input>
-            <Reflection />
-         </input>
-      </InnerShadow>
-   </effect>
 </BorderPane>
