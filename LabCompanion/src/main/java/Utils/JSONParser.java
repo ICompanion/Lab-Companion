@@ -7,12 +7,22 @@ import java.util.List;
 
 import org.json.*;
 
+
+/**
+ *
+ *This class is an utilities class for JSON parsing.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class JSONParser{
 
     private static HashMap<String, Object> parsedResult = new HashMap<String, Object>();
     private static JSONObject jsonResult;
 
     /**
+     * This function is a parser of JSON Object into an HashMap.
      *
      * @param object
      * @return a HashMap
@@ -35,6 +45,7 @@ public class JSONParser{
     }
 
     /**
+     *This function make an JSON Object from an Hashmap
      *
      * @param values
      * @return a Json Object
@@ -46,6 +57,7 @@ public class JSONParser{
     }
 
     /**
+     *This function make an JSON Object List from an Array
      *
      * @param stringArray
      * @return a List of Json Object

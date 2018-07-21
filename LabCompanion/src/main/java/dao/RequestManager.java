@@ -3,11 +3,20 @@ package dao;
 import Utils.JSONParser;
 import business.*;
 import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
 
+/**
+ *
+ *This class is a request sender to the Request Helper, making specific project Url and sending them to the helper.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class RequestManager {
 
     private static String url = "http://localhost:8080";
@@ -21,6 +30,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send for user connection.
      *
      * @param username
      * @param password
@@ -55,6 +65,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get Doctor analysis.
      *
      * @param doctor
      * @return an analysis list or null
@@ -94,6 +105,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get an analysis by its id.
      *
      * @param id
      * @return an analysis or null
@@ -129,6 +141,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get an analysis by its code.
      *
      * @param code
      * @return an analysis or null
@@ -165,6 +178,7 @@ public class RequestManager {
 
 
     /**
+     *This function make the URL and associated data to send to get Analysis results.
      *
      * @param analysis
      * @return an analysis list or null
@@ -196,6 +210,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get a result by its id.
      *
      * @param id
      * @return a result or null
@@ -221,6 +236,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get all Results.
      *
      * @return an result list or null
      * @throws Exception
@@ -250,6 +266,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get a category by its id.
      *
      * @param id
      * @return a category or null
@@ -271,6 +288,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get Doctor's Surveys.
      *
      * @param doctor
      * @return Survey list or null
@@ -305,6 +323,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get all surveys.
      *
      * @return a Survey list or null
      * @throws Exception
@@ -339,6 +358,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get Survey's questions.
      *
      * @param survey
      * @return question list or null
@@ -370,6 +390,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get question's answers.
      *
      * @param question
      * @return proposal list or null
@@ -394,6 +415,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get all Patients.
      *
      * @return Patient list or null
      * @throws Exception
@@ -426,6 +448,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get a Patient by its id.
      *
      * @param id
      * @return a Patient or null
@@ -454,6 +477,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get a patient by its code.
      *
      * @param code
      * @return a Patient or null
@@ -482,6 +506,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get a doctor by its id.
      *
      * @param id
      * @return a doctor or null
@@ -508,6 +533,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get all doctors.
      *
      * @return an doctor list or null
      * @throws Exception
@@ -536,6 +562,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get all categories.
      *
      * @return a Category list or null
      * @throws Exception
@@ -565,6 +592,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get patient's appoitments.
      *
      * @param patient
      * @return an appointment list or null
@@ -599,6 +627,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get an appointment by its id.
      *
      * @param id
      * @return an appointment or null
@@ -628,6 +657,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get all bills.
      *
      * @return an Bill list or null
      * @throws Exception
@@ -662,6 +692,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a patient.
      *
      * @param patient
      * @return bool
@@ -690,6 +721,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create an analysis.
      *
      * @param analysis
      * @return bool
@@ -719,6 +751,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create an Analysis result.
      *
      * @param analysisResult
      * @return bool
@@ -742,6 +775,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a result.
      *
      * @param result
      * @return bool
@@ -766,6 +800,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a category.
      *
      * @param category
      * @return bool
@@ -784,6 +819,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a survey.
      *
      * @param survey
      * @return bool
@@ -808,6 +844,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a question.
      *
      * @param question
      * @return bool
@@ -826,6 +863,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a proposal.
      *
      * @param proposal
      * @return bool
@@ -844,6 +882,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create an appointment.
      *
      * @param appointment
      * @return bool
@@ -873,6 +912,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to add a question to a survey.
      *
      * @param survey
      * @param question
@@ -888,6 +928,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to add a proposal to a question.
      *
      * @param question
      * @param proposal
@@ -904,6 +945,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a participation to a study.
      *
      * @param survey
      * @param patient
@@ -921,6 +963,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to create a bill.
      *
      * @param bill
      * @return bool
@@ -944,6 +987,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to update a bill.
      *
      * @param bill
      * @return bool
@@ -970,6 +1014,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to update an employee.
      *
      * @param employee
      * @return bool
@@ -997,6 +1042,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to update a patient.
      *
      * @param employee
      * @return bool
@@ -1047,10 +1093,10 @@ public class RequestManager {
         boolean result = RequestHelper.postOrPut(url + "/patient/" + patient.getId(), hashMap, "PUT");
 
         return result;
-
     }
 
     /**
+     *This function make the URL and associated data to send to update an appointment.
      *
      * @param appointment
      * @return bool
@@ -1080,7 +1126,7 @@ public class RequestManager {
     }
 
     /**
-     *
+     *This function make the URL and associated data to send to remove a question from a survey.
      * @param survey
      * @param question
      * @return bool
@@ -1094,6 +1140,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get answer stats of a survey.
      *
      * @param idSurvey
      * @param idQuestion
@@ -1116,6 +1163,7 @@ public class RequestManager {
     }
 
     /**
+     *This function make the URL and associated data to send to get participation stats for a survey.
      *
      * @param idSurvey
      * @return bool

@@ -11,9 +11,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-
+/**
+ *
+ *This class
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class PluginChooser {
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
     public static ArrayList<Plugin> showPluginChooser() throws IOException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choix du Plugin à importer");

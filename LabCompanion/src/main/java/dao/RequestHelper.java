@@ -6,12 +6,19 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+/**
+ *This class handle the connection to the project API and make API REST request.
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class RequestHelper {
 
     private static URL obj;
     private static HttpURLConnection con;
 
     /**
+     *This function open connection and send url to the api for Post and PUT requests Type.
      *
      * @param url
      * @param parameters
@@ -35,6 +42,7 @@ public class RequestHelper {
     }
 
     /**
+     *This function open connection and send url to the api for delete requests Type.
      *
      * @param url
      * @return bool or data
@@ -52,6 +60,7 @@ public class RequestHelper {
     }
 
     /**
+     *This function open connection, send to the api for get requests Type.
      *
      * @param url
      * @return bool or data
@@ -72,6 +81,7 @@ public class RequestHelper {
     }
 
     /**
+     *This function initialise a connection to the API.
      *
      * @param url
      * @param type
@@ -101,6 +111,7 @@ public class RequestHelper {
     }
 
     /**
+     *This function open a stream to send data in the opened API connection.
      *
      * @param body
      * @throws IOException
@@ -118,6 +129,7 @@ public class RequestHelper {
     }
 
     /**
+     *This function analyse the request state.
      *
      * @param responseCode
      * @return state of request
@@ -134,6 +146,7 @@ public class RequestHelper {
     }
 
     /**
+     *This function get data from a stream comming from the API server.
      *
      * @return String message
      * @throws IOException

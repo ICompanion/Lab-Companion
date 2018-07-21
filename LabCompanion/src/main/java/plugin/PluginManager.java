@@ -12,8 +12,21 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
+/**
+ *
+ *This class
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class PluginManager {
 
+    /**
+     *
+     * @return Plugins
+     * @throws IOException
+     */
     public static ArrayList<Plugin> showPluginChooser() throws IOException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choix du Plugin à importer");
@@ -49,6 +62,10 @@ public class PluginManager {
         return loader.getPlugins();
     }
 
+    /**
+     *
+     * @param toActivate
+     */
     public static void activatePlugin(String toActivate){
         Path pluginPath = Paths.get(
                 LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER
@@ -68,6 +85,10 @@ public class PluginManager {
         }
     }
 
+    /**
+     *
+     * @param pluginNameToDesactivate
+     */
     public static void desactivatePlugin(String pluginNameToDesactivate){
         Path pluginPath = Paths.get(
                 LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER
