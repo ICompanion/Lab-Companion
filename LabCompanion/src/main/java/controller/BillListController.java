@@ -21,7 +21,13 @@ import javafx.util.Callback;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-
+/**
+ *This class is the bill list view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class BillListController {
 
     @FXML
@@ -56,6 +62,11 @@ public class BillListController {
 
     private static ArrayList<Bill> billListe = new ArrayList<>();
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation).
+     *
+     * @throws Exception
+     */
     @FXML
     private void initialize(){
         try {
@@ -137,11 +148,11 @@ public class BillListController {
         billTableView.setItems(dataList);
     }
 
-    @FXML
-    private void addBillButtonAction(ActionEvent event) {
-
-    }
-
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try{
@@ -152,10 +163,16 @@ public class BillListController {
         }
     }
 
+    /**
+     * Class that represent a button to be inserted in each row of the tableView .
+     */
     private static class ButtonCell extends TableCell<billRecord, Boolean> {
 
     final Button cellButton = new Button("Modifier");
 
+        /**
+         * Button constructor (initialise button)
+         */
     public ButtonCell() {
         cellButton.getStyleClass().add("btn_primary");
         cellButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -179,16 +196,23 @@ public class BillListController {
         });
     }
 
-    //Display button if the row is not empty
+    /**
+     * This function set visible the button in case if a row is not empty.
+     * @param t
+     * @param empty
+     */
     @Override
     protected void updateItem(Boolean t, boolean empty) {
         super.updateItem(t, empty);
         if(!empty){
             setGraphic(cellButton);
         }
-        }
     }
+}
 
+    /**
+     * Class which modelise a tableView row.
+     */
     public class billRecord {
         private final SimpleStringProperty numPatient;
         private final SimpleStringProperty numAnalyse;

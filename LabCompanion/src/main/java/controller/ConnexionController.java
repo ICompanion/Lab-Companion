@@ -1,20 +1,20 @@
 package controller;
 
-import business.LabCompanion;
 import business.Employee;
+import business.LabCompanion;
 import dao.RequestManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
+/**
+ *This class is the connection view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class ConnexionController {
 
     @FXML
@@ -26,17 +26,25 @@ public class ConnexionController {
     @FXML
     private TextField passwordField;
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation).
+     */
     @FXML
     public void initialize() {
         //FOR DEVELOPMENT ONLY --> GOOD CREDENTIALS TO LOGIN QUICKLY
-        idTextField.setText("apetit");
-        passwordField.setText("admin1");
+        idTextField.setText("mdesanges");
+        passwordField.setText("admin2");
 
         //SECRETARY
         //idTextField.setText("mdesanges");
         //passwordField.setText("admin2");
     }
 
+    /**
+     * This function is the connection button action that set the connected employee and make the connection.
+     *
+     * @param event
+     */
     @FXML
     private void connectionButtonAction(ActionEvent event) {
         try {

@@ -10,6 +10,10 @@ text: "",
 values: undefined,
 }
 
+/**
+ *
+ * @param callback
+ */
 bddController.start = function(callback){
     pool.connect(function(err, client, done){
         if(err)
@@ -25,7 +29,12 @@ bddController.start = function(callback){
     });
 };
 
-
+/**
+ *
+ * @param text
+ * @param values
+ * @param callback
+ */
 bddController.executeQuery = function(text, values, callback){
     var state = false;
 
@@ -49,7 +58,9 @@ bddController.executeQuery = function(text, values, callback){
     });
 };
 
-
+/**
+ * close the bdd ccnnection
+ */
 bddController.stop = function(){
   pool.end(function(){
     console.log('Déconnecté de la base de données');
@@ -59,6 +70,11 @@ bddController.stop = function(){
 
 module.exports = bddController;
 
+/**
+ *
+ * @param text
+ * @param values
+ */
 bddController.makeQuery = function(text, values){
     query.text = text;
     if(values != '')

@@ -18,10 +18,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+/**
+ *This class is the DoctorStudyOverview view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class DoctorStudyOverviewController {
 
     @FXML
@@ -48,6 +54,11 @@ public class DoctorStudyOverviewController {
     private static ArrayList<Survey> surveysList = new ArrayList<>();
     private static Doctor doctor = new Doctor(LabCompanion.singleton.getConnectedEmployee());
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation).
+     *
+     * @throws Exception
+     */
     @FXML
     private void initialize() throws Exception {
         surveysList = RequestManager.getSurveys(doctor);
@@ -104,6 +115,11 @@ public class DoctorStudyOverviewController {
         studyTableView.setItems(dataList);
     }
 
+    /**
+     * This function is the add ButtonAction event that redirect to the studyCreation view.
+     *
+     * @param event
+     */
     @FXML
     private void addStudyButtonAction(ActionEvent event) {
         try {
@@ -113,6 +129,11 @@ public class DoctorStudyOverviewController {
         }
     }
 
+    /**
+     * This function is the welcome ButtonAction event that redirect to the mainn view.
+     *
+     * @param event
+     */
     @FXML
     private void welcomeButtonAction(ActionEvent event) {
         try {
@@ -122,10 +143,16 @@ public class DoctorStudyOverviewController {
         }
     }
 
+    /**
+     * Class that represent a button to be inserted in each row of the tableView .
+     */
     private static class ButtonCell extends TableCell<SurveyRecord, Boolean> {
 
         final Button cellButton = new Button("Voir");
 
+        /**
+         * Button constructor (initialise button)
+         */
         public ButtonCell() {
             cellButton.getStyleClass().add("btn_primary");
             cellButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -148,7 +175,11 @@ public class DoctorStudyOverviewController {
             });
         }
 
-        //Display button if the row is not empty
+        /**
+         * This function set visible the button in case if a row is not empty.
+         * @param t
+         * @param empty
+         */
         @Override
         protected void updateItem(Boolean t, boolean empty) {
             super.updateItem(t, empty);
@@ -158,6 +189,9 @@ public class DoctorStudyOverviewController {
         }
     }
 
+    /**
+     * Class which modelise a tableView row.
+     */
     public class SurveyRecord {
         private final SimpleStringProperty code;
         private final SimpleStringProperty name;

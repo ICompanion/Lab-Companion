@@ -6,6 +6,7 @@ const visiteController = controllers.visite;
 const visiteRouter = express.Router();
 visiteRouter.use(bodyParser.json());
 
+
 visiteRouter.get('/all', function(req, res){
   visiteController.getAll(function(data, state){
     if(state === false) {res.status(500).end(); return;}

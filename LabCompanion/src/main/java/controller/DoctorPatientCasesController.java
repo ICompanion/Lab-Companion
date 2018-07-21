@@ -17,11 +17,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
+/**
+ *This class is the DoctorPatient view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class DoctorPatientCasesController {
 
     @FXML
@@ -47,6 +52,11 @@ public class DoctorPatientCasesController {
 
     private static ArrayList<Patient> patientListe = new ArrayList<>();
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation).
+     *
+     * @throws Exception
+     */
     @FXML
     public void initialize() throws Exception {
 
@@ -120,6 +130,11 @@ public class DoctorPatientCasesController {
 
     }
 
+    /**
+     * This function is the add ButtonAction event that redirect to the PatientCreation view.
+     *
+     * @param event
+     */
     @FXML
     private void addCaseButtonAction(ActionEvent event) {
         try{
@@ -130,6 +145,11 @@ public class DoctorPatientCasesController {
         }
     }
 
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try{
@@ -140,10 +160,16 @@ public class DoctorPatientCasesController {
         }
     }
 
+    /**
+     * Class that represent a button to be inserted in each row of the tableView .
+     */
     private static class ButtonCell extends TableCell<PatientRecord, Boolean> {
 
         final Button cellButton = new Button("Voir");
 
+        /**
+         * Button constructor (initialise button)
+         */
         public ButtonCell() {
                 cellButton.getStyleClass().add("btn_primary");
                 cellButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -165,7 +191,12 @@ public class DoctorPatientCasesController {
                     }
                 });
         }
-        //Display button if the row is not empty
+
+        /**
+         * This function set visible the button in case if a row is not empty.
+         * @param t
+         * @param empty
+         */
         @Override
         protected void updateItem(Boolean t, boolean empty) {
             super.updateItem(t, empty);
@@ -175,10 +206,16 @@ public class DoctorPatientCasesController {
         }
     }
 
+    /**
+     * Class that represent a button to be inserted in each row of the tableView .
+     */
     private static class ButtonCell2 extends TableCell<PatientRecord, Boolean> {
 
         final Button cellButton = new Button("Modifier");
 
+        /**
+         * Button constructor (initialise button)
+         */
         public ButtonCell2() {
             cellButton.getStyleClass().add("btn_primary");
             cellButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -200,7 +237,12 @@ public class DoctorPatientCasesController {
                 }
             });
         }
-        //Display button if the row is not empty
+
+        /**
+         * This function set visible the button in case if a row is not empty.
+         * @param t
+         * @param empty
+         */
         @Override
         protected void updateItem(Boolean t, boolean empty) {
             super.updateItem(t, empty);
@@ -210,6 +252,9 @@ public class DoctorPatientCasesController {
         }
     }
 
+    /**
+     * Class which modelise a tableView row.
+     */
     public class PatientRecord {
         private final SimpleStringProperty code;
         private final SimpleStringProperty name;

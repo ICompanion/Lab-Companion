@@ -5,13 +5,7 @@
  */
 package controller;
 
-import plugin.PluginManager;
 import business.LabCompanion;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,10 +18,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import plugin.Plugin;
+import plugin.PluginManager;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
+ *This class is the Plugin view controller in which are events and treatments.
  *
- * @author mickael.vilalard
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
  */
 public class PluginOverviewController {
     
@@ -57,6 +59,11 @@ public class PluginOverviewController {
 
     ObservableList<Record> dataList = FXCollections.observableArrayList();
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation and getting plugins).
+     *
+     * @throws Exception
+     */
     @FXML
     public void initialize() {
         this.pluginTableView.setEditable(false);
@@ -108,6 +115,11 @@ public class PluginOverviewController {
         pluginTableView.setItems(dataList);
     }
 
+    /**
+     * This function is the add button event which set and add a plugin into the plugin manager.
+     *
+     * @param event
+     */
     @FXML
     private void addPluginButtonAction(ActionEvent event) {
         ArrayList<Plugin> toAdd = null;
@@ -126,7 +138,12 @@ public class PluginOverviewController {
                 "Oui"));
         this.pluginTableView.refresh();
     }
-    
+
+    /**
+     * This function activate a plugin.
+     *
+     * @param event
+     */
     @FXML
     private void activatePluginButtonAction(ActionEvent event) {
         Record seletedItem = (Record) this.pluginTableView
@@ -134,7 +151,12 @@ public class PluginOverviewController {
         PluginManager.activatePlugin(seletedItem.getPluginName());
         seletedItem.setPluginActiveState("Oui");
     }
-    
+
+    /**
+     * This function desactivate a plugin.
+     *
+     * @param event
+     */
     @FXML
     private void desactivatePluginButtonAction(ActionEvent event) {
         Record seletedItem = (Record) this.pluginTableView
@@ -142,8 +164,10 @@ public class PluginOverviewController {
         PluginManager.desactivatePlugin(seletedItem.getPluginName());
         seletedItem.setPluginActiveState("Non");
     }
-    
-    
+
+    /**
+     * Class which modelise a tableView row.
+     */
     public class Record {
         private final SimpleStringProperty pluginName;
         private final SimpleStringProperty pluginDescription;

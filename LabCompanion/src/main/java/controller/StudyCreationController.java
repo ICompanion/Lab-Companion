@@ -2,7 +2,6 @@ package controller;
 
 import business.*;
 import dao.RequestManager;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -10,13 +9,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import javafx.util.Callback;
-
 import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -24,6 +24,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ *This class is the Study creation view controller in which are events and treatments.
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class StudyCreationController {
 
     @FXML
@@ -70,6 +76,12 @@ public class StudyCreationController {
 
     private static ObservableList<QuestionRow> rows = FXCollections.observableArrayList();
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation,
+     * buttons visibility).
+     *
+     * @throws Exception
+     */
     @FXML
     private void initialize() {
 
@@ -159,19 +171,33 @@ public class StudyCreationController {
     }
 
 
-
+    /**
+     * This function add a new row to the table.
+     *
+     * @param event
+     */
     @FXML
     private void addButtonAction(ActionEvent event) {
         QuestionRow newRow = new QuestionRow("//A remplir",null,null,null);
         rows.add(newRow);
     }
 
+    /**
+     * This function is the deleteButton event which make treatments to remove an item from a row.
+     *
+     * @param event
+     */
     @FXML
     private void deleteButtonAction(ActionEvent event) {
         QuestionRow selectedItem = (QuestionRow) this.formStudy.getSelectionModel().getSelectedItem();
         this.formStudy.getItems().remove(selectedItem);
     }
 
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backToStudyButtonAction(ActionEvent event) {
         try {
@@ -181,6 +207,12 @@ public class StudyCreationController {
         }
     }
 
+    /**
+     * This function is the sendStudy button event which create and save a study.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void sendStudyAction(ActionEvent event) throws Exception {
         if (!rows.isEmpty()){
@@ -223,6 +255,9 @@ public class StudyCreationController {
 
     }
 
+    /**
+     * Class which modelise a tableView row.
+     */
     public class QuestionRow {
         private String title;
         private String answer1;

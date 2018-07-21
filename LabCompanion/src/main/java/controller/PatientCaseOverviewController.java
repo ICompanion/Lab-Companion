@@ -13,10 +13,16 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+/**
+ *This class is the patient view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class PatientCaseOverviewController {
 
     @FXML
@@ -62,6 +68,11 @@ public class PatientCaseOverviewController {
     private static ArrayList<Appointment> appointmentsList;
     private static ArrayList<Survey> surveyList;
 
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try {
@@ -71,6 +82,11 @@ public class PatientCaseOverviewController {
         }
     }
 
+    /**
+     *This function is the adRdv button event which redirect to the patient creation view.
+     *
+     * @param event
+     */
     @FXML
     private void addRdvButtonAction(ActionEvent event) {
         try {
@@ -80,6 +96,11 @@ public class PatientCaseOverviewController {
         }
     }
 
+    /**
+     * This function is the addParticipation button event which makes treatment to add a participation.
+     *
+     * @param event
+     */
     @FXML
     private void addParticipationButtonAction(ActionEvent event) {
         String surveyCode = this.participationComboBox.getValue().toString();
@@ -108,6 +129,11 @@ public class PatientCaseOverviewController {
         }
     }
 
+    /**
+     * This function set a patient and initialise the table with patient informations.
+     *
+     * @param patient
+     */
     public void setPatient(Patient patient){
         this.patient = patient;
 
@@ -184,11 +210,16 @@ public class PatientCaseOverviewController {
 
     }
 
-
+    /**
+     * Class that represent a button to be inserted in each row of the tableView .
+     */
     private static class ButtonCell extends TableCell<AppointMentRecord, Boolean> {
 
         final Button cellButton = new Button("Créer une facture");
 
+        /**
+         * Button constructor (initialise button)
+         */
         public ButtonCell() {
             cellButton.getStyleClass().add("btn_primary");
             cellButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -210,7 +241,12 @@ public class PatientCaseOverviewController {
                 }
             });
         }
-        //Display button if the row is not empty
+
+        /**
+         * This function set visible the button in case if a row is not empty.
+         * @param t
+         * @param empty
+         */
         @Override
         protected void updateItem(Boolean t, boolean empty) {
             super.updateItem(t, empty);
@@ -220,7 +256,9 @@ public class PatientCaseOverviewController {
         }
     }
 
-
+    /**
+     * Class which modelise a tableView row.
+     */
     public class AppointMentRecord {
         private final SimpleStringProperty date;
         private final SimpleStringProperty doctorName;

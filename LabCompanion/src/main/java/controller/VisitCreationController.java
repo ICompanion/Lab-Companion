@@ -8,16 +8,22 @@ import dao.RequestManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Font;
-
-import java.awt.event.KeyEvent;
 import java.net.MalformedURLException;
-import java.sql.Timestamp;
-import java.time.*;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ *This class is the visit creation view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class VisitCreationController {
 
     @FXML
@@ -48,6 +54,12 @@ public class VisitCreationController {
     private static Patient patient;
     private static String patientId = "";
 
+    /**
+     * This function set patient get patient and doctor's informations, set inputs and label with its informations
+     * and create inputs validations.
+     *
+     * @param patientId
+     */
     public void setPatientId(String patientId)
     {
         try {
@@ -98,7 +110,11 @@ public class VisitCreationController {
         });
     }
 
-
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try{
@@ -109,6 +125,11 @@ public class VisitCreationController {
         }
     }
 
+    /**
+     * This function is the registerButton Action event that make treatments to create and save an appointment.
+     *
+     * @param event
+     */
     @FXML
     private void registerButtonAction(ActionEvent event) {
 

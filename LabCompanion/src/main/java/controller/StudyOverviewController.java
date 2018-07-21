@@ -9,14 +9,18 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 
+/**
+ *This class is the study overview controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class StudyOverviewController {
 
     @FXML
@@ -48,12 +52,21 @@ public class StudyOverviewController {
     private static Label precQLabel;
     private static Label precPLabel;
 
-
+    /**
+     * This function initialise the view and make treatments before rendering(set button action event).
+     *
+     * @throws Exception
+     */
     @FXML
     private void initialize() {
         studyListButton.setOnAction(this::studyListButtonAction);
     }
 
+    /**
+     * This function is the studyList button event which redirect to the studyList view.
+     *
+     * @param event
+     */
     @FXML
     private void studyListButtonAction(ActionEvent event) {
         try {
@@ -63,6 +76,12 @@ public class StudyOverviewController {
         }
     }
 
+    /**
+     * This function set a survey informations in labels and call statistics display.
+     *
+     * @param survey
+     * @throws Exception
+     */
     public void setSurvey(Survey survey) throws Exception {
         this.survey = survey;
         studyNameLabel.setText(survey.getName());
@@ -72,6 +91,11 @@ public class StudyOverviewController {
         displayStats();
     }
 
+    /**
+     * This function make treatments to display study statistics
+     *
+     * @throws Exception
+     */
     public void displayStats() throws Exception {
         try {
             for (Question question : survey.getQuestions()) {

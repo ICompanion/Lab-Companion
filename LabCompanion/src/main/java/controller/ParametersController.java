@@ -2,16 +2,21 @@ package controller;
 
 import business.Employee;
 import business.LabCompanion;
-import business.Patient;
 import dao.RequestManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
 import java.net.MalformedURLException;
 
+/**
+ *This class is the parameters view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class ParametersController {
 
     @FXML
@@ -35,6 +40,11 @@ public class ParametersController {
     @FXML
     private TextField emailInput;
 
+    /**
+     * This function redirect to the pluginManager view.
+     *
+     * @param event
+     */
     @FXML
     private void pluginsButtonAction(ActionEvent event) {
         try {
@@ -44,6 +54,11 @@ public class ParametersController {
         }
     }
 
+    /**
+     * This function redirect to the main view.
+     *
+     * @param event
+     */
     @FXML
     private void homeButtonAction(ActionEvent event) {
         try {
@@ -53,6 +68,12 @@ public class ParametersController {
         }
     }
 
+    /**
+     * This function make treatments to change the connected user's password.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void passwordModificationAction(ActionEvent event) throws Exception {
         if (!newPasswordInput.getText().equals("") && !confirmPasswordInput.equals("")) {
@@ -67,6 +88,12 @@ public class ParametersController {
         }
     }
 
+    /**
+     * This function make treatments to change the connected user's mail.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void emailModificationAction(ActionEvent event) throws Exception {
         if (!emailInput.getText().equals(employee.getMail())) {
@@ -81,6 +108,10 @@ public class ParametersController {
 
     private static Employee employee;
 
+    /**
+     * This function set the Employee.
+     * @param employee
+     */
     public void setEmployee(Employee employee) {
         this.employee = employee;
         emailInput.setText(employee.getMail());

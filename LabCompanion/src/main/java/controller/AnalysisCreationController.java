@@ -2,7 +2,6 @@ package controller;
 
 import business.*;
 import dao.RequestManager;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,22 +10,24 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.Callback;
-import org.json.JSONObject;
-
-import javax.swing.*;
 import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 
+/**
+ *This class is the Analysis Creation view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class AnalysisCreationController {
+
 
     @FXML
     private ComboBox<String> patientSelector;
@@ -55,6 +56,11 @@ public class AnalysisCreationController {
     private static ObservableList<AnalysisRow> rows = FXCollections.observableArrayList();
     private static ObservableList<String> results = FXCollections.observableArrayList();
 
+    /**
+     * This function initialise the view and make treatments before rendering.
+     *
+     * @throws Exception
+     */
     public void initialize() throws Exception {
         this.deleteBtn.setDisable(true);
         this.addButton.setDisable(true);
@@ -122,6 +128,12 @@ public class AnalysisCreationController {
 
     }
 
+    /**
+     * This function is the addButton event.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void addAnalysisAction(ActionEvent event) throws Exception {
 
@@ -147,12 +159,22 @@ public class AnalysisCreationController {
 
     }
 
+    /**
+     * This function is the deleteButton event which make treatments to remove an item from a row.
+     *
+     * @param event
+     */
     @FXML
     private void deleteButtonAction(ActionEvent event) {
         AnalysisRow selectedItem = (AnalysisRow) this.formAnalysis.getSelectionModel().getSelectedItem();
         this.formAnalysis.getItems().remove(selectedItem);
     }
 
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try {
@@ -162,11 +184,22 @@ public class AnalysisCreationController {
         }
     }
 
+    /**
+     * This function disable the add button.
+     *
+     * @param event
+     */
     @FXML
     private void comboBoxSelection(ActionEvent event) {
         this.addButton.setDisable(false);
     }
 
+    /**
+     * This function is the sendAnalysisBtn event to create and send an analysis to the RequestManager.
+     *
+     * @param event
+     * @throws Exception
+     */
     @FXML
     private void sendAnalysis(ActionEvent event) throws Exception {
         boolean complete = true;
@@ -210,6 +243,12 @@ public class AnalysisCreationController {
         }
     }
 
+    /**
+     * This function initialise the patient comboBox.
+     *
+     * @param comboBoxInit
+     * @throws Exception
+     */
     public void initializePatientSelector(ComboBox<String> comboBoxInit) throws Exception {
         ArrayList<Patient> patients = RequestManager.getPatients();
         ObservableList<String> items = FXCollections.observableArrayList();
@@ -224,6 +263,9 @@ public class AnalysisCreationController {
         comboBoxInit.setItems(items);
     }
 
+    /**
+     * Modelise a row for the tableView.
+     */
     public class AnalysisRow {
         private int id;
         private String selected;

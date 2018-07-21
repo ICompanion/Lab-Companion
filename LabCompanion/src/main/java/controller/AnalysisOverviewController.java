@@ -3,7 +3,6 @@ package controller;
 import business.Analysis;
 import business.AnalysisResult;
 import business.LabCompanion;
-import dao.RequestManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,11 +14,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
-import sun.misc.Request;
-
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 
+/**
+ *This class is the Analysis view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class AnalysisOverviewController {
 
     @FXML
@@ -60,6 +63,11 @@ public class AnalysisOverviewController {
 
     private Analysis analysis;
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation).
+     *
+     * @throws Exception
+     */
     @FXML
     private void initialize() {
         this.nameColumn.setStyle( "-fx-alignment: CENTER;");
@@ -90,6 +98,11 @@ public class AnalysisOverviewController {
         backButton.setOnAction(this::backButtonAction);
     }
 
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try {
@@ -99,6 +112,11 @@ public class AnalysisOverviewController {
         }
     }
 
+    /**
+     * This function set an analysis.
+     *
+     * @param analysis
+     */
     public void setAnalysis(Analysis analysis) {
         this.analysis = analysis;
         codePatient.setText(analysis.getPatient().getUsername());
@@ -107,6 +125,11 @@ public class AnalysisOverviewController {
 
     }
 
+    /**
+     * This function display the tableView with analysis data.
+     *
+     * @param analysis
+     */
     private void displayTable(Analysis analysis) {
         ObservableList<AnalysisRecord> dataList = FXCollections.observableArrayList();
 
@@ -125,6 +148,9 @@ public class AnalysisOverviewController {
         analysisTable.setItems(dataList);
     }
 
+    /**
+     * Class that represent the tableView row.
+     */
     public class AnalysisRecord {
         private final SimpleStringProperty name;
         private final SimpleStringProperty minValue;

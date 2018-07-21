@@ -11,13 +11,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DateTimeException;
 import java.util.Date;
 
+/**
+ *This class is the Bill creation view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class BillCreationController {
 
     @FXML
@@ -45,6 +50,11 @@ public class BillCreationController {
     private Analysis analysis;
     private Appointment appointment;
 
+    /**
+     * This function initialise the view and make treatments before rendering (input validation and comboBox data insertion).
+     *
+     * @throws Exception
+     */
     @FXML
     private void initialize() {
 
@@ -65,6 +75,11 @@ public class BillCreationController {
         this.statutComboBox.getItems().addAll("Payée", "Impayée");
     }
 
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try{
@@ -75,6 +90,11 @@ public class BillCreationController {
         }
     }
 
+    /**
+     * This function is the registerButton Action event that make treatments to create and save a bill.
+     *
+     * @param event
+     */
     @FXML
     private void registerButtonAction(ActionEvent event) {
         if(this.priceTextField.getText().equals("") || this.adressTextField.getText().equals("")
@@ -138,6 +158,11 @@ public class BillCreationController {
         }
     }
 
+    /**
+     * This function set inputs with patient informations.
+     *
+     * @param bill
+     */
     public void setPatient(Bill bill){
         this.bill = bill;
         this.registerButton.setVisible(false);
@@ -150,10 +175,20 @@ public class BillCreationController {
         this.analysisNumTextField.setText(analysis.getCode());
     }
 
+    /**
+     * This function set the appointment.
+     *
+     * @param appointment
+     */
     public void setAppointment(Appointment appointment){
         this.appointment = appointment;
     }
 
+    /**
+     * This function is a save button action event to save patient changes in case of update.
+     *
+     * @param event
+     */
     @FXML
     private void saveButtonAction(ActionEvent event) {
         if(this.priceTextField.getText().equals("") || this.adressTextField.getText().equals("")

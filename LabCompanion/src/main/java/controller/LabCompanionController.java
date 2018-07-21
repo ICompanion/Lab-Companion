@@ -15,7 +15,6 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -23,6 +22,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import plugin.Plugin;
 
+/**
+ *This class is the doctor analysis view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class LabCompanionController {
 
     public static double maxPaneHeight, maxPaneWidth;
@@ -46,6 +52,11 @@ public class LabCompanionController {
     @FXML
     private SplitPane editedContainer;
 
+    /**
+     * This function initialise the view and make treatments before rendering (initialise main panel, and menu).
+     *
+     * @throws Exception
+     */
     @FXML
     public void initialize() {
 
@@ -60,17 +71,33 @@ public class LabCompanionController {
         menuListView.setItems(menuButtons);
     }
 
+    /**
+     * This function set button's CSS.
+     *
+     * @param btn
+     */
     private void setMenuButtonsBounds(Button btn){
         btn.setPrefWidth(menuListView.getMaxWidth()-15);
         btn.getStyleClass().add("btn_primary");
         btn.setEffect(new DropShadow());
     }
 
+    /**
+     * This function is the disconnect button event which disconnect a user.
+     *
+     * @param event
+     */
     @FXML
     private void disconnectButtonAction(ActionEvent event) {
         LabCompanion.singleton.disconnect();
     }
 
+    /**
+     * This function set an editedPane size.
+     *
+     * @param editedPane
+     * @param connectedEmployee
+     */
     public void setEditedPane(Pane editedPane, Employee connectedEmployee) {
         this.initValues(connectedEmployee);
         this.editedPane = editedPane;
@@ -79,6 +106,11 @@ public class LabCompanionController {
         this.editedContainer.getItems().set(1, this.editedPane);
     }
 
+    /**
+     * This function handle employee type to display the associated menu.
+     *
+     * @param connectedEmployee
+     */
     private void initValues(Employee connectedEmployee) {
         this.usernameInfoLabel.setText(connectedEmployee.getFirstname()
                 + " " + connectedEmployee.getName());
@@ -90,6 +122,9 @@ public class LabCompanionController {
         }
     }
 
+    /**
+     * This function initialise the secretary menu.
+     */
     private void initSecretaryMenu() {
         Button billButton = new Button("Factures");
         billButton.setOnAction(this::billButtonHandler);
@@ -115,6 +150,9 @@ public class LabCompanionController {
         addEmployeePluginsToMenu(Secretary.SECRETARY_TYPE);
     }
 
+    /**
+     * This function initialise the doctor menu.
+     */
     private void initDoctorMenu() {
         Button analysisListButton = new Button("Liste de vos analyses");
         analysisListButton.setOnAction(this::analysisListButtonHandler);
@@ -144,7 +182,12 @@ public class LabCompanionController {
         
         addEmployeePluginsToMenu(Doctor.DOCTOR_TYPE);
     }
-    
+
+    /**
+     * This function create a manager for plugins Buttons and its event.
+     *
+     * @return Button
+     */
     private Button createPluginManagerButton() {
         Button pluginManagerButton = new Button("Gestionnaire de plugin");
         setMenuButtonsBounds(pluginManagerButton);
@@ -158,7 +201,12 @@ public class LabCompanionController {
         return pluginManagerButton;
         
     }
-    
+
+    /**
+     * This function add plugin button into menu depending of the employee type.
+     *
+     * @param employeeType
+     */
     private void addEmployeePluginsToMenu(int employeeType) {
         ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getActivePlugins();
         if(loadedPlugins!= null) {
@@ -170,7 +218,13 @@ public class LabCompanionController {
             }
         }
     }
-    
+
+    /**
+     * This function create a plugin Button and its event.
+     *
+     * @param toCreate
+     * @return
+     */
     private Button createPluginButton(Plugin toCreate) {
         Button pluginButton = new Button(toCreate.getDisplayName());
         setMenuButtonsBounds(pluginButton);
@@ -186,14 +240,11 @@ public class LabCompanionController {
 
     //Button handlers
 
-    private void rdvButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initVisitCreationPane("1");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * This function is a button event to display to the secretaryBillList view.
+     *
+     * @param event
+     */
     private void billButtonHandler(ActionEvent event) {
         try {
             LabCompanion.singleton.initSecretaryBillListPane();
@@ -202,6 +253,11 @@ public class LabCompanionController {
         }
     }
 
+    /**
+     * This function is a button event to display to the DoctorPatient view.
+     *
+     * @param event
+     */
     private void folderButtonHandler(ActionEvent event) {
         try {
             LabCompanion.singleton.initDoctorPatientCasePane();
@@ -210,6 +266,11 @@ public class LabCompanionController {
         }
     }
 
+    /**
+     * This function is a button event to display to the patientCreation view.
+     *
+     * @param event
+     */
     private void addFolderButtonHandler(ActionEvent event) {
         try {
             LabCompanion.singleton.initCreatePatientCasePane();
@@ -218,6 +279,11 @@ public class LabCompanionController {
         }
     }
 
+    /**
+     * This function is a button event to display to the parameters view.
+     *
+     * @param event
+     */
     private void optionsButtonHandler(ActionEvent event) {
         try {
             LabCompanion.singleton.initParametersPane(LabCompanion.singleton.getConnectedEmployee());
@@ -226,6 +292,11 @@ public class LabCompanionController {
         }
     }
 
+    /**
+     * This function is a button event to display to the analysisCreation view.
+     *
+     * @param event
+     */
     private void analysisButtonHandler(ActionEvent event) {
         try {
             LabCompanion.singleton.initAnalysisCreationPane();
@@ -234,6 +305,11 @@ public class LabCompanionController {
         }
     }
 
+    /**
+     * This function is a button event to display to the DcotorAnalysis view.
+     *
+     * @param event
+     */
     private void analysisListButtonHandler(ActionEvent event) {
         try {
             LabCompanion.singleton.initDoctorAnalysisPanel();
@@ -242,14 +318,24 @@ public class LabCompanionController {
         }
     }
 
+    /**
+     * This function is a button event to display to the StudyCreation view.
+     *
+     * @param event
+     */
     private void studiesButtonHandler(ActionEvent event) {
         try {
-            LabCompanion.singleton.initStudyCreationPane(); //TODO change the init
+            LabCompanion.singleton.initStudyCreationPane();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * This function is a button event to display to the DoctorStudy view.
+     *
+     * @param event
+     */
     private void studiesListButtonHandler(ActionEvent event) {
         try {
             LabCompanion.singleton.initDoctorStudyPanel();

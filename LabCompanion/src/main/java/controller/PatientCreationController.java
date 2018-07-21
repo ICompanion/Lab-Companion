@@ -9,14 +9,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import java.net.MalformedURLException;
 import java.time.DateTimeException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 
+/**
+ *This class is the patient creation view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class PatientCreationController {
 
     @FXML
@@ -60,6 +62,11 @@ public class PatientCreationController {
 
     Patient patient;
 
+    /**
+     * This function initialise the view and make treatments before rendering (input validations).
+     *
+     * @throws Exception
+     */
     @FXML
     private void initialize() {
         mailTextField.focusedProperty().addListener((arg0, oldValue, newValue) -> {
@@ -105,6 +112,11 @@ public class PatientCreationController {
         });
     }
 
+    /**
+     * This function is the backButton event to return to the previous view.
+     *
+     * @param event
+     */
     @FXML
     private void backButtonAction(ActionEvent event) {
         try{
@@ -115,6 +127,11 @@ public class PatientCreationController {
         }
     }
 
+    /**
+     * This function is the registerButton Action event that make treatments to create and save a patient.
+     *
+     * @param event
+     */
     @FXML
     private void registerButtonAction(ActionEvent event) {
         if(this.nameTextField.getText().equals("") || this.firstnameTextField.getText().equals("")
@@ -163,6 +180,11 @@ public class PatientCreationController {
         }
     }
 
+    /**
+     * This function set inputs with patient informations in case of an update.
+     *
+     * @param patient
+     */
     public void setPatient(Patient patient){
 
         this.registerButton.setVisible(false);
@@ -181,6 +203,11 @@ public class PatientCreationController {
         this.birthdatePicker.setValue(new java.sql.Date(patient.getBirthdate().getTime()).toLocalDate());
     }
 
+    /**
+     * This function is the registerButton Action event that make treatments to save modifications on a patient.
+     *
+     * @param event
+     */
     @FXML
     private void saveButtonAction(ActionEvent event) {
         if(this.nameTextField.getText().equals("") || this.firstnameTextField.getText().equals("")

@@ -3,15 +3,7 @@ package controller;
 import business.Analysis;
 import business.Doctor;
 import business.LabCompanion;
-import business.Patient;
 import dao.RequestManager;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -24,10 +16,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
 
+/**
+ *This class is the doctor analysis view controller in which are events and treatments.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class DoctorAnalysisController {
 
     @FXML
@@ -55,6 +55,11 @@ public class DoctorAnalysisController {
     private static ArrayList<Analysis> analysisList = new ArrayList<>();
     private static Doctor doctor = new Doctor(LabCompanion.singleton.getConnectedEmployee());
 
+    /**
+     * This function initialise the view and make treatments before rendering (tableView initialisation).
+     *
+     * @throws Exception
+     */
     @FXML
     public void initialize() throws Exception {
         analysisList = RequestManager.getAnalysis(doctor);
@@ -115,6 +120,11 @@ public class DoctorAnalysisController {
         analysisTab.setItems(dataList);
     }
 
+    /**
+     * This function is the add ButtonAction event that redirect to the AnalysisCreation view.
+     *
+     * @param event
+     */
     @FXML
     private void addAnalysisButtonAction(ActionEvent event) {
         try {
@@ -124,6 +134,11 @@ public class DoctorAnalysisController {
         }
     }
 
+    /**
+     * This function is the welcome ButtonAction event that redirect to the mainn view.
+     *
+     * @param event
+     */
     @FXML
     private void welcomeButtonAction(ActionEvent event) {
         try {
@@ -133,9 +148,16 @@ public class DoctorAnalysisController {
         }
     }
 
+    /**
+     * Class that represent a button to be inserted in each row of the tableView .
+     */
     private static class ButtonCell extends TableCell<Record, Boolean> {
 
         final Button cellButton = new Button("Voir");
+
+        /**
+         * Button constructor (initialise button)
+         */
         public ButtonCell() {
             cellButton.getStyleClass().add("btn_primary");
             cellButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -158,7 +180,11 @@ public class DoctorAnalysisController {
             });
         }
 
-        //Display button if the row is not empty
+        /**
+         * This function set visible the button in case if a row is not empty.
+         * @param t
+         * @param empty
+         */
         @Override
         protected void updateItem(Boolean t, boolean empty) {
             super.updateItem(t, empty);
@@ -168,7 +194,9 @@ public class DoctorAnalysisController {
         }
     }
 
-
+    /**
+     * Class which modelise a tableView row.
+     */
     public class Record {
         private final SimpleStringProperty patientID;
         private final SimpleStringProperty analysisCode;
