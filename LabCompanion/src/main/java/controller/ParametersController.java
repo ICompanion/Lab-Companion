@@ -54,10 +54,11 @@ public class ParametersController {
     }
 
     @FXML
-    private void passwordModificationAction(ActionEvent event) {
+    private void passwordModificationAction(ActionEvent event) throws Exception {
         if (!newPasswordInput.getText().equals("") && !confirmPasswordInput.equals("")) {
             if (newPasswordInput.getText().equals(confirmPasswordInput.getText())) {
-                //TODO
+                RequestManager.updateEmploye(LabCompanion.singleton.getConnectedEmployee(),newPasswordInput.getText());
+                LabCompanion.singleton.initSuccessPane("Information","Votre mot de passe vient d'être changé avec succès.","");
             } else {
                 LabCompanion.singleton.initAlertPane("Erreur de formulaire","Champs non identiques.","Votre nouveau mot de passe et le champ de confirmation doivent être identiques.");
             }
@@ -67,8 +68,15 @@ public class ParametersController {
     }
 
     @FXML
-    private void emailModificationAction(ActionEvent event) {
-        //TODO
+    private void emailModificationAction(ActionEvent event) throws Exception {
+        if (!emailInput.getText().equals(employee.getMail())) {
+            RequestManager.updateEmployeEmail(LabCompanion.singleton.getConnectedEmployee(),emailInput.getText());
+            LabCompanion.singleton.initSuccessPane("Information","Votre e-mail vient d'être changé avec succès.","");
+            employee.setMail(emailInput.getText());
+            LabCompanion.singleton.setConnectedEmployee(employee);
+        } else {
+            LabCompanion.singleton.initAlertPane("Erreur de formulaire","L'e-mail rentré est identique à votre e-mail actuel.","Veuillez modifier.");
+        }
     }
 
     private static Employee employee;

@@ -640,6 +640,30 @@ public class LabCompanion extends Application {
 
     /**
      *
+     * @param title
+     * @param description
+     * @param message
+     */
+    public void initSuccessPane(String title, String description, String message) {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(description);
+        alert.setContentText(message);
+        DialogPane dialogPane = alert.getDialogPane();
+        URL cssURL = getClass().getResource("main/java/style/alertPane.css");
+
+        if(cssURL != null) {
+            dialogPane.getStylesheets().add(cssURL.toExternalForm());
+            //            dialogPane.getStylesheets().add(Paths.get("src/main/java/style/alertPane.css").toUri().toURL().toExternalForm());
+            dialogPane.getStyleClass().add("alert-pane");
+        }
+
+        alert.showAndWait();
+    }
+
+    /**
+     *
      * @param employee
      * @throws MalformedURLException
      */

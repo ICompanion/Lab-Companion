@@ -998,6 +998,32 @@ public class RequestManager {
 
     /**
      *
+     * @param employee
+     * @return bool
+     * @throws Exception
+     */
+    public static boolean updateEmployeEmail(Employee employee, String email) throws Exception {
+        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+
+        hashMap.put("nom", employee.getName());
+        hashMap.put("prenom", employee.getFirstname());
+        hashMap.put("cp", employee.getPostalCode());
+        hashMap.put("adresse", employee.getAdress());
+        hashMap.put("ville", employee.getCity());
+        hashMap.put("num_secu", employee.getSecuNumber());
+        hashMap.put("identifiant", employee.getUsername());
+        hashMap.put("mail", email);
+        hashMap.put("date_embauche",employee.getEmploymentDate());
+
+        JSONParser.makeObject(hashMap);
+
+        boolean result = RequestHelper.postOrPut(url + "/employe/" + employee.getId(), hashMap, "PUT");
+
+        return result;
+    }
+
+    /**
+     *
      * @param patient
      * @return bool
      * @throws Exception
