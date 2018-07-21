@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 public class StudyOverviewController {
 
@@ -92,7 +93,7 @@ public class StudyOverviewController {
                 precQLabel = currentQLabel;
             }
         } catch (NullPointerException e) {
-            Label noParticipations = new Label("No participations yet.");
+            Label noParticipations = new Label("Pas encore de participations.");
             noParticipations.getStyleClass().add("stats_label");
             statsPane.getChildren().add(noParticipations);
         }

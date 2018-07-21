@@ -67,7 +67,7 @@ public class PatientCaseOverviewController {
     @FXML
     private void addRdvButtonAction(ActionEvent event) {
         try {
-            LabCompanion.singleton.initVisitCreationPane(patientIdLabel.getText());
+            LabCompanion.singleton.initVisitCreationPane(String.valueOf(patient.getId()));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -103,7 +103,7 @@ etudeController.addParticipation = function(values, callback) {
 };
 
 etudeController.updateParticipation = function(values, callback) {
-    bddController.executeQuery('update public.participation set participation_statut = $1 where patient_id = $2 and etude_id = $3',
+    bddController.executeQuery('update public.participation set participation_statut = $1 where etude_id = $2 and patient_id = $3',
         values, function(data, state){
             callback(state);
         });

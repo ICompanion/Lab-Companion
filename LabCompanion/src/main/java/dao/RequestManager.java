@@ -247,6 +247,8 @@ public class RequestManager {
                                             obj.get("nom").toString(),date.parse(obj.getString("date")),
                                             obj.get("description").toString(), doctor, null);
 
+                survey.setQuestions(RequestManager.getQuestions(survey));
+
                 surveyList.add(survey);
             }
 
@@ -274,6 +276,8 @@ public class RequestManager {
                         obj.get("nom").toString(),date.parse(obj.getString("date")),
                         obj.get("description").toString(), doctor, null);
 
+                survey.setQuestions(RequestManager.getQuestions(survey));
+
                 surveyList.add(survey);
             }
 
@@ -281,6 +285,50 @@ public class RequestManager {
         }
         return null;
     }
+
+    public static ArrayList<Question> getQuestions(Survey survey) throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/" + survey.getCode() + "/questions");
+        Question precQuestion = new Question(0, null, null);
+        if (data != null) {
+            Iterator<JSONObject> it = data.iterator();
+            ArrayList<Question> questionsList = new ArrayList<Question>();
+            while (it.hasNext()) {
+                JSONObject obj = it.next();
+
+                Question question = new Question(obj.getInt("id_question"), obj.getString("intitule"), null);
+                question.setProposals(RequestManager.getAnswers(question));
+
+                if (precQuestion.getId() != question.getId()) {
+                    questionsList.add(question);
+                }
+
+                precQuestion = question;
+            }
+
+            return questionsList;
+        } else {
+            return null;
+        }
+    }
+
+    public static ArrayList<Proposal> getAnswers(Question question) throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/" + question.getId() + "/reponses");
+        if (data != null) {
+            Iterator<JSONObject> it = data.iterator();
+            ArrayList<Proposal> proposalList = new ArrayList<Proposal>();
+            while (it.hasNext()) {
+                JSONObject obj = it.next();
+
+                Proposal proposal = new Proposal(obj.getInt("id_reponse"), obj.getString("intitule"));
+
+                proposalList.add(proposal);
+            }
+            return proposalList;
+        } else {
+            return null;
+        }
+    }
+
 
     //Tested
     public static ArrayList<Patient> getPatients() throws Exception {
@@ -696,7 +744,7 @@ public class RequestManager {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("statut", false);
 
-        boolean result = RequestHelper.postOrPut(url + "/etude/" + survey.getId() + "/participate/" + patient.getId(),
+        boolean result = RequestHelper.postOrPut(url + "/etude/" + patient.getId() + "/participate/" + survey.getId(),
                 hashMap, "POST");
 
         return result;
@@ -764,7 +812,7 @@ public class RequestManager {
 
             Iterator<JSONObject> it = data.iterator();
 
-            int value = it.next().getInt("nbReponses");
+            int value = it.next().getInt("nbreponses");
             return value;
         }
 
@@ -778,7 +826,7 @@ public class RequestManager {
 
             Iterator<JSONObject> it = data.iterator();
 
-            int value = it.next().getInt("nbParticipations");
+            int value = it.next().getInt("nbparticipations");
             return value;
         }
 
