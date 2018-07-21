@@ -3,6 +3,13 @@ package business;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ *This class is a class representing an survey.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class Survey {
 
     private int id;

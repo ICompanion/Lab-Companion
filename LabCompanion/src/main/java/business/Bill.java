@@ -2,6 +2,13 @@ package business;
 
 import java.util.Date;
 
+/**
+ *This class is a class representing a bill.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class Bill {
 
     private int id;

@@ -2,6 +2,13 @@ package plugin;
 
 import javafx.scene.layout.Pane;
 
+/**
+ *This class is.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public interface Plugin {
     /**
      * Return plugin's name.

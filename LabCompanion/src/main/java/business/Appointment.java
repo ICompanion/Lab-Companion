@@ -1,8 +1,14 @@
 package business;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ *This class is a class representing an appointment.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class Appointment {
 
     private int id;

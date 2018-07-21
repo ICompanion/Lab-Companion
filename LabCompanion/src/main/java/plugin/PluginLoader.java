@@ -14,6 +14,13 @@ import java.util.jar.JarFile;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *This class is.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class PluginLoader {
     
     /**

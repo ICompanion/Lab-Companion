@@ -1,7 +1,12 @@
 package business;
 
-import java.util.Date;
-
+/**
+ *This class build an employee.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class EmployeeBuilder {
     private int id;
     private String name;

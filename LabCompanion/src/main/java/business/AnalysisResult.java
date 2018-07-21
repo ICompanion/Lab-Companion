@@ -1,5 +1,12 @@
 package business;
 
+/**
+ *This class is a class representing an Analysis result.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class AnalysisResult {
 
     private int id;

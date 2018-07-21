@@ -2,7 +2,6 @@ package plugin;
 
 import business.LabCompanion;
 import javafx.stage.FileChooser;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  *
- *This class
+ *This class is
  *
  *
  * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël

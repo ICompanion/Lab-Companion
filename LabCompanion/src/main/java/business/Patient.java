@@ -3,6 +3,13 @@ package business;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ *This class is a class representing an patient.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class Patient {
 
     private int id;

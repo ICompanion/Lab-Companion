@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -22,6 +21,14 @@ import javafx.scene.layout.GridPane;
 import plugin.Plugin;
 import plugin.PluginLoader;
 
+/**
+ *This class is class is the main class of the application,
+ * here is initialised main view and its components.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class LabCompanion extends Application {
 
     public static final String USER_LAB_COMPANION_FOLDER =
@@ -44,6 +51,7 @@ public class LabCompanion extends Application {
     private ArrayList<Plugin> inactivePlugins;
 
     /**
+     *This function init and display the main view.
      *
      * @param primaryStage
      * @throws Exception
@@ -76,6 +84,7 @@ public class LabCompanion extends Application {
     /**** Common ****/
 
     /**
+     *This function set size and parameters for the main view.
      *
      * @param currentEditedPane
      */
@@ -102,6 +111,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function initialise the connection view.
      *
      * @throws MalformedURLException
      */
@@ -120,6 +130,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function initialise the label of the main view.
      *
      * @throws MalformedURLException
      */
@@ -138,6 +149,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function initialise the pluginManager view.
      *
      * @throws MalformedURLException
      */
@@ -156,6 +168,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function initialise the plugin view.
      *
      * @param toLoad
      * @throws MalformedURLException
@@ -182,6 +195,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     * This function add plugins into activate plugins.
      *
      * @param toAdd
      */
@@ -199,6 +213,9 @@ public class LabCompanion extends Application {
         }
     }
 
+    /**
+     * This function refresh plugin.
+     */
     private void reloadPlugins() {
         PluginLoader loader = new PluginLoader(
                 LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER);
@@ -208,18 +225,20 @@ public class LabCompanion extends Application {
         this.inactivePlugins = loader.getPlugins();
     }
 
-
+    /**
+     * This function disconnect the user from the application.
+     */
     public void disconnect() {
         this.setConnectedEmployee(null);
         try {
             this.initConnectionPanel();
         } catch (MalformedURLException ex) {
-            // TODO call AlertPane
             Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     /**
+     *This function set the actual user.
      *
      * @param connectedEmployee
      */
@@ -228,7 +247,7 @@ public class LabCompanion extends Application {
     }
 
     /**
-     *
+     *This function get the actual user.
      * @return connectedEmployee
      */
     public Employee getConnectedEmployee() {
@@ -236,6 +255,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function get all plugins.
      *
      * @return List of plugins
      */
@@ -250,10 +270,20 @@ public class LabCompanion extends Application {
         return toReturn;
     }
 
+    /**
+     * This function get all plugins which are activated.
+     *
+     * @return
+     */
     public ArrayList<Plugin> getActivePlugins() {
         return this.activePlugins;
     }
 
+    /**
+     * This function get all InactivePlugins.
+     *
+     * @return
+     */
     public ArrayList<Plugin> getInactivePlugins() {
         return this.inactivePlugins;
     }
@@ -261,6 +291,7 @@ public class LabCompanion extends Application {
     /**** Doctor ****/
 
     /**
+     *This function init the welcome view.
      *
      * @throws MalformedURLException
      */
@@ -280,6 +311,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the doctor Analysis view.
      *
      * @throws MalformedURLException
      */
@@ -299,6 +331,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the doctor study view.
      *
      * @throws MalformedURLException
      */
@@ -318,6 +351,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the analysis view.
      *
      * @param analysis
      * @throws MalformedURLException
@@ -341,6 +375,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the analysis creation view.
      *
      * @throws MalformedURLException
      */
@@ -360,6 +395,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the study Creation view.
      *
      * @throws MalformedURLException
      */
@@ -379,6 +415,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the study view.
      *
      * @param survey
      * @throws MalformedURLException
@@ -409,25 +446,7 @@ public class LabCompanion extends Application {
     /**** Secretary ****/
 
     /**
-     *
-     * @throws MalformedURLException
-     */
-    public void initSecretaryPatientCasePanel() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/docotorPatientCase.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
-        Pane pane = null;
-        try {
-            pane = (Pane) loader.load();
-        } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
-        }
-        this.setCurrentEditedPane(pane);
-
-    }
-
-    /**
+     *This function init the bill list view.
      *
      * @throws MalformedURLException
      */
@@ -447,6 +466,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the bill view.
      *
      * @param bill
      * @throws MalformedURLException
@@ -468,6 +488,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the bill creation view.
      *
      * @param appointment
      * @throws MalformedURLException
@@ -489,6 +510,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the doctor bill creation view for update.
      *
      * @param bill
      * @throws MalformedURLException
@@ -510,6 +532,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the doctor patient view.
      *
      * @throws MalformedURLException
      */
@@ -529,6 +552,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the patient creation view.
      *
      * @throws MalformedURLException
      */
@@ -548,6 +572,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the patient creation view for update.
      *
      * @param patient
      * @throws MalformedURLException
@@ -570,6 +595,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the patient view.
      *
      * @param patient
      * @throws MalformedURLException
@@ -593,6 +619,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the visit creation view.
      *
      * @param patientId
      * @throws MalformedURLException
@@ -615,6 +642,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the alert pane view.
      *
      * @param title
      * @param description
@@ -639,6 +667,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the alert success pane view.
      *
      * @param title
      * @param description
@@ -663,6 +692,7 @@ public class LabCompanion extends Application {
     }
 
     /**
+     *This function init the parameters pane view.
      *
      * @param employee
      * @throws MalformedURLException

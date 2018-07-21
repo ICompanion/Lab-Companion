@@ -13,7 +13,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 /**
  *
- *This class
+ *This class is
  *
  *
  * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël

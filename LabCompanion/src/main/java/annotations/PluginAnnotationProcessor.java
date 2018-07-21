@@ -17,6 +17,13 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import org.json.*;
 
+/**
+ *This class is .
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 @SupportedAnnotationTypes({"src.main.java.annotations.Plugin"})
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class PluginAnnotationProcessor extends AbstractProcessor {

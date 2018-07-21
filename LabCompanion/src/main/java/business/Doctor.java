@@ -2,6 +2,13 @@ package business;
 
 import java.util.Date;
 
+/**
+ *This class is a class representing a doctor heriting from employee class.
+ *
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 public class Doctor extends Employee {
 
     public static final int DOCTOR_TYPE = 1;
