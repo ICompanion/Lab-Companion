@@ -20,7 +20,13 @@ public class RequestManager {
         RequestManager.url = url;
     }
 
-    //Tested
+    /**
+     *
+     * @param username
+     * @param password
+     * @return an Employe or null
+     * @throws Exception
+     */
     public static Employee connect(String username, String password) throws Exception {
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/authenticate/employee/" + username + "/" + password);
@@ -48,7 +54,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param doctor
+     * @return an analysis list or null
+     * @throws Exception
+     */
     public static ArrayList<Analysis> getAnalysis(Doctor doctor) throws Exception {
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/employe/" + doctor.getId());
@@ -82,7 +93,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param id
+     * @return an analysis or null
+     * @throws Exception
+     */
     public static Analysis getAnalysisById(int id) throws Exception {
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/id/" + id);
@@ -112,6 +128,12 @@ public class RequestManager {
         return null;
     }
 
+    /**
+     *
+     * @param code
+     * @return an analysis or null
+     * @throws Exception
+     */
     public static Analysis getAnalysisByCode(String code) throws Exception {
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/" + code);
@@ -142,7 +164,12 @@ public class RequestManager {
     }
 
 
-    //Tested
+    /**
+     *
+     * @param analysis
+     * @return an analysis list or null
+     * @throws Exception
+     */
     public static ArrayList<AnalysisResult> getAnalysisResults(Analysis analysis)throws Exception{
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/analyse/"+ analysis.getCode() +"/resultats");
@@ -168,7 +195,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param id
+     * @return a result or null
+     * @throws Exception
+     */
     public static Result getResult(int id) throws Exception{
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/resultat/" + id);
@@ -188,6 +220,11 @@ public class RequestManager {
         return null;
     }
 
+    /**
+     *
+     * @return an result list or null
+     * @throws Exception
+     */
     public static ArrayList<Result> getAllResult() throws Exception{
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/resultat/all/");
@@ -212,7 +249,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param id
+     * @return a category or null
+     * @throws Exception
+     */
     public static Category getResultCategory(int id)throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/resultat/"+id+"/categorie");
         if(data != null){
@@ -228,7 +270,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param doctor
+     * @return Survey list or null
+     * @throws Exception
+     */
     public static ArrayList<Survey> getSurveys(Doctor doctor) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/employe/" + doctor.getId());
 
@@ -257,6 +304,11 @@ public class RequestManager {
         return null;
     }
 
+    /**
+     *
+     * @return a Survey list or null
+     * @throws Exception
+     */
     public static ArrayList<Survey> getAllSurveys() throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/allSurveyx");
 
@@ -286,6 +338,12 @@ public class RequestManager {
         return null;
     }
 
+    /**
+     *
+     * @param survey
+     * @return question list or null
+     * @throws Exception
+     */
     public static ArrayList<Question> getQuestions(Survey survey) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/" + survey.getCode() + "/questions");
         Question precQuestion = new Question(0, null, null);
@@ -311,6 +369,12 @@ public class RequestManager {
         }
     }
 
+    /**
+     *
+     * @param question
+     * @return proposal list or null
+     * @throws Exception
+     */
     public static ArrayList<Proposal> getAnswers(Question question) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/" + question.getId() + "/reponses");
         if (data != null) {
@@ -329,8 +393,11 @@ public class RequestManager {
         }
     }
 
-
-    //Tested
+    /**
+     *
+     * @return Patient list or null
+     * @throws Exception
+     */
     public static ArrayList<Patient> getPatients() throws Exception {
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/patient/all");
@@ -358,7 +425,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param id
+     * @return a Patient or null
+     * @throws Exception
+     */
     public static Patient getPatientById(int id)throws Exception{
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/patient/id/" + id);
@@ -381,7 +453,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param code
+     * @return a Patient or null
+     * @throws Exception
+     */
     public static Patient getPatientByCode(String code)throws Exception{
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/patient/" + code);
@@ -404,7 +481,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param id
+     * @return a doctor or null
+     * @throws Exception
+     */
     public static Doctor getDoctorById(int id) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/employe/id/" + id);
         if(data != null){
@@ -425,6 +507,11 @@ public class RequestManager {
         return null;
     }
 
+    /**
+     *
+     * @return an doctor list or null
+     * @throws Exception
+     */
     public static ArrayList<Doctor> getAllDoctor() throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/employe/doctors/");
 
@@ -448,7 +535,11 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @return a Category list or null
+     * @throws Exception
+     */
     public static ArrayList<Category> getCategories() throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/categorie/all");
 
@@ -473,7 +564,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param patient
+     * @return an appointment list or null
+     * @throws Exception
+     */
     public static ArrayList<Appointment> getPatientAppointments(Patient patient) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/visite/patient/" + patient.getId());
 
@@ -502,6 +598,12 @@ public class RequestManager {
         return null;
     }
 
+    /**
+     *
+     * @param id
+     * @return an appointment or null
+     * @throws Exception
+     */
     public static Appointment getAppointmentById(int id) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/visite/" + id);
 
@@ -525,6 +627,11 @@ public class RequestManager {
         return null;
     }
 
+    /**
+     *
+     * @return an Bill list or null
+     * @throws Exception
+     */
     public static ArrayList<Bill> getBills() throws Exception {
 
         ArrayList<JSONObject> data = RequestHelper.get(url + "/facture/all");
@@ -554,7 +661,12 @@ public class RequestManager {
         return null;
     }
 
-    //Tested
+    /**
+     *
+     * @param patient
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addPatient(Patient patient) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -577,7 +689,12 @@ public class RequestManager {
 
     }
 
-    //Tested
+    /**
+     *
+     * @param analysis
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addAnalysis(Analysis analysis) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -601,7 +718,12 @@ public class RequestManager {
         return result;
     }
 
-    //Tested
+    /**
+     *
+     * @param analysisResult
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addAnalysisResult(AnalysisResult analysisResult) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -619,7 +741,12 @@ public class RequestManager {
         return res;
     }
 
-    //Tested
+    /**
+     *
+     * @param result
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addResult(Result result)throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -638,7 +765,12 @@ public class RequestManager {
         return res;
     }
 
-    //Tested
+    /**
+     *
+     * @param category
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addCategory(Category category) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -651,7 +783,12 @@ public class RequestManager {
         return resultat;
     }
 
-    //Tested
+    /**
+     *
+     * @param survey
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addSurvey(Survey survey) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -670,7 +807,12 @@ public class RequestManager {
         return resultat;
     }
 
-    //Tested
+    /**
+     *
+     * @param question
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addQuestion(Question question) throws Exception{
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -683,7 +825,12 @@ public class RequestManager {
         return resultat;
     }
 
-    //Tested
+    /**
+     *
+     * @param proposal
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addProposal(Proposal proposal) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -696,7 +843,12 @@ public class RequestManager {
         return resultat;
     }
 
-    //Tested
+    /**
+     *
+     * @param appointment
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addAppointment(Appointment appointment) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -720,7 +872,13 @@ public class RequestManager {
         return resultat;
     }
 
-    //Tested
+    /**
+     *
+     * @param survey
+     * @param question
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addQuestionToSurvey(Survey survey, Question question) throws Exception{
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -729,7 +887,13 @@ public class RequestManager {
 
     }
 
-    //Tested
+    /**
+     *
+     * @param question
+     * @param proposal
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addProposalToQuestion(Question question, Proposal proposal) throws Exception{
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -739,7 +903,13 @@ public class RequestManager {
         return result;
     }
 
-    //Tested
+    /**
+     *
+     * @param survey
+     * @param patient
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addParticipation(Survey survey, Patient patient) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("statut", false);
@@ -750,6 +920,12 @@ public class RequestManager {
         return result;
     }
 
+    /**
+     *
+     * @param bill
+     * @return bool
+     * @throws Exception
+     */
     public static boolean addBill(Bill bill) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -767,6 +943,12 @@ public class RequestManager {
         return result;
     }
 
+    /**
+     *
+     * @param bill
+     * @return bool
+     * @throws Exception
+     */
     public static boolean updateBill(Bill bill) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -787,7 +969,12 @@ public class RequestManager {
         return result;
     }
 
-    //Tested
+    /**
+     *
+     * @param patient
+     * @return bool
+     * @throws Exception
+     */
     public static boolean updatePatient(Patient patient) throws Exception {
         HashMap<String, Object> hashMap = new HashMap<String, Object>();
 
@@ -810,7 +997,12 @@ public class RequestManager {
 
     }
 
-    //Tested
+    /**
+     *
+     * @param appointment
+     * @return bool
+     * @throws Exception
+     */
     public static boolean updateAppointment(Appointment appointment) throws Exception{
         HashMap<String, Object> hashMap = new HashMap<>();
 
@@ -834,7 +1026,13 @@ public class RequestManager {
         return resultat;
     }
 
-    //to confirm
+    /**
+     *
+     * @param survey
+     * @param question
+     * @return bool
+     * @throws Exception
+     */
     public static boolean removeQuestionFromSurvey(Survey survey, Question question) throws Exception{
 
         boolean result = RequestHelper.delete(url + "/etude/" + survey.getId() + "/question/" + question.getId());
@@ -842,6 +1040,14 @@ public class RequestManager {
         return result;
     }
 
+    /**
+     *
+     * @param idSurvey
+     * @param idQuestion
+     * @param idReponse
+     * @return bool
+     * @throws Exception
+     */
     public static int statsByReponse(int idSurvey, int idQuestion, int idReponse) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/nbReponses/" + idSurvey + "/" + idQuestion + "/" + idReponse);
 
@@ -856,6 +1062,12 @@ public class RequestManager {
         return -1;
     }
 
+    /**
+     *
+     * @param idSurvey
+     * @return bool
+     * @throws Exception
+     */
     public static int statsByParticipation(int idSurvey) throws Exception {
         ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/nbParticipations/" + idSurvey);
 

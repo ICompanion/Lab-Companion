@@ -11,6 +11,14 @@ public class RequestHelper {
     private static URL obj;
     private static HttpURLConnection con;
 
+    /**
+     *
+     * @param url
+     * @param parameters
+     * @param requestType
+     * @return bool
+     * @throws Exception
+     */
     public static boolean postOrPut(String url,
                                   HashMap<String, Object> parameters,String requestType)throws Exception
     {
@@ -26,6 +34,12 @@ public class RequestHelper {
         return false;
     }
 
+    /**
+     *
+     * @param url
+     * @return bool or data
+     * @throws Exception
+     */
     public static boolean delete(String url)throws Exception
     {
         connect(url,"DELETE", null);
@@ -37,6 +51,12 @@ public class RequestHelper {
         return false;
     }
 
+    /**
+     *
+     * @param url
+     * @return bool or data
+     * @throws Exception
+     */
     public static ArrayList<JSONObject> get(String url)throws Exception
     {
         connect(url,"GET", null);
@@ -51,6 +71,13 @@ public class RequestHelper {
         return null;
     }
 
+    /**
+     *
+     * @param url
+     * @param type
+     * @param body
+     * @throws Exception
+     */
     private static void connect(String url, String type, JSONObject body)throws Exception
     {
         try{
@@ -73,6 +100,11 @@ public class RequestHelper {
 
     }
 
+    /**
+     *
+     * @param body
+     * @throws IOException
+     */
     private static void sendBody(JSONObject body) throws IOException
     {
         try{
@@ -85,6 +117,11 @@ public class RequestHelper {
         }
     }
 
+    /**
+     *
+     * @param responseCode
+     * @return state of request
+     */
     private static boolean getRequestState(int responseCode)
     {
         boolean state = false;
@@ -96,6 +133,12 @@ public class RequestHelper {
         return state;
     }
 
+    /**
+     *
+     * @return String message
+     * @throws IOException
+     * @throws JSONException
+     */
     private static String getResponse() throws IOException, JSONException
     {
         StringBuffer response;
