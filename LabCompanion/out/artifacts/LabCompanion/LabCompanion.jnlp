@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="LabCompanion.jnlp">
+  <information>
+    <title>LabCompanion</title>
+    <vendor>Unknown</vendor>
+    <description>LabCompanion</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="LabCompanion.jar" size="158501" download="eager" />
+    <jar href="PluginManager.jar" size="2205" download="eager" />
+    <jar href="hamcrest-core-1.1.jar" size="76643" download="eager" />
+    <jar href="json-20180130.jar" size="62116" download="eager" />
+    <jar href="json-simple-1.1.1.jar" size="23931" download="eager" />
+    <jar href="junit-4.10.jar" size="253160" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="600" height="400" main-class="business.LabCompanion"  name="LabCompanion" />
+  <update check="background"/>
+</jnlp>
