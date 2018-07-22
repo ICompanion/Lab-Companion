@@ -6,6 +6,10 @@
 package controller;
 
 import business.LabCompanion;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,12 +21,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import plugin.Plugin;
 import plugin.PluginManager;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import pluginmanager.main.Plugin;
 
 /**
  *This class is the Plugin view controller in which are events and treatments.
@@ -130,13 +130,13 @@ public class PluginOverviewController {
         }
         if(toAdd!=null) {
             LabCompanion.singleton.addToActivePluginList(toAdd);
+            Plugin added = toAdd.get(0);
+            dataList.add(new Record(added.getName(),
+                    added.getDescription(),
+                    added.getAuthor(),
+                    "Oui"));
+            this.pluginTableView.refresh();
         }
-        Plugin added = toAdd.get(0);
-        dataList.add(new Record(added.getName(),
-                added.getDescription(),
-                added.getAuthor(),
-                "Oui"));
-        this.pluginTableView.refresh();
     }
 
     /**

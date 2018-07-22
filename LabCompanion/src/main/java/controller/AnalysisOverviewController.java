@@ -3,6 +3,7 @@ package controller;
 import business.Analysis;
 import business.AnalysisResult;
 import business.LabCompanion;
+import dao.RequestManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,6 +18,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.VBox;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 
 /**
  *This class is the Analysis view controller in which are events and treatments.

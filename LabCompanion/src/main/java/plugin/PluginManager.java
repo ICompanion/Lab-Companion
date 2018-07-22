@@ -2,6 +2,7 @@ package plugin;
 
 import business.LabCompanion;
 import javafx.stage.FileChooser;
+import pluginmanager.main.Plugin;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.CopyOption;
@@ -54,7 +55,7 @@ public class PluginManager {
         Path targetPath = userLabCompanionActiveFolder.resolve(
                 currentPath.getFileName());
         
-        Files.move(currentPath, targetPath, options);
+        Files.copy(currentPath, targetPath, options);
         
         PluginLoader loader = new PluginLoader(new String[] {targetPath.toString()});
         
@@ -78,7 +79,7 @@ public class PluginManager {
         };
 
         try {
-            Files.move(pluginPath, pluginDestination, options); // not working
+            Files.copy(pluginPath, pluginDestination, options); // not working
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,7 +102,7 @@ public class PluginManager {
         };
 
         try {
-            Files.move(pluginPath, pluginDestination, options); // not working
+            Files.copy(pluginPath, pluginDestination, options); // not working
         } catch (IOException e) {
             e.printStackTrace();
         }

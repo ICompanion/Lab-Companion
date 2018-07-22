@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
-import plugin.Plugin;
 import plugin.PluginLoader;
+import pluginmanager.main.Plugin;
 
 /**
  *This class is class is the main class of the application,
@@ -37,6 +37,8 @@ public class LabCompanion extends Application {
             System.getProperty("user.home")+"\\LabCompanion\\active";
     public static final String USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER =
             System.getProperty("user.home")+"\\LabCompanion\\inactive";
+    public static final String USER_LAB_COMPANION_CONF_FOLDER =
+            System.getProperty("user.home")+"\\LabCompanion\\conf";
 
     public static LabCompanion singleton;
 
@@ -60,8 +62,6 @@ public class LabCompanion extends Application {
     public void start(Stage primaryStage) throws Exception{
         singleton = this;
         this.connectedEmployee = null;
-        this.activePlugins = new ArrayList<Plugin>();
-        this.inactivePlugins = new ArrayList<Plugin>();
 
         this.mainStage = primaryStage;
 
@@ -219,10 +219,20 @@ public class LabCompanion extends Application {
     private void reloadPlugins() {
         PluginLoader loader = new PluginLoader(
                 LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER);
-        this.activePlugins = loader.getPlugins();
+        ArrayList<Plugin> activeLoaded = loader.getPlugins();
+        if (activeLoaded != null) {
+            this.activePlugins = activeLoaded;
+        } else {
+            this.activePlugins = new ArrayList<Plugin>();
+        }
         loader = new PluginLoader(
                 LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER);
-        this.inactivePlugins = loader.getPlugins();
+        ArrayList<Plugin> inactiveLoaded = loader.getPlugins();
+        if (inactiveLoaded != null) {
+            this.inactivePlugins = inactiveLoaded;
+        } else {
+            this.inactivePlugins = new ArrayList<Plugin>();
+        }
     }
 
     /**

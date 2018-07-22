@@ -15,12 +15,12 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import pluginmanager.main.Plugin;
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import plugin.Plugin;
 
 /**
  *This class is the doctor analysis view controller in which are events and treatments.

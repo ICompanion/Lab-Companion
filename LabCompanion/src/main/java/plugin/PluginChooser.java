@@ -2,6 +2,7 @@ package plugin;
 
 import business.LabCompanion;
 import javafx.stage.FileChooser;
+import pluginmanager.main.Plugin;
 
 import java.io.File;
 import java.io.IOException;

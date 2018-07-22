@@ -1,5 +1,8 @@
 package plugin;
 
+import annotations.PluginAnnotationParser;
+import pluginmanager.main.Plugin;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -40,7 +43,12 @@ public class PluginLoader {
         this.files = files;
         this.plugins = new ArrayList<>();
     }
-    
+
+    /**
+     * Create a new instance of PluginLoader with a given folder containing
+     * plugin files to load.
+     * @param folderPath folder path to load
+     */
     public PluginLoader(String folderPath) {
         Path folder = Paths.get(folderPath);
         this.plugins = new ArrayList<>();
@@ -81,7 +89,7 @@ public class PluginLoader {
 
     /**
      * Loads the files.
-     * Check if .class files implements plugin.Plugin
+     * Check if .class files implements pluginmanager.main.Plugin
      * Creates an instance for each one.
      * @throws Exception If there is no files to load.
      */
@@ -118,9 +126,12 @@ public class PluginLoader {
 
                     for (Class current : tmpClass.getInterfaces()) {
                         //Check if actual file implements plugin
-                        if (current.getName().equals("plugin.Plugin")) {
+                        if (current.getName().equals("pluginmanager.main.Plugin")) {
                             // newInstance to permit cast
-                            this.plugins.add((Plugin) tmpClass.newInstance());
+                            Plugin instance = (Plugin) tmpClass.newInstance();
+                            this.plugins.add(instance);
+                            PluginAnnotationParser.writeInConfFile(instance);
+                            System.out.println("end");
                         }
                     }
                 }
