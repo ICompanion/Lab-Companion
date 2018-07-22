@@ -72,6 +72,12 @@ public class PluginAnnotationParser {
      * @throws IOException when the file can't be created
      */
     private static void createConfFile() throws IOException {
+        Path userLabCompanionConfolder =
+                Paths.get(LabCompanion.USER_LAB_COMPANION_CONF_FOLDER);
+
+        if(!Files.exists(userLabCompanionConfolder)) {
+            Files.createDirectory(userLabCompanionConfolder);
+        }
         Path confPath = Paths.get(new PluginManager().pluginConfFilePath);
         Files.createFile(confPath);
 
