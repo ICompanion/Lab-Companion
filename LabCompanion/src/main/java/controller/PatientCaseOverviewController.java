@@ -75,11 +75,7 @@ public class PatientCaseOverviewController {
      */
     @FXML
     private void backButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initDoctorPatientCasePane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorPatientCasePane();
     }
 
     /**
@@ -89,11 +85,7 @@ public class PatientCaseOverviewController {
      */
     @FXML
     private void addRdvButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initVisitCreationPane(String.valueOf(patient.getId()));
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initVisitCreationPane(String.valueOf(patient.getId()));
     }
 
     /**
@@ -122,11 +114,7 @@ public class PatientCaseOverviewController {
             e.printStackTrace();
         }
 
-        try {
-            LabCompanion.singleton.initDoctorPatientCasePane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorPatientCasePane();
     }
 
     /**
@@ -228,16 +216,8 @@ public class PatientCaseOverviewController {
                     String date = String.valueOf(ButtonCell.this
                             .getTableView().getItems()
                             .get(ButtonCell.this.getIndex()).getDate());
-                    try {
-                        Appointment currentAppointment = appointmentsList.get(ButtonCell.this.getIndex());
-                        LabCompanion.singleton.initBillCreationCasePane(currentAppointment);
-                    } catch (MalformedURLException ex) {
-                        System.err.println("Ici " + date);
-                        // TODO
-                    } catch (Exception ex) {
-                        System.err.println("Là " + date);
-                        // on peut pas recup l'analyse
-                    }
+                    Appointment currentAppointment = appointmentsList.get(ButtonCell.this.getIndex());
+                    LabCompanion.singleton.initBillCreationCasePane(currentAppointment);
                 }
             });
         }

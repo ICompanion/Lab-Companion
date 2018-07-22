@@ -200,11 +200,7 @@ public class StudyCreationController {
      */
     @FXML
     private void backToStudyButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initDoctorStudyPanel();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorStudyPanel();
     }
 
     /**

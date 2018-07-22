@@ -127,11 +127,7 @@ public class DoctorAnalysisController {
      */
     @FXML
     private void addAnalysisButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initAnalysisCreationPane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initAnalysisCreationPane();
     }
 
     /**
@@ -141,11 +137,7 @@ public class DoctorAnalysisController {
      */
     @FXML
     private void welcomeButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initLabCompanionPanel();
-        } catch (MalformedURLException ex) {
-            // AlertPane
-        }
+        LabCompanion.singleton.initLabCompanionPanel();
     }
 
     /**
@@ -166,16 +158,8 @@ public class DoctorAnalysisController {
                     String currentAnalysisCode = String.valueOf(ButtonCell.this
                             .getTableView().getItems()
                             .get(ButtonCell.this.getIndex()).getAnalysisCode());
-                    try {
-                        Analysis currentAnalysis = analysisList.get(ButtonCell.this.getIndex());
-                        LabCompanion.singleton.initAnalysisOverviewPane(currentAnalysis);
-                    } catch (MalformedURLException ex) {
-                        System.err.println("Ici " + currentAnalysisCode);
-                        // TODO
-                    } catch (Exception ex) {
-                        System.err.println("Là " + currentAnalysisCode);
-                        // on peut pas recup l'analyse
-                    }
+                    Analysis currentAnalysis = analysisList.get(ButtonCell.this.getIndex());
+                    LabCompanion.singleton.initAnalysisOverviewPane(currentAnalysis);
                 }
             });
         }

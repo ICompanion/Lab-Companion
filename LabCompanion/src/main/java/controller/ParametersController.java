@@ -47,11 +47,7 @@ public class ParametersController {
      */
     @FXML
     private void pluginsButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initPluginManagerOverview();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initPluginManagerOverview();
     }
 
     /**
@@ -61,11 +57,7 @@ public class ParametersController {
      */
     @FXML
     private void homeButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initWelcomePanel();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initWelcomePanel();
     }
 
     /**

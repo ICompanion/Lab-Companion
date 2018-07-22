@@ -12,16 +12,12 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.Alert;
-import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import plugin.PluginLoader;
-import plugin.PluginManager;
 import pluginmanager.main.Plugin;
 
 /**
@@ -66,8 +62,7 @@ public class LabCompanion extends Application {
         mainStage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
         mainStage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
-        URL loaded = Paths.get("src/main/java/view/connexion.fxml").toUri().toURL();
-        FXMLLoader loader = new FXMLLoader(loaded);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/connexion.fxml"));
         root = (GridPane) loader.load();
 
         Scene scene = new Scene(root);
@@ -91,9 +86,7 @@ public class LabCompanion extends Application {
      */
     private void setCurrentEditedPane(Pane currentEditedPane) {
         try {
-            FXMLLoader rootLoader = new FXMLLoader();
-            URL rootUrl = Paths.get("src/main/java/view/labCompanion.fxml").toUri().toURL();
-            rootLoader.setLocation(rootUrl);
+            FXMLLoader rootLoader = new FXMLLoader(getClass().getResource("/view/labCompanion.fxml"));
             root = (VBox) rootLoader.load();
             LabCompanionController labCompanionController =
                     (LabCompanionController) rootLoader.getController();
@@ -106,26 +99,27 @@ public class LabCompanion extends Application {
             mainStage.setMaximized(true);
 
         } catch (IOException e) {
-            System.out.println("Can't load current editedLoader");
-            System.out.println(e);
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre n'as pas pu être chargée",
+                    "Panneau : " + currentEditedPane.getId());
         }
     }
 
     /**
      *This function initialise the connection view.
      *
-     * @throws MalformedURLException
      */
-    public void initConnectionPanel() throws MalformedURLException {
+    public void initConnectionPanel() {
         try {
-            URL loaded = Paths.get("src/main/java/view/connexion.fxml").toUri().toURL();
-            FXMLLoader loader = new FXMLLoader(loaded);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/connexion.fxml"));
             root = (GridPane) loader.load();
 
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
         } catch (IOException ex) {
-            //TODO
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de connexion n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
 
     }
@@ -133,37 +127,25 @@ public class LabCompanion extends Application {
     /**
      *This function initialise the label of the main view.
      *
-     * @throws MalformedURLException
      */
-    public void initLabCompanionPanel() throws MalformedURLException {
+    public void initLabCompanionPanel() {
         reloadPlugins();
-        try {
-            if(connectedEmployee.getType() == Doctor.DOCTOR_TYPE) {
-                initWelcomePanel();
-            }
-            else if (connectedEmployee.getType() == Secretary.SECRETARY_TYPE) {
-                initWelcomePanel();
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initWelcomePanel();
     }
 
     /**
      *This function initialise the pluginManager view.
      *
-     * @throws MalformedURLException
      */
-    public void initPluginManagerOverview() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/pluginOverview.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initPluginManagerOverview() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/pluginOverview.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de vue d'ensemble de plugin n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
     }
@@ -172,27 +154,10 @@ public class LabCompanion extends Application {
      *This function initialise the plugin view.
      *
      * @param toLoad
-     * @throws MalformedURLException
      */
-    public void initPlugin(Plugin toLoad) throws MalformedURLException {
-        try {
-            FXMLLoader rootLoader = new FXMLLoader();
-            URL rootUrl = Paths.get("src/main/java/view/labCompanion.fxml").toUri().toURL();
-            rootLoader.setLocation(rootUrl);
-            root = (VBox) rootLoader.load();
-            LabCompanionController labCompanionController =
-                    (LabCompanionController) rootLoader.getController();
-            Pane currentEditedNode = toLoad.getPane();
-            labCompanionController.setEditedPane(currentEditedNode,
-                    this.connectedEmployee);
-
-            mainStage.close();
-            Scene scene = new Scene(root);
-            mainStage.setScene(scene);
-            mainStage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void initPlugin(Plugin toLoad) {
+        Pane currentEditedNode = toLoad.getPane();
+        singleton.setCurrentEditedPane(currentEditedNode);
     }
 
     /**
@@ -233,11 +198,7 @@ public class LabCompanion extends Application {
      */
     public void disconnect() {
         this.setConnectedEmployee(null);
-        try {
-            this.initConnectionPanel();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(LabCompanion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.initConnectionPanel();
     }
 
     /**
@@ -271,18 +232,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the welcome view.
      *
-     * @throws MalformedURLException
      */
-    public void initWelcomePanel() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/welcome.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initWelcomePanel() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/welcome.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre d'accueil n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -291,18 +250,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the doctor Analysis view.
      *
-     * @throws MalformedURLException
      */
-    public void initDoctorAnalysisPanel() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/doctorAnalysis.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initDoctorAnalysisPanel() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/doctorAnalysis.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre des analyses d'un docteur n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -311,18 +268,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the doctor study view.
      *
-     * @throws MalformedURLException
      */
-    public void initDoctorStudyPanel() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/doctorStudyOverview.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initDoctorStudyPanel() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/doctorStudyOverview.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre des études d'un docteur n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -332,18 +287,16 @@ public class LabCompanion extends Application {
      *This function init the analysis view.
      *
      * @param analysis
-     * @throws MalformedURLException
      */
-    public void initAnalysisOverviewPane(Analysis analysis) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/analysisOverview.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initAnalysisOverviewPane(Analysis analysis) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/analysisOverview.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre du détail d'une analyse n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
 
         AnalysisOverviewController controller = loader.getController();
@@ -355,18 +308,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the analysis creation view.
      *
-     * @throws MalformedURLException
      */
-    public void initAnalysisCreationPane() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/analysisCreation.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initAnalysisCreationPane() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/analysisCreation.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de création d'une analyse n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -375,18 +326,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the study Creation view.
      *
-     * @throws MalformedURLException
      */
-    public void initStudyCreationPane() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/studyCreation.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initStudyCreationPane() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/studyCreation.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de création d'une étude n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -396,18 +345,16 @@ public class LabCompanion extends Application {
      *This function init the study view.
      *
      * @param survey
-     * @throws MalformedURLException
      */
-    public void initStudyOverviewPane(Survey survey) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/studyOverview.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initStudyOverviewPane(Survey survey) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/studyOverview.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre détaillant une étude n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -426,18 +373,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the bill list view.
      *
-     * @throws MalformedURLException
      */
-    public void initSecretaryBillListPane() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/billList.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initSecretaryBillListPane() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/billList.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre des factures n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -447,18 +392,16 @@ public class LabCompanion extends Application {
      *This function init the bill creation view.
      *
      * @param appointment
-     * @throws MalformedURLException
      */
-    public void initBillCreationCasePane(Appointment appointment) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/billCreation.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initBillCreationCasePane(Appointment appointment) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/billCreation.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de création d'une facture n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         BillCreationController controller = loader.getController();
         controller.setAppointment(appointment);
@@ -469,18 +412,16 @@ public class LabCompanion extends Application {
      *This function init the doctor bill creation view for update.
      *
      * @param bill
-     * @throws MalformedURLException
      */
-    public void initBillCreationUpdateCasePane(Bill bill) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/billCreation.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initBillCreationUpdateCasePane(Bill bill) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/billCreation.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de modification d'une facture n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         BillCreationController controller = loader.getController();
         controller.setPatient(bill);
@@ -490,18 +431,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the doctor patient view.
      *
-     * @throws MalformedURLException
      */
-    public void initDoctorPatientCasePane() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/doctorPatientCases.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initDoctorPatientCasePane() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/doctorPatientCases.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de la liste des patients d'un docteur n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -510,18 +449,16 @@ public class LabCompanion extends Application {
     /**
      *This function init the patient creation view.
      *
-     * @throws MalformedURLException
      */
-    public void initCreatePatientCasePane() throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/patientCreation.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initCreatePatientCasePane() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/patientCreation.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de création d'un patient n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         this.setCurrentEditedPane(pane);
 
@@ -531,18 +468,16 @@ public class LabCompanion extends Application {
      *This function init the patient creation view for update.
      *
      * @param patient
-     * @throws MalformedURLException
      */
-    public void initCreatePatientUpdateCasePane(Patient patient) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/patientCreation.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initCreatePatientUpdateCasePane(Patient patient) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/patientCreation..fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de modification d'un patient n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         PatientCreationController controller = loader.getController();
         controller.setPatient(patient);
@@ -554,18 +489,16 @@ public class LabCompanion extends Application {
      *This function init the patient view.
      *
      * @param patient
-     * @throws MalformedURLException
      */
-    public void initPatientCaseOverviewPane(Patient patient) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/patientCaseOverview.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initPatientCaseOverviewPane(Patient patient) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/patientCaseOverview.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre détaillant un dossier patient n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
 
         PatientCaseOverviewController controller = loader.getController();
@@ -578,18 +511,16 @@ public class LabCompanion extends Application {
      *This function init the visit creation view.
      *
      * @param patientId
-     * @throws MalformedURLException
      */
-    public void initVisitCreationPane(String patientId) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/visitCreation.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initVisitCreationPane(String patientId) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/visitCreation.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre de création d'une visite n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
         VisitCreationController controller = loader.getController();
         controller.setPatientId(patientId);
@@ -605,20 +536,10 @@ public class LabCompanion extends Application {
      * @param message
      */
     public void initAlertPane(String title, String description, String message) {
-        
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(title);
             alert.setHeaderText(description);
             alert.setContentText(message);
-            DialogPane dialogPane = alert.getDialogPane();
-            URL cssURL = getClass().getResource("main/java/style/alertPane.css");
-            
-            if(cssURL != null) {
-                dialogPane.getStylesheets().add(cssURL.toExternalForm());
-    //            dialogPane.getStylesheets().add(Paths.get("src/main/java/style/alertPane.css").toUri().toURL().toExternalForm());
-                dialogPane.getStyleClass().add("alert-pane");
-            }
-            
             alert.showAndWait();
     }
 
@@ -630,20 +551,10 @@ public class LabCompanion extends Application {
      * @param message
      */
     public void initSuccessPane(String title, String description, String message) {
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(description);
         alert.setContentText(message);
-        DialogPane dialogPane = alert.getDialogPane();
-        URL cssURL = getClass().getResource("main/java/style/alertPane.css");
-
-        if(cssURL != null) {
-            dialogPane.getStylesheets().add(cssURL.toExternalForm());
-            //            dialogPane.getStylesheets().add(Paths.get("src/main/java/style/alertPane.css").toUri().toURL().toExternalForm());
-            dialogPane.getStyleClass().add("alert-pane");
-        }
-
         alert.showAndWait();
     }
 
@@ -651,20 +562,17 @@ public class LabCompanion extends Application {
      *This function init the parameters pane view.
      *
      * @param employee
-     * @throws MalformedURLException
      */
-    public void initParametersPane(Employee employee) throws MalformedURLException {
-        FXMLLoader loader = new FXMLLoader();
-        URL rootUrl = Paths.get("src/main/java/view/parameters.fxml").toUri().toURL();
-        loader.setLocation(rootUrl);
+    public void initParametersPane(Employee employee) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/parameters.fxml"));
         Pane pane = null;
         try {
             pane = (Pane) loader.load();
         } catch (IOException e) {
-            // TODO
-            e.printStackTrace();
+            initAlertPane("Erreur de chargement",
+                    "La fenêtre des paramètres n'as pas pu être chargée",
+                    "Le fichier fxml n'a pas été trouvé.");
         }
-
         ParametersController controller = loader.getController();
         controller.setEmployee(employee);
         this.setCurrentEditedPane(pane);

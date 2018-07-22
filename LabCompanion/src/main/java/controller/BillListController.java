@@ -155,12 +155,7 @@ public class BillListController {
      */
     @FXML
     private void backButtonAction(ActionEvent event) {
-        try{
-            LabCompanion.singleton.initLabCompanionPanel();
-        }
-        catch(MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initLabCompanionPanel();
     }
 
     /**
@@ -181,17 +176,8 @@ public class BillListController {
                 String id = String.valueOf(ButtonCell.this
                         .getTableView().getItems()
                         .get(ButtonCell.this.getIndex()).getId());
-                try {
-
                     Bill currentBill = billList.get(ButtonCell.this.getIndex());
                     LabCompanion.singleton.initBillCreationUpdateCasePane(currentBill);
-                } catch (MalformedURLException ex) {
-                    System.err.println("Ici " + id);
-                    // TODO
-                } catch (Exception ex) {
-                    System.err.println("Là " + id);
-                    // on peut pas recup l'analyse
-                }
             }
         });
     }

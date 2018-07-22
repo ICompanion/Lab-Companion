@@ -82,12 +82,7 @@ public class BillCreationController {
      */
     @FXML
     private void backButtonAction(ActionEvent event) {
-        try{
-            LabCompanion.singleton.initSecretaryBillListPane();
-        }
-        catch(MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initSecretaryBillListPane();
     }
 
     /**
@@ -151,11 +146,7 @@ public class BillCreationController {
             e.printStackTrace();
         }
 
-        try{
-            LabCompanion.singleton.initPatientCaseOverviewPane(bill.getPatient());
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initPatientCaseOverviewPane(bill.getPatient());
     }
 
     /**
@@ -228,10 +219,6 @@ public class BillCreationController {
             e.printStackTrace();
         }
 
-        try{
-            LabCompanion.singleton.initSecretaryBillListPane();
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initSecretaryBillListPane();
     }
 }

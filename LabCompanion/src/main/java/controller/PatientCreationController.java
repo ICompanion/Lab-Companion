@@ -119,12 +119,7 @@ public class PatientCreationController {
      */
     @FXML
     private void backButtonAction(ActionEvent event) {
-        try{
-            LabCompanion.singleton.initDoctorPatientCasePane();
-        }
-        catch(MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorPatientCasePane();
     }
 
     /**
@@ -173,11 +168,7 @@ public class PatientCreationController {
             e.printStackTrace();
         }
 
-        try{
-            LabCompanion.singleton.initDoctorPatientCasePane();
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorPatientCasePane();
     }
 
     /**
@@ -250,10 +241,6 @@ public class PatientCreationController {
             e.printStackTrace();
         }
 
-        try{
-            LabCompanion.singleton.initDoctorPatientCasePane();
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorPatientCasePane();
     }
 }

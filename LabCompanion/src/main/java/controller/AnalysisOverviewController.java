@@ -137,11 +137,7 @@ public class AnalysisOverviewController {
      */
     @FXML
     private void backButtonAction(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initDoctorAnalysisPanel();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorAnalysisPanel();
     }
 
     /**

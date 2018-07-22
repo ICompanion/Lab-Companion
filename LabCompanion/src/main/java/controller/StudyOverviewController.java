@@ -131,12 +131,8 @@ public class StudyOverviewController {
      */
     @FXML
     private void studyListButtonAction(ActionEvent event) {
-        try {
-            rows.clear();
-            LabCompanion.singleton.initDoctorStudyPanel();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        rows.clear();
+        LabCompanion.singleton.initDoctorStudyPanel();
     }
 
     /**

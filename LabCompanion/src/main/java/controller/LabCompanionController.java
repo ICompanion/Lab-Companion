@@ -179,28 +179,8 @@ public class LabCompanionController {
         menuButtons.add(studiesListButton);
         menuButtons.add(studiesButton);
         menuButtons.add(optionsButtons);
-        menuButtons.add(createPluginManagerButton());
         
         addEmployeePluginsToMenu(Doctor.DOCTOR_TYPE);
-    }
-
-    /**
-     * This function create a manager for plugins Buttons and its event.
-     *
-     * @return Button
-     */
-    private Button createPluginManagerButton() {
-        Button pluginManagerButton = new Button("Gestionnaire de plugin");
-        setMenuButtonsBounds(pluginManagerButton);
-        pluginManagerButton.setOnAction((ActionEvent e) -> {
-            try {
-                LabCompanion.singleton.initPluginManagerOverview();
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(LabCompanionController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-        return pluginManagerButton;
-        
     }
 
     /**
@@ -232,11 +212,7 @@ public class LabCompanionController {
         Button pluginButton = new Button(toCreate.getDisplayName());
         setMenuButtonsBounds(pluginButton);
         pluginButton.setOnAction((ActionEvent e) -> {
-            try {
-                LabCompanion.singleton.initPlugin(toCreate);
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(LabCompanionController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            LabCompanion.singleton.initPlugin(toCreate);
         });
         return pluginButton;
     }
@@ -249,11 +225,7 @@ public class LabCompanionController {
      * @param event
      */
     private void billButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initSecretaryBillListPane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initSecretaryBillListPane();
     }
 
     /**
@@ -262,11 +234,7 @@ public class LabCompanionController {
      * @param event
      */
     private void folderButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initDoctorPatientCasePane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorPatientCasePane();
     }
 
     /**
@@ -275,11 +243,7 @@ public class LabCompanionController {
      * @param event
      */
     private void addFolderButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initCreatePatientCasePane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initCreatePatientCasePane();
     }
 
     /**
@@ -288,11 +252,7 @@ public class LabCompanionController {
      * @param event
      */
     private void optionsButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initParametersPane(LabCompanion.singleton.getConnectedEmployee());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initParametersPane(LabCompanion.singleton.getConnectedEmployee());
     }
 
     /**
@@ -301,11 +261,7 @@ public class LabCompanionController {
      * @param event
      */
     private void analysisButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initAnalysisCreationPane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initAnalysisCreationPane();
     }
 
     /**
@@ -314,11 +270,7 @@ public class LabCompanionController {
      * @param event
      */
     private void analysisListButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initDoctorAnalysisPanel();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorAnalysisPanel();
     }
 
     /**
@@ -327,11 +279,7 @@ public class LabCompanionController {
      * @param event
      */
     private void studiesButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initStudyCreationPane();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initStudyCreationPane();
     }
 
     /**
@@ -340,10 +288,6 @@ public class LabCompanionController {
      * @param event
      */
     private void studiesListButtonHandler(ActionEvent event) {
-        try {
-            LabCompanion.singleton.initDoctorStudyPanel();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorStudyPanel();
     }
 }

@@ -117,12 +117,7 @@ public class VisitCreationController {
      */
     @FXML
     private void backButtonAction(ActionEvent event) {
-        try{
-            LabCompanion.singleton.initDoctorPatientCasePane();
-        }
-        catch(MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initDoctorPatientCasePane();
     }
 
     /**
@@ -166,10 +161,6 @@ public class VisitCreationController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        try{
-            LabCompanion.singleton.initPatientCaseOverviewPane(patient);
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initPatientCaseOverviewPane(patient);
     }
 }

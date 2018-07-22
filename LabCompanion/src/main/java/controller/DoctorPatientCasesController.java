@@ -137,12 +137,7 @@ public class DoctorPatientCasesController {
      */
     @FXML
     private void addCaseButtonAction(ActionEvent event) {
-        try{
-            LabCompanion.singleton.initCreatePatientCasePane();
-        }
-        catch(MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initCreatePatientCasePane();
     }
 
     /**
@@ -152,12 +147,7 @@ public class DoctorPatientCasesController {
      */
     @FXML
     private void backButtonAction(ActionEvent event) {
-        try{
-            LabCompanion.singleton.initLabCompanionPanel();
-        }
-        catch(MalformedURLException e){
-            e.printStackTrace();
-        }
+        LabCompanion.singleton.initLabCompanionPanel();
     }
 
     /**
@@ -178,16 +168,8 @@ public class DoctorPatientCasesController {
                         String code = String.valueOf(ButtonCell.this
                                 .getTableView().getItems()
                                 .get(ButtonCell.this.getIndex()).getCode());
-                        try {
-                            Patient currentPatient = patientList.get(ButtonCell.this.getIndex());
-                            LabCompanion.singleton.initPatientCaseOverviewPane(currentPatient);
-                        } catch (MalformedURLException ex) {
-                            System.err.println("Ici " + code);
-                            // TODO
-                        } catch (Exception ex) {
-                            System.err.println("Là " + code);
-                            // on peut pas recup l'analyse
-                        }
+                        Patient currentPatient = patientList.get(ButtonCell.this.getIndex());
+                        LabCompanion.singleton.initPatientCaseOverviewPane(currentPatient);
                     }
                 });
         }
@@ -224,16 +206,8 @@ public class DoctorPatientCasesController {
                     String code = String.valueOf(ButtonCell2.this
                             .getTableView().getItems()
                             .get(ButtonCell2.this.getIndex()).getCode());
-                    try {
-                        Patient currentPatient = patientList.get(ButtonCell2.this.getIndex());
-                        LabCompanion.singleton.initCreatePatientUpdateCasePane(currentPatient);
-                    } catch (MalformedURLException ex) {
-                        System.err.println("Ici " + code);
-                        // TODO
-                    } catch (Exception ex) {
-                        System.err.println("Là " + code);
-                        // on peut pas recup l'analyse
-                    }
+                    Patient currentPatient = patientList.get(ButtonCell2.this.getIndex());
+                    LabCompanion.singleton.initCreatePatientUpdateCasePane(currentPatient);
                 }
             });
         }
