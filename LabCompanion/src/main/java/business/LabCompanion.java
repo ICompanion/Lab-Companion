@@ -8,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.awt.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -64,6 +66,8 @@ public class LabCompanion extends Application {
         this.connectedEmployee = null;
 
         this.mainStage = primaryStage;
+        mainStage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+        mainStage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight());
 
         URL loaded = Paths.get("src/main/java/view/connexion.fxml").toUri().toURL();
         FXMLLoader loader = new FXMLLoader(loaded);
@@ -99,10 +103,10 @@ public class LabCompanion extends Application {
             labCompanionController.setEditedPane(currentEditedPane,
                     this.connectedEmployee);
 
-            mainStage.close();
             Scene scene = new Scene(root);
             mainStage.setScene(scene);
             mainStage.show();
+            mainStage.setMaximized(true);
 
         } catch (IOException e) {
             System.out.println("Can't load current editedLoader");

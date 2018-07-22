@@ -15,7 +15,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import pluginmanager.main.Plugin;
+import PluginManager.main.Plugin;
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
