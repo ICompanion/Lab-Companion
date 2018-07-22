@@ -329,7 +329,7 @@ public class RequestManager {
      * @throws Exception
      */
     public static ArrayList<Survey> getAllSurveys() throws Exception {
-        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/allSurveyx");
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/allSurvey");
 
         if(data != null)
         {
