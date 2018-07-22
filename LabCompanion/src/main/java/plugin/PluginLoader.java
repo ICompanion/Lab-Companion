@@ -1,6 +1,5 @@
 package plugin;
 
-import annotations.PluginAnnotationParser;
 import pluginmanager.main.Plugin;
 
 import java.io.File;
@@ -18,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *This class is.
+ * This class manage a plugin loading.
  *
  *
  * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
@@ -67,7 +66,7 @@ public class PluginLoader {
     }
 
     /**
-     * Set files to load for thi loader.
+     * Set files to load for this loader.
      * @param files files to load.
      */
     public void setFiles(String[] files) {
@@ -131,7 +130,6 @@ public class PluginLoader {
                             Plugin instance = (Plugin) tmpClass.newInstance();
                             this.plugins.add(instance);
                             PluginAnnotationParser.writeInConfFile(instance);
-                            System.out.println("end");
                         }
                     }
                 }

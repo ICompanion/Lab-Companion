@@ -21,6 +21,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.DialogPane;
 import javafx.scene.layout.GridPane;
 import plugin.PluginLoader;
+import plugin.PluginManager;
 import pluginmanager.main.Plugin;
 
 /**
@@ -35,10 +36,8 @@ public class LabCompanion extends Application {
 
     public static final String USER_LAB_COMPANION_FOLDER =
             System.getProperty("user.home")+"\\LabCompanion";
-    public static final String USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER =
-            System.getProperty("user.home")+"\\LabCompanion\\active";
-    public static final String USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER =
-            System.getProperty("user.home")+"\\LabCompanion\\inactive";
+    public static final String USER_LAB_COMPANION_PLUGIN_FOLDER =
+            System.getProperty("user.home")+"\\LabCompanion\\plugins";
     public static final String USER_LAB_COMPANION_CONF_FOLDER =
             System.getProperty("user.home")+"\\LabCompanion\\conf";
 
@@ -50,9 +49,7 @@ public class LabCompanion extends Application {
 
     private Employee connectedEmployee;
 
-    private ArrayList<Plugin> activePlugins;
-
-    private ArrayList<Plugin> inactivePlugins;
+    private ArrayList<Plugin> pluginList;
 
     /**
      *This function init and display the main view.
@@ -203,17 +200,17 @@ public class LabCompanion extends Application {
      *
      * @param toAdd
      */
-    public void addToActivePluginList(ArrayList<Plugin> toAdd) {
+    public void addToPluginList(ArrayList<Plugin> toAdd) {
         if(!toAdd.isEmpty()) {
             for(Plugin current : toAdd) {
-                for(Plugin loaded : this.getLoadedPlugins()) {
+                for(Plugin loaded : this.pluginList) {
                     if(current.getName().equals(loaded.getName())
                         && current.getDescription().equals(loaded.getDescription())) {
                         toAdd.remove(current);
                     }
                 }
             }
-            this.activePlugins.addAll(toAdd);
+            this.pluginList.addAll(toAdd);
         }
     }
 
@@ -222,20 +219,12 @@ public class LabCompanion extends Application {
      */
     private void reloadPlugins() {
         PluginLoader loader = new PluginLoader(
-                LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER);
-        ArrayList<Plugin> activeLoaded = loader.getPlugins();
-        if (activeLoaded != null) {
-            this.activePlugins = activeLoaded;
+                LabCompanion.USER_LAB_COMPANION_PLUGIN_FOLDER);
+        ArrayList<Plugin> loadedPlugins = loader.getPlugins();
+        if (loadedPlugins != null) {
+            this.pluginList = loadedPlugins;
         } else {
-            this.activePlugins = new ArrayList<Plugin>();
-        }
-        loader = new PluginLoader(
-                LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER);
-        ArrayList<Plugin> inactiveLoaded = loader.getPlugins();
-        if (inactiveLoaded != null) {
-            this.inactivePlugins = inactiveLoaded;
-        } else {
-            this.inactivePlugins = new ArrayList<Plugin>();
+            this.pluginList = new ArrayList<Plugin>();
         }
     }
 
@@ -273,33 +262,8 @@ public class LabCompanion extends Application {
      *
      * @return List of plugins
      */
-    public ArrayList<Plugin> getLoadedPlugins() {
-        ArrayList<Plugin> toReturn = new ArrayList<Plugin>();
-        if(this.activePlugins != null) {
-            toReturn.addAll(this.activePlugins);
-        }
-        if(this.inactivePlugins != null) {
-            toReturn.addAll(this.inactivePlugins);
-        }
-        return toReturn;
-    }
-
-    /**
-     * This function get all plugins which are activated.
-     *
-     * @return
-     */
-    public ArrayList<Plugin> getActivePlugins() {
-        return this.activePlugins;
-    }
-
-    /**
-     * This function get all InactivePlugins.
-     *
-     * @return
-     */
-    public ArrayList<Plugin> getInactivePlugins() {
-        return this.inactivePlugins;
+    public ArrayList<Plugin> getPlugins() {
+        return this.pluginList;
     }
 
     /**** Doctor ****/

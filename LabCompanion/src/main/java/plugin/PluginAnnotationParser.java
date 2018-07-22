@@ -1,4 +1,4 @@
-package annotations;
+package plugin;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -12,10 +12,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import pluginmanager.annotation.Plugin;
 
+/**
+ * This class gives methods to parse a given plugin.
+ */
 public class PluginAnnotationParser {
-
-    private static String pluginConfFilePath =
-            LabCompanion.USER_LAB_COMPANION_CONF_FOLDER + "\\plugins.conf";
 
     /**
      * Write the given plugin class in the user plugin configuration file.
@@ -26,7 +26,7 @@ public class PluginAnnotationParser {
                 .getAnnotation(Plugin.class);
 
         try {
-            Path confPath = Paths.get(pluginConfFilePath);
+            Path confPath = Paths.get(new PluginManager().pluginConfFilePath);
             if(!Files.exists(confPath)) {
                 createConfFile();
             }
@@ -35,15 +35,18 @@ public class PluginAnnotationParser {
             Object test = parser.parse(reader);
             JSONObject confObject = (JSONObject) test;
             JSONObject pluginsObject = (JSONObject) confObject.get("plugins");
-            boolean unique = true;
-            for (int i = 0; i < pluginsObject.size(); i++) {
-                JSONObject currentPluginObject = (JSONObject) pluginsObject.get(i);
+
+            boolean found = false;
+            int i = 1;
+            while(!found && i < pluginsObject.size()+1) {
+                JSONObject currentPluginObject = (JSONObject) pluginsObject.get(String.valueOf(i));
                 if(currentPluginObject!= null &&
                         currentPluginObject.get("name").equals(pluginAnnotation.name())) {
-                    unique = false;
+                    found = true;
                 }
+                i++;
             }
-            if(unique) {
+            if(!found) {
                 HashMap map = new HashMap();
                 JSONObject onePlugin = new JSONObject();
                 onePlugin.put("name", pluginAnnotation.name());
@@ -69,7 +72,7 @@ public class PluginAnnotationParser {
      * @throws IOException when the file can't be created
      */
     private static void createConfFile() throws IOException {
-        Path confPath = Paths.get(pluginConfFilePath);
+        Path confPath = Paths.get(new PluginManager().pluginConfFilePath);
         Files.createFile(confPath);
 
         JSONObject conf = new JSONObject();

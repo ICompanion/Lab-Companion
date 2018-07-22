@@ -8,8 +8,8 @@ package controller;
 import business.LabCompanion;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -57,7 +58,11 @@ public class PluginOverviewController {
     @FXML
     private TableColumn isActiveColumn;
 
-    ObservableList<Record> dataList = FXCollections.observableArrayList();
+    private ObservableList<Record> dataList = FXCollections.observableArrayList();
+
+    private PluginManager manager;
+
+    private ArrayList<Plugin> loadedPlugins;
 
     /**
      * This function initialise the view and make treatments before rendering (tableView initialisation and getting plugins).
@@ -66,6 +71,7 @@ public class PluginOverviewController {
      */
     @FXML
     public void initialize() {
+        this.manager = new PluginManager();
         this.pluginTableView.setEditable(false);
         this.activatePluginButton.setDisable(true);
         this.desactivatePluginButton.setDisable(true);
@@ -81,16 +87,17 @@ public class PluginOverviewController {
                     Record seletedItem = (Record) PluginOverviewController
                             .this.pluginTableView
                             .getSelectionModel().getSelectedItem();
-                    if(seletedItem.getPluginActiveState().equals("Non")) {
-                        PluginOverviewController.this.activatePluginButton.setDisable(false);
-                        PluginOverviewController.this.desactivatePluginButton.setDisable(true);
-                    } else {
+
+                    if(seletedItem != null) {
+                        updateButtonState(seletedItem.getPluginActiveState());
+                    }
+                    else {
                         PluginOverviewController.this.activatePluginButton.setDisable(true);
-                        PluginOverviewController.this.desactivatePluginButton.setDisable(false);
+                        PluginOverviewController.this.desactivatePluginButton.setDisable(true);
                     }
                  }
-                 }
-            });
+             }
+        });
         
         this.nameColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("pluginName"));
@@ -98,17 +105,33 @@ public class PluginOverviewController {
                 new PropertyValueFactory<Record, String>("pluginDescription"));
         this.authorColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("pluginAuthor"));
+        // set cellfactory
+        this.isActiveColumn.setCellFactory(tc -> new TableCell<Record, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty) {
+                    setText(null);
+                    PluginOverviewController.this.activatePluginButton.setDisable(true);
+                    PluginOverviewController.this.desactivatePluginButton.setDisable(true);
+                } else {
+                    setText(item.booleanValue() ? "Oui" : "Non");
+                    updateButtonState(item.booleanValue());
+                }
+            }
+        });
+
         this.isActiveColumn.setCellValueFactory(
                 new PropertyValueFactory<Record, String>("pluginActiveState"));
         
-        ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getLoadedPlugins();
-        if(loadedPlugins!=null) {
-            for (Plugin current : loadedPlugins) {
+        this.loadedPlugins = LabCompanion.singleton.getPlugins();
+        if(this.loadedPlugins!=null) {
+            for (Plugin current : this.loadedPlugins) {
                 Record toAdd = new Record(
                         current.getName(),
                         current.getDescription(),
                         current.getAuthor(),
-                        LabCompanion.singleton.getActivePlugins().contains(current) ? "Oui" : "Non");
+                        this.manager.isPluginActive(current));
                 dataList.add(toAdd);
             }
         }
@@ -124,45 +147,57 @@ public class PluginOverviewController {
     private void addPluginButtonAction(ActionEvent event) {
         ArrayList<Plugin> toAdd = null;
         try {
-            toAdd = PluginManager.showPluginChooser();
+            toAdd = this.manager.showPluginChooser();
         } catch (IOException ex) {
-            Logger.getLogger(PluginOverviewController.class.getName()).log(Level.SEVERE, null, ex);
+            LabCompanion.singleton.initAlertPane(
+                    "Erreur de chargement de plugin",
+                    "Le plugin sélectionné est déjà intégré.",
+                    "Veuillez choisir un autre plugin à intégrer.");
         }
         if(toAdd!=null) {
-            LabCompanion.singleton.addToActivePluginList(toAdd);
+            LabCompanion.singleton.addToPluginList(toAdd);
             Plugin added = toAdd.get(0);
             dataList.add(new Record(added.getName(),
                     added.getDescription(),
                     added.getAuthor(),
-                    "Oui"));
+                    true));
             this.pluginTableView.refresh();
         }
     }
 
     /**
-     * This function activate a plugin.
+     * This function change a plugin activation state.
      *
      * @param event
      */
     @FXML
-    private void activatePluginButtonAction(ActionEvent event) {
-        Record seletedItem = (Record) this.pluginTableView
+    private void switchPluginStateButtonAction(ActionEvent event) {
+        Record selectedItem = (Record) this.pluginTableView
             .getSelectionModel().getSelectedItem();
-        PluginManager.activatePlugin(seletedItem.getPluginName());
-        seletedItem.setPluginActiveState("Oui");
+        Plugin selectedPlugin = null;
+        for(Plugin current : this.loadedPlugins) {
+            if(current.getName().equals(selectedItem.getPluginName())){
+                selectedPlugin = current;
+            }
+        }
+        this.manager.switchPluginActiveState(selectedPlugin);
+        selectedItem.setPluginActiveState(this.manager.isPluginActive(selectedPlugin));
+        this.pluginTableView.refresh();
     }
 
     /**
-     * This function desactivate a plugin.
-     *
-     * @param event
+     * This function update the state of activate and desactivate buttons from
+     * the plugin active state.
+     * @param state
      */
-    @FXML
-    private void desactivatePluginButtonAction(ActionEvent event) {
-        Record seletedItem = (Record) this.pluginTableView
-                .getSelectionModel().getSelectedItem();
-        PluginManager.desactivatePlugin(seletedItem.getPluginName());
-        seletedItem.setPluginActiveState("Non");
+    private void updateButtonState(boolean state) {
+        if(state) {
+            PluginOverviewController.this.activatePluginButton.setDisable(true);
+            PluginOverviewController.this.desactivatePluginButton.setDisable(false);
+        } else {
+            PluginOverviewController.this.activatePluginButton.setDisable(false);
+            PluginOverviewController.this.desactivatePluginButton.setDisable(true);
+        }
     }
 
     /**
@@ -172,14 +207,14 @@ public class PluginOverviewController {
         private final SimpleStringProperty pluginName;
         private final SimpleStringProperty pluginDescription;
         private final SimpleStringProperty pluginAuthor;
-        private final SimpleStringProperty pluginActiveState;
+        private final SimpleBooleanProperty pluginActiveState;
 
         public Record(String pluginName, String pluginDescription,
-                String pluginAuthor, String pluginActiveState) {
+                String pluginAuthor, boolean pluginActiveState) {
             this.pluginName = new SimpleStringProperty(pluginName);
             this.pluginDescription = new SimpleStringProperty(pluginDescription);
             this.pluginAuthor = new SimpleStringProperty(pluginAuthor);
-            this.pluginActiveState = new SimpleStringProperty(pluginActiveState);
+            this.pluginActiveState = new SimpleBooleanProperty(pluginActiveState);
         }
 
         public String getPluginDescription() {
@@ -194,7 +229,7 @@ public class PluginOverviewController {
             return pluginName.get();
         }
 
-        public String getPluginActiveState() {
+        public boolean getPluginActiveState() {
             return pluginActiveState.get();
         }
         
@@ -210,8 +245,8 @@ public class PluginOverviewController {
             pluginAuthor.set(newValue);
         }
         
-        public void setPluginActiveState(String newValue) {
-            pluginAuthor.set(newValue);
+        public void setPluginActiveState(boolean state) {
+                pluginActiveState.set(state);
         }
         
     }

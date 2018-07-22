@@ -30,12 +30,12 @@
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-          <Button fx:id="activatePluginButton" alignment="CENTER" mnemonicParsing="false" onAction="#activatePluginButtonAction" styleClass="btn_primary" text="Activer">
+          <Button fx:id="activatePluginButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchPluginStateButtonAction" styleClass="btn_primary" text="Activer">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="desactivatePluginButton" alignment="CENTER" mnemonicParsing="false" onAction="#desactivatePluginButtonAction" styleClass="btn_primary" text="Desactiver">
+            <Button fx:id="desactivatePluginButton" alignment="CENTER" mnemonicParsing="false" onAction="#switchPluginStateButtonAction" styleClass="btn_primary" text="Desactiver">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>

@@ -2,8 +2,13 @@ package plugin;
 
 import business.LabCompanion;
 import javafx.stage.FileChooser;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import pluginmanager.main.Plugin;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
@@ -14,7 +19,7 @@ import java.util.ArrayList;
 
 /**
  *
- *This class is
+ * This class manages plugins.
  *
  *
  * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
@@ -22,39 +27,50 @@ import java.util.ArrayList;
  */
 public class PluginManager {
 
+    public String pluginConfFilePath =
+            LabCompanion.USER_LAB_COMPANION_CONF_FOLDER + "\\plugins.conf";
+
     /**
-     *
-     * @return Plugins
+     * Show a dialog to choose a plugin.
+     * @return
      * @throws IOException
      */
-    public static ArrayList<Plugin> showPluginChooser() throws IOException {
+    public ArrayList<Plugin> showPluginChooser() throws IOException {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Choix du Plugin à importer");
 
         File seletecFile = chooser.showOpenDialog(null);
-        
-        Path userLabCompanionFolder = 
+
+        Path currentPath = null;
+        if(seletecFile == null) {
+            return null;
+        }
+
+        Path userLabCompanionFolder =
                 Paths.get(LabCompanion.USER_LAB_COMPANION_FOLDER);
-        Path userLabCompanionActiveFolder = 
-                Paths.get(LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER);
-        Path userLabCompanionInactiveFolder = 
-                Paths.get(LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER);
+        Path userLabCompanionPluginFolder =
+                Paths.get(LabCompanion.USER_LAB_COMPANION_PLUGIN_FOLDER);
 
         if(!Files.exists(userLabCompanionFolder)) {
             Files.createDirectory(userLabCompanionFolder);
-            Files.createDirectory(userLabCompanionActiveFolder);
-            Files.createDirectory(userLabCompanionInactiveFolder);
         }
-        
-        Path currentPath = Paths.get(seletecFile.getPath());
-        
+        if(!Files.exists(userLabCompanionPluginFolder)) {
+            Files.createDirectory(userLabCompanionPluginFolder);
+        }
+
+        currentPath = Paths.get(seletecFile.getPath());
+
         CopyOption[] options = new CopyOption[] {
                 StandardCopyOption.REPLACE_EXISTING
         }; 
         
-        Path targetPath = userLabCompanionActiveFolder.resolve(
+        Path targetPath = userLabCompanionPluginFolder.resolve(
                 currentPath.getFileName());
-        
+
+        if(Files.exists(targetPath)) {
+            return null;
+        }
+
         Files.copy(currentPath, targetPath, options);
         
         PluginLoader loader = new PluginLoader(new String[] {targetPath.toString()});
@@ -63,48 +79,68 @@ public class PluginManager {
     }
 
     /**
-     *
-     * @param toActivate
+     * Changes the activation state of  a plugin in the conf file.
+     * @param plugin
      */
-    public static void activatePlugin(String toActivate){
-        Path pluginPath = Paths.get(
-                LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER
-                + "\\" + toActivate + ".jar");
-        Path pluginDestination = Paths.get(
-                LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER
-                        + "\\" + toActivate + ".jar");
-
-        CopyOption[] options = new CopyOption[] {
-                StandardCopyOption.REPLACE_EXISTING
-        };
-
+    public void switchPluginActiveState(Plugin plugin) {
         try {
-            Files.copy(pluginPath, pluginDestination, options); // not working
-        } catch (IOException e) {
-            e.printStackTrace();
+            Path confPath = Paths.get(this.pluginConfFilePath);
+            JSONParser parser = new JSONParser();
+            FileReader reader = new FileReader(confPath.toString());
+            Object test = parser.parse(reader);
+            JSONObject confObject = (JSONObject) test;
+            JSONObject pluginsObject = (JSONObject) confObject.get("plugins");
+            JSONObject toChange = null;
+            int i = 1;
+            while(toChange == null && i < pluginsObject.size()+1) {
+                JSONObject currentPlugin = (JSONObject) pluginsObject.get(
+                        String.valueOf(i));
+                if(currentPlugin.get("name").equals(plugin.getName())) {
+                    toChange = currentPlugin;
+                }
+                i++;
+            }
+            boolean activeState = (boolean) toChange.get("isActive");
+            toChange.put("isActive", !activeState);
+            FileWriter writer = new FileWriter(confPath.toString());
+            writer.write(confObject.toJSONString());
+            writer.flush();
+            writer.close();
+        } catch (ParseException | IOException e) {
+            LabCompanion.singleton.initAlertPane("Lecture des plugins",
+                    "Erreur durant la lecture des plugins",
+                    "Le fichier de oonfiguration des plugins n'as pas pu être lu.");
         }
     }
 
     /**
-     *
-     * @param pluginNameToDesactivate
+     * Returns the active state of given plugin.
+     * @param plugin plugin to check
+     * @return plugin active state
      */
-    public static void desactivatePlugin(String pluginNameToDesactivate){
-        Path pluginPath = Paths.get(
-                LabCompanion.USER_LAB_COMPANION_PLUGIN_ACTIVE_FOLDER
-                        + "\\" + pluginNameToDesactivate + ".jar");
-        Path pluginDestination = Paths.get(
-                LabCompanion.USER_LAB_COMPANION_PLUGIN_INACTIVE_FOLDER
-                        + "\\" + pluginNameToDesactivate + ".jar");
-
-        CopyOption[] options = new CopyOption[] {
-                StandardCopyOption.REPLACE_EXISTING
-        };
-
+    public boolean isPluginActive(Plugin plugin) {
         try {
-            Files.copy(pluginPath, pluginDestination, options); // not working
-        } catch (IOException e) {
-            e.printStackTrace();
+            Path confPath = Paths.get(this.pluginConfFilePath);
+            JSONParser parser = new JSONParser();
+            FileReader reader = new FileReader(confPath.toString());
+            Object test = parser.parse(reader);
+            JSONObject confObject = (JSONObject) test;
+            JSONObject pluginsObject = (JSONObject) confObject.get("plugins");
+            JSONObject toChange = null;
+            int i = 1;
+            while(toChange == null && i < pluginsObject.size()+1) {
+                JSONObject currentPlugin = (JSONObject) pluginsObject.get(String.valueOf(i));
+                if(currentPlugin.get("name").equals(plugin.getName())) {
+                    toChange = currentPlugin;
+                }
+                i++;
+            }
+            return (boolean) toChange.get("isActive");
+        } catch (ParseException | IOException e) {
+            LabCompanion.singleton.initAlertPane("Lecture des plugins",
+                    "Erreur durant la lecture des plugins",
+                    "Le fichier de oonfiguration des plugins n'as pas pu être lu.");
+            return false;
         }
     }
 

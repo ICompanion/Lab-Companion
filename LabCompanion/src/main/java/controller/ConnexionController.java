@@ -27,20 +27,6 @@ public class ConnexionController {
     private TextField passwordField;
 
     /**
-     * This function initialise the view and make treatments before rendering (tableView initialisation).
-     */
-    @FXML
-    public void initialize() {
-        //FOR DEVELOPMENT ONLY --> GOOD CREDENTIALS TO LOGIN QUICKLY
-        idTextField.setText("mdesanges");
-        passwordField.setText("admin2");
-
-        //SECRETARY
-        //idTextField.setText("mdesanges");
-        //passwordField.setText("admin2");
-    }
-
-    /**
      * This function is the connection button action that set the connected employee and make the connection.
      *
      * @param event

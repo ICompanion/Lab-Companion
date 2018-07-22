@@ -15,7 +15,8 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
-import PluginManager.main.Plugin;
+import plugin.PluginManager;
+import pluginmanager.main.Plugin;
 import java.awt.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -208,10 +209,12 @@ public class LabCompanionController {
      * @param employeeType
      */
     private void addEmployeePluginsToMenu(int employeeType) {
-        ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getActivePlugins();
+        ArrayList<Plugin> loadedPlugins = LabCompanion.singleton.getPlugins();
         if(loadedPlugins!= null) {
             for(Plugin current : loadedPlugins) {
-                if(current.getEmployeeType() == employeeType) {
+                PluginManager manager = new PluginManager();
+                if(manager.isPluginActive(current) &&
+                        current.getEmployeeType() == employeeType) {
                     Button currentPluginButton = createPluginButton(current);
                     menuButtons.add(currentPluginButton);
                 }
