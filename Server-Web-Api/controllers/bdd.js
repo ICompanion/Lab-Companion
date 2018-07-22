@@ -11,8 +11,10 @@ values: undefined,
 }
 
 /**
- *
+ * Function to start the database connection
+ * @method start
  * @param callback
+ * @return 
  */
 bddController.start = function(callback){
     pool.connect(function(err, client, done){
@@ -30,10 +32,12 @@ bddController.start = function(callback){
 };
 
 /**
- *
+ * Function to execute a query
+ * @method executeQuery
  * @param text
  * @param values
  * @param callback
+ * @return 
  */
 bddController.executeQuery = function(text, values, callback){
     var state = false;
@@ -59,7 +63,9 @@ bddController.executeQuery = function(text, values, callback){
 };
 
 /**
- * close the bdd ccnnection
+ * Function to close the bdd ccnnection
+ * @method stop
+ * @return 
  */
 bddController.stop = function(){
   pool.end(function(){
@@ -71,9 +77,11 @@ bddController.stop = function(){
 module.exports = bddController;
 
 /**
- *
+ * Function to make a query
+ * @method makeQuery
  * @param text
  * @param values
+ * @return 
  */
 bddController.makeQuery = function(text, values){
     query.text = text;

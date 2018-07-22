@@ -1,3 +1,12 @@
+/**
+ *
+ * This is the main API server file.
+ * Here is initialised connection.
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
+
 const express = require('express');
 const RouterManager = require('./routes');
 const morgan = require('morgan');

@@ -1,9 +1,23 @@
+/**
+ *
+ * This is the authenticate controller file.
+ *
+ * @author Lamy Grégoire, Dubreucq Thibaud, Vilalard Mickaël
+ * @version 1.0
+ */
 const authenticateController = function(){ };
 const bddController = require('./bdd');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const CookieParser = require('cookie-parser');
 
+/**
+ * Function which execute a query to sign in
+ * @method signIn
+ * @param {} values
+ * @param {} callback
+ * @return 
+ */
 authenticateController.signIn = function(values, callback){
   bddController.executeQuery('select nom,identifiant from employe where employe.identifiant = $1 and employe.password = $2 union select nom,identifiant from patient where patient.identifiant = $1 and patient.password = $2', values, function(data, state){
     var name = "none";
@@ -21,12 +35,29 @@ authenticateController.signIn = function(values, callback){
   });
 };
 
+/**
+ * Function which execute a query to connect
+ * @method employeeConnection
+ * @param {} values
+ * @param {} callback
+ * @return 
+ */
 authenticateController.employeeConnection = function(values, callback){
   bddController.executeQuery('select id, identifiant, nom, prenom, employe_type, type_contrat, date_embauche, adresse, ville, cp, mail, num_secu from employe where employe.identifiant = $1 and employe.password = $2', values, function(data, state){
     callback(data,state);
   });
 };
 
+/**
+ * Function which execute handle connection
+ * @method connect
+ * @param {} req
+ * @param {} res
+ * @param {} result
+ * @param {} name
+ * @param {} id
+ * @return 
+ */
 authenticateController.connect = function(req, res, result, name, id){
   if (result === false) {
     res.json({ success: false, message: 'Authentication failed. Invalid credentials.' }).status(404).end();
@@ -55,6 +86,14 @@ authenticateController.connect = function(req, res, result, name, id){
   }
 };
 
+/**
+ * Function which execute a query to check the tokens validity
+ * @method check
+ * @param {} req
+ * @param {} res
+ * @param {} callback
+ * @return 
+ */
 authenticateController.check = function(req, res, callback){
   if(req.cookies['x-access-token']) {
     var token = req.cookies['x-access-token'];
@@ -92,6 +131,14 @@ authenticateController.check = function(req, res, callback){
   }
 };
 
+/**
+ * Function which execute a query to get connection informations
+ * @method getInfos
+ * @param {} req
+ * @param {} res
+ * @param {} callback
+ * @return 
+ */
 authenticateController.getInfos = function(req, res, callback){
     var name = req.cookies['name'];
     var id = req.cookies['id'];

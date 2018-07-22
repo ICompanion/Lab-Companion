@@ -1,0 +1,14 @@
+{
+  "name": "User-Doc",
+  "version": "1.0.0",
+  "description": "Documentations to use the API",
+  "title": "LabCompanion API",
+  "header": {
+    "title": "Annual Project 2018",
+    "Authors": "Lamy Grégoire, Mickaël Vilalard, Thibaud Dubreucq"
+  },
+  "footer": {
+    "title": "Annual Project 2018",
+    "Authors": "Lamy Grégoire, Mickaël Vilalard, Thibaud Dubreucq"
+  }
+}
