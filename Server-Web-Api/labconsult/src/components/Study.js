@@ -172,7 +172,7 @@ class Study extends React.Component {
      * @param questionID - ID of the question
      */
     submitAnswer = async (etudeID, answerID, questionID) => {
-        var url =  '/etude/'+etudeID+'/answer/add/'+answerID+'/'+questionID
+        var url =  '/etude/'+etudeID+'/answer/add/'+questionID+'/'+answerID
         fetch(url,{
             method: 'POST',
             credentials: 'include'
@@ -196,11 +196,12 @@ class Study extends React.Component {
 
         if (completeq === true && this.state.confirmCb === true) {
             previousq = '';
+            i = 1;
             this.state.results.map(question => {
                 if (question.intitule !== previousq) {
-                    i = 1;
                     previousq = question.intitule;
                     index = 'question'+i;
+                    var test = this.state[index];
                     this.submitAnswer(this.state.details[0].id,this.state[index],question.id_question)
                     i += 1;
                 }

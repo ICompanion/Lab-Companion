@@ -34,7 +34,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            response: '',
         };
         this.authentificationCheck = this.authentificationCheck.bind(this);
 
@@ -72,20 +71,7 @@ class App extends Component {
             )
         } else {
             return (
-                /*<MuiThemeProvider theme={theme}>
-                    <BrowserRouter>
-                      <div className='App'>
-                        <Switch>
-                            <Route path='/' exact={true}>
-                                <Redirect to='/login'/>
-                            </Route>
-                            <Route path='/login' exact={true} component={LoginComponent} />
-                            <Route path='/home' exact={true} component={MainApp} />
-                            <Route path='*' component={Component404}/>
-                        </Switch>
-                      </div>
-                    </BrowserRouter>
-                </MuiThemeProvider>*/
+
                 <MuiThemeProvider theme={theme}>
                     <div className='App'>
                         <MainApp/>

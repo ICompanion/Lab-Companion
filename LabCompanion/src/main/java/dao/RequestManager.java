@@ -840,6 +840,14 @@ public class RequestManager {
 
         boolean resultat = RequestHelper.postOrPut(url + "/etude/new", hashMap, "POST");
 
+        survey.setId(getLastSurveyId());
+
+        for (Question question : survey.getQuestions()) {
+            addQuestion(question);
+            question.setId(getLastQuestionId());
+            addQuestionToSurvey(survey, question);
+        }
+
         return resultat;
     }
 
@@ -858,6 +866,15 @@ public class RequestManager {
         JSONParser.makeObject(hashMap);
 
         boolean resultat = RequestHelper.postOrPut(url + "/question/new", hashMap, "POST");
+
+        question.setId(getLastQuestionId());
+
+        for (Proposal proposal : question.getProposals()) {
+            addProposal(proposal);
+            proposal.setId(getLastProposalId());
+            addProposalToQuestion(question,proposal);
+
+        }
 
         return resultat;
     }
@@ -1231,6 +1248,48 @@ public class RequestManager {
             Iterator<JSONObject> it = data.iterator();
 
             int value = it.next().getInt("nbparticipations");
+            return value;
+        }
+
+        return -1;
+    }
+
+    public static int getLastQuestionId() throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/question/maxId/");
+
+        if (data != null) {
+
+            Iterator<JSONObject> it = data.iterator();
+
+            int value = it.next().getInt("id");
+            return value;
+        }
+
+        return -1;
+    }
+
+    public static int getLastProposalId() throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/proposition/maxId/");
+
+        if (data != null) {
+
+            Iterator<JSONObject> it = data.iterator();
+
+            int value = it.next().getInt("id");
+            return value;
+        }
+
+        return -1;
+    }
+
+    public static int getLastSurveyId() throws Exception {
+        ArrayList<JSONObject> data = RequestHelper.get(url + "/etude/maxId/");
+
+        if (data != null) {
+
+            Iterator<JSONObject> it = data.iterator();
+
+            int value = it.next().getInt("id");
             return value;
         }
 

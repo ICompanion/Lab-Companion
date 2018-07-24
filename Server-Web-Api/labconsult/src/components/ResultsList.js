@@ -92,8 +92,6 @@ class ResultsList extends React.Component {
 	  
 	  const { classes } = this.props;
 	  if(this.state.display == 'list') {
-          var promise = this.displayResults(this.props);
-          promise.then(result => {data = result});
 	      return (
               <div>
                   <Typography variant="title" noWrap>{'Bienvenue M. '+this.props.name+' ('}<i>{this.props.id}</i>{')'}</Typography><br/>
