@@ -21,6 +21,12 @@ questionController.getAll = function(callback) {
     });
 };
 
+questionController.getMaxId = function(callback) {
+    bddController.executeQuery('select max(id) as id from question', '', function(data, state){
+        callback(data, state);
+    });
+};
+
 /**
  * Function which execute a query to get a question by its id
  * @method getById

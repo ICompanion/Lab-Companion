@@ -21,6 +21,12 @@ propositionController.getAll = function(callback) {
     });
 };
 
+propositionController.getMaxId = function(callback) {
+    bddController.executeQuery('select max(id) as id from proposition', '', function(data, state){
+        callback(data, state);
+    });
+};
+
 /**
  *  Function which execute a query to get a proposition by its id
  * @method getById

@@ -47,6 +47,18 @@ questionRouter.get('/all', function(req, res){
     });
 });
 
+questionRouter.get('/maxId', function(req, res){
+    questionController.getMaxId(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 /**
  * @api {get} /all get a question by its id
  * @apiName getById
@@ -68,10 +80,11 @@ questionRouter.get('/all', function(req, res){
  *     HTTP/1.1 500 Internal server error
  *     false
  */
-questionRouter.get('/:id', function(req, res){
+
+questionRouter.get('/maxID', function(req, res){
     if(Number.parseInt(req.params.id))
     {
-        questionController.getById(req.params.id,function(data, state){
+        questionController.getMaxId( [""],function(data, state){
             if(state === false) {res.status(500).end(); return;}
             data = JSON.parse(data);
             if(data.length !== 0){
