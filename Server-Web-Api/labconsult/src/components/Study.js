@@ -207,11 +207,11 @@ class Study extends React.Component {
                 }
             })
 
-            /*var url =  '/etude/answer/participate/true/'+this.props.patientID+'/'+this.state.details[0].id
+            var url =  '/etude/answer/participate/true/'+this.props.patientID+'/'+this.state.details[0].id
             fetch(url,{
                 method: 'POST',
                 credentials: 'include'
-            });*/
+            });
 
             alert("Formulaire envoyé. Vous allez maintenant être redirigé vers la page d'accueil.")
             window.location.reload();
