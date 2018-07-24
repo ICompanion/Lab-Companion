@@ -21,6 +21,12 @@ etudeController.getAll = function(callback) {
     });
 };
 
+etudeController.getMaxId = function(callback) {
+    bddController.executeQuery('select max(id) as id from etude', '', function(data, state){
+        callback(data, state);
+    });
+};
+
 /**
  * Function which execute a query to get all studies from table
  * @method getAllStudies

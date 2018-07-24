@@ -26,6 +26,18 @@ etudeRouter.get('/all', function(req, res){
     });
 });
 
+etudeRouter.get('/maxId', function(req, res){
+    etudeController.getMaxId(function(data, state){
+        if(state === false) {res.status(500).end(); return;}
+        data = JSON.parse(data);
+        if(data.length !== 0){
+            res.json(data).status(200);
+            return;
+        }
+        res.status(404).end();
+    });
+});
+
 /**
  * @api {get} /all get all surveys
  * @apiName getAllStudies
