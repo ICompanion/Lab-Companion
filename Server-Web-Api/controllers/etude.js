@@ -88,7 +88,7 @@ etudeController.getParticipatingPatient = function(code, callback) {
  * @return 
  */
 etudeController.getNbAnswers = function(codeEtude, questionId, reponseId, callback ) {
-    bddController.executeQuery('select count(*) as nbReponses from reponses where etude_id = $1 and question_id = $2 and proposition_id = $3', [codeEtude, questionId, reponseId], function(data, state){
+    bddController.executeQuery('select count(*) as nbReponses from reponses where etude_id = $1 and question_id = $3 and proposition_id = $2', [codeEtude, questionId, reponseId], function(data, state){
         callback(data, state);
     });
 };
@@ -205,8 +205,8 @@ etudeController.addQuestion = function(values, callback) {
  * @return 
  */
 etudeController.addAnswer = function(values, callback) {
-    console.log('insert into public.reponses(etude_id, proposition_id, question_id) values($1, $2, $3)',values);
-    bddController.executeQuery('insert into public.reponses(etude_id, proposition_id, question_id) values($1, $2, $3)',
+    console.log('insert into public.reponses(etude_id, proposition_id, question_id) values($1, $3, $2)',values);
+    bddController.executeQuery('insert into public.reponses(etude_id, proposition_id, question_id) values($1, $3, $2)',
         values, function(data, state){
             callback(state);
         });
@@ -234,7 +234,7 @@ etudeController.addParticipation = function(values, callback) {
  * @return 
  */
 etudeController.updateParticipation = function(values, callback) {
-    bddController.executeQuery('update public.participation set participation_statut = $1 where etude_id = $2 and patient_id = $3',
+    bddController.executeQuery('update public.participation set participation_statut = $1 where etude_id = $3 and patient_id = $2',
         values, function(data, state){
             callback(state);
         });

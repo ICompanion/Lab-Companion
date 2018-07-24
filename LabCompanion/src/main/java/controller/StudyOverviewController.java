@@ -170,8 +170,8 @@ public class StudyOverviewController {
                 //Traitement des réponses
 
 
-                count1 = RequestManager.statsByReponse(survey.getId(),question.getId(),proposals.get(0).getId());
-                count2 = RequestManager.statsByReponse(survey.getId(),question.getId(),proposals.get(1).getId());
+                count1 = RequestManager.statsByReponse(survey.getId(),proposals.get(0).getId(),question.getId());
+                count2 = RequestManager.statsByReponse(survey.getId(),proposals.get(1).getId(),question.getId());
                 count3 = 0;
 
                 countTotal = count1+count2;
@@ -179,7 +179,7 @@ public class StudyOverviewController {
                 answer3Count = "";
                 if (proposals.size() == 3) {
                     answer3 = proposals.get(2).getTitle();
-                    count3 = RequestManager.statsByReponse(survey.getId(),question.getId(),proposals.get(2).getId());
+                    count3 = RequestManager.statsByReponse(survey.getId(),proposals.get(2).getId(),question.getId());
                     countTotal += count3;
                 }
 
